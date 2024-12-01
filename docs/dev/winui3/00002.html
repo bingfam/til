@@ -1,0 +1,278 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>winui 3 패키징하지 않고 탐색기에서 exe 파일 실행하기 - TIL</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../custom.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">TIL</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="winui-3-패키징하지-않고-탐색기에서-exe-파일-실행하기"><a class="header" href="#winui-3-패키징하지-않고-탐색기에서-exe-파일-실행하기">winui 3 패키징하지 않고 탐색기에서 exe 파일 실행하기</a></h1>
+<p>이거 보고 함.<br />
+https://learn.microsoft.com/en-us/windows/apps/winui/winui3/create-your-first-winui3-app</p>
+<ol>
+<li>프로젝트를 만든다.</li>
+</ol>
+<p><img src="img/20241201155210.png" alt="" /></p>
+<p>이걸로 프로젝트 만들었음.</p>
+<ol start="2">
+<li>
+<p>vcxproj 파일을 수정한다.
+<code>&lt;PropertyGroup Label="Globals"&gt;</code> 안에
+<code>&lt;WindowsPackageType&gt;None&lt;/WindowsPackageType&gt;</code>
+을 추가한다.</p>
+</li>
+<li>
+<p>vcxproj 파일을 수정한다.
+<code>&lt;PropertyGroup Label="Globals"&gt;</code> 안에
+<code>&lt;AppxPackage&gt;true&lt;/AppxPackage&gt;</code> 를
+<code>&lt;AppxPackage&gt;false&lt;/AppxPackage&gt;</code>  로 수정한다.</p>
+</li>
+</ol>
+<p>위 2, 3 번을 하고 나면 아래와 같다.</p>
+<pre><code class="language-xml">&lt;PropertyGroup Label="Globals"&gt;
+  &lt;CppWinRTOptimized&gt;true&lt;/CppWinRTOptimized&gt;
+  &lt;CppWinRTRootNamespaceAutoMerge&gt;true&lt;/CppWinRTRootNamespaceAutoMerge&gt;
+  &lt;MinimalCoreWin&gt;true&lt;/MinimalCoreWin&gt;
+  &lt;ProjectGuid&gt;{1c4a0c28-b802-46ee-83ee-a35facb2c5d7}&lt;/ProjectGuid&gt;
+  &lt;ProjectName&gt;winuitest&lt;/ProjectName&gt;
+  &lt;RootNamespace&gt;winuitest&lt;/RootNamespace&gt;
+  &lt;!--
+    $(TargetName) should be same as $(RootNamespace) so that the produced binaries (.exe/.pri/etc.)
+    have a name that matches the .winmd
+  --&gt;
+  &lt;TargetName&gt;$(RootNamespace)&lt;/TargetName&gt;
+  &lt;DefaultLanguage&gt;ko-KR&lt;/DefaultLanguage&gt;
+  &lt;MinimumVisualStudioVersion&gt;16.0&lt;/MinimumVisualStudioVersion&gt;
+  &lt;AppContainerApplication&gt;false&lt;/AppContainerApplication&gt;
+  &lt;AppxPackage&gt;false&lt;/AppxPackage&gt;
+  &lt;ApplicationType&gt;Windows Store&lt;/ApplicationType&gt;
+  &lt;ApplicationTypeRevision&gt;10.0&lt;/ApplicationTypeRevision&gt;
+  &lt;WindowsTargetPlatformVersion&gt;10.0&lt;/WindowsTargetPlatformVersion&gt;
+  &lt;WindowsTargetPlatformMinVersion&gt;10.0.17763.0&lt;/WindowsTargetPlatformMinVersion&gt;
+  &lt;UseWinUI&gt;true&lt;/UseWinUI&gt;
+  &lt;EnableMsixTooling&gt;true&lt;/EnableMsixTooling&gt;
+  &lt;WindowsPackageType&gt;None&lt;/WindowsPackageType&gt;
+&lt;/PropertyGroup&gt;
+</code></pre>
+<ol start="4">
+<li>visual studio로 돌아오면</li>
+</ol>
+<p><img src="img/20241201155226.png" alt="" /></p>
+<p>이런 메시지가 나오는데 당연히 [모두 다시 로드]를 클릭한다.</p>
+<ol start="5">
+<li>build 하면</li>
+</ol>
+<p><img src="img/20241201155234.png" alt="" /></p>
+<p>E:\test\winuitest\x64\Debug\winuitest 안에 exe 파일이 생성된다.</p>
+<p>실행하면</p>
+<p><img src="img/20241201155242.png" alt="" /></p>
+<p>이런 메시지가 나온다. Windows App Runtime을 설치하라는 것.</p>
+<p>[예]를 누르면</p>
+<p>https://learn.microsoft.com/ko-kr/windows/apps/windows-app-sdk/downloads</p>
+<p>창이 열린다.</p>
+<p>여기서</p>
+<p><img src="img/20241201155252.png" alt="" /></p>
+<p>저 다운로드 버튼을 눌러 실행하면 msix 패키징없이 탐색기에서 exe 파일을 더블클릭해 실행할 수 있게 된다.</p>
+<p><img src="img/20241201155300.png" alt="" /></p>
+<p><img src="img/20241201155309.png" alt="" /></p>
+<p>탐색기에서 더블클릭해 실행된 winui 3 앱.</p>
+<p>개발자 pc 가 아닌 다른 곳에서는 실행이 안될 수도 있는데 그때는 vcredist.exe 를 다운로드받아 실행하면 된다.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../dev/winui3/00001.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../dev/game/game.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../dev/winui3/00001.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../dev/game/game.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

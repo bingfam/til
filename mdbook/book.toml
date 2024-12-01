@@ -4,3 +4,13 @@ language = "en"
 multilingual = false
 src = "src"
 title = "TIL"
+
+[output.html.fold]
+enable = true    # whether or not to enable section folding. 기본값은 다 열어놓고 시작하는 거
+level = 1         # the depth to start folding
+
+[output.html]
+no-section-label = false             # 숫자 섹션 레이블(false면 숫자 나타나고 true면 숫자 안 나타남)
+additional-css = ["custom.css"]
+
+[preprocessor.external-links]
