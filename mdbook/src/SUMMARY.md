@@ -46,3 +46,6 @@
 
 - [유틸리티](./utility/utility.md)
   - [joplin](./utility/joplin.md)
+
+- [마케팅](./marketing/marketing.md)
+  - [팔지마라. 해결해줘라](./marketing/00001.md)  
