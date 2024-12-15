@@ -49,3 +49,6 @@
 
 - [마케팅](./marketing/marketing.md)
   - [팔지마라. 해결해줘라](./marketing/00001.md)  
+
+- [자격증](./license/license.md)
+  - [버스(1종 대형)](./license/bus/00001.md)    
