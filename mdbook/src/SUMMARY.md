@@ -38,6 +38,7 @@
       - [답이 접혀 있는 문제를 내기 위한 code snippet](./dev/vscode/snippets/00002.md)
     - [vscode 작업 영역](./dev/vscode/00001.md)
     - [visual studio code 에서 terminal에서 한글이 안될 때](./dev/vscode/00002.md)
+    - [markdown custom css](./dev/vscode/00003.md)
 
   - [기타](./dev/etc.md)
     - [miniconda](./dev/miniconda/miniconda.md)
@@ -46,6 +47,10 @@
 
 - [유틸리티](./utility/utility.md)
   - [joplin](./utility/joplin.md)
+
+- [노트](./note/note.md)
+  - [mdbook](./note/mdbook/mdbook.md)
+    - [extensions](./note/mdbook/mdbook-00001.md)
 
 - [마케팅](./marketing/marketing.md)
   - [팔지마라. 해결해줘라](./marketing/00001.md)  
