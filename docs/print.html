@@ -774,6 +774,60 @@ error: could not lock config file C:/Program Files/Git/etc/gitconfig: Permission
 <pre><code class="language-shell">&gt; chcp 65001
 </code></pre>
 <p>하면 바로 해결된다. 65001이 utf-8</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="markdown-custom-css"><a class="header" href="#markdown-custom-css">markdown custom css</a></h1>
+<p>C:\Users_USERID_\AppData\Local\Programs\Microsoft VS Code\resources\app\extensions\markdown-language-features\media\markdown.css</p>
+<p>파일을 수정하면 된다.</p>
+<p>오늘은 아래와 같이 수정함.</p>
+<pre><code class="language-css">h1 {
+    font-size: 2.3em;
+    margin-top: 0;
+    /* margin-bottom: 100px; */
+    padding-bottom: 0.3em;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    font-weight: bold
+}
+
+h2 {
+    font-size: 2em;
+    margin-top: 80px;
+    /* margin-bottom: -30px; */
+    padding-bottom: 0.3em;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    font-weight: bold
+}
+
+h3 {
+  margin-top: 60px;
+  /* margin-bottom: -20px; */
+    font-size: 1.5em;
+    font-weight: bold
+}
+
+h4 {
+  margin-top: 50px;
+  /* margin-bottom: -20px; */
+    font-size: 1.25em;
+    font-weight: bold
+}
+
+h5 {
+  margin-top: 30px;
+  /* margin-bottom: -10px; */
+    font-size: 1em;
+    font-weight: bold
+}
+
+h6 {
+    font-size: 0.85em;
+}
+</code></pre>
+<p>이 파일을 수정하고 markdown 미리 보기 창을 닫고 다시 미리보기 하면 반영되어 있다.</p>
+<p>그런데 이렇게 해도 yzane Markdown pdf 익스텐션을 이용해 pdf로 export 할 때는 이 css가 반영되지 않는다.</p>
+<p>pdf 파일은</p>
+<p>C:\Users\_USERID_.vscode\extensions\yzane.markdown-pdf-1.5.0\styles\markdown-pdf.css</p>
+<p>파일을 수정하면 된다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="기타"><a class="header" href="#기타">기타</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="miniconda"><a class="header" href="#miniconda">miniconda</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="miniconda-사용법"><a class="header" href="#miniconda-사용법">miniconda 사용법</a></h1>
@@ -827,10 +881,56 @@ error: could not lock config file C:/Program Files/Git/etc/gitconfig: Permission
 <li>쉬운 tags, backlinks 기능</li>
 <li>다양한 플러그인들(하지만 내가 만들어 버리지 모).</li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="joplin-1"><a class="header" href="#joplin-1">joplin</a></h1>
+<h2 id="joplin에서-mdbook으로-넘어온-이유-1"><a class="header" href="#joplin에서-mdbook으로-넘어온-이유-1">joplin에서 mdbook으로 넘어온 이유</a></h2>
+<ul>
+<li>
+<p>잦은 동기화 오류.<br />
+여러 기기에서 사용하다 보니 충돌 폴더가 생기고 그 안에 자꾸 내용이 쌓이고 있어 불안하다.<br />
+그리고 작성한 기억이 있는데 동기화 하다보면 사라진 거 같은 느낌이 있다. 아 이건 정확하지 않아 뭐라 하기 어렵긴 하다.</p>
+</li>
+<li>
+<p>이미지 처리의 불편함.<br />
+이미지가 하나의 폴더에 전부 다 들어간다. 나중에 이 파일 찾기도 어렵다.</p>
+</li>
+<li>
+<p>사실 아이패드나 핸드폰에서는 보기만 하지 작성은 하지 않는다. 작성할 일이 있으면 디바이스마다 죄다 다 펜을 사놨는데 그걸로 메모해 놨다가 나중에 다시 mdbook에 적어 넣으면 된다.</p>
+</li>
+<li>
+<p>joplin은 md 표준을 지키지 않는다.
+예를 들면 문장 맨 뒤에 space 2개를 넣지 않아도 자동으로 개행이 된다. 나중에 굉장히 난잡한 글을 보게 될 거 같아 걱정스럽다.</p>
+</li>
+<li>
+<p>나는 온전한 md 파일을 내 로컬에 남기고 싶다.</p>
+</li>
+<li>
+<p>mdbook에 대한 일종의 믿음(?)</p>
+</li>
+</ul>
+<h2 id="joplin에서-mdbook으로-넘어올-때-아쉬웠던-점-1"><a class="header" href="#joplin에서-mdbook으로-넘어올-때-아쉬웠던-점-1">joplin에서 mdbook으로 넘어올 때 아쉬웠던 점</a></h2>
+<ul>
+<li>joplin은 종단간 암호화 동기화 기능을 지원한다.</li>
+<li>쉬운 tags, backlinks 기능</li>
+<li>다양한 플러그인들(하지만 내가 만들어 버리지 모).</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="노트"><a class="header" href="#노트">노트</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="mdbook"><a class="header" href="#mdbook">mdbook</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="extensions-1"><a class="header" href="#extensions-1">extensions</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="mindmap"><a class="header" href="#mindmap">mindmap</a></h1>
+<h2 id="markdown-파일을-mmfreemind-freeplane-으로-바꾸기"><a class="header" href="#markdown-파일을-mmfreemind-freeplane-으로-바꾸기">markdown 파일을 mm(freemind, freeplane) 으로 바꾸기</a></h2>
+<p>https://github.com/unhurried/md-to-mm</p>
+<p>여기서 markdown 파일을 freemind나 freeplane에서 사용하는 mm파일로 바꿀 수 있다.</p>
+<p>freeplane이 freemind를 fork한 거다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="마케팅"><a class="header" href="#마케팅">마케팅</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="팔지마라-해결해줘라"><a class="header" href="#팔지마라-해결해줘라">팔지마라. 해결해줘라</a></h1>
 <p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7264963259730976768" title="" target="_blank">https://www.linkedin.com/feed/update/urn:li:activity:7264963259730976768</a></p>
 <p>팔지 말고 그들의 문제점을 해결해 줘라.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="콘텐츠"><a class="header" href="#콘텐츠">콘텐츠</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="저작권"><a class="header" href="#저작권">저작권</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="유튜브-링크를-걸면-저작권-위반인지에-대한-대법원-판결"><a class="header" href="#유튜브-링크를-걸면-저작권-위반인지에-대한-대법원-판결">유튜브 링크를 걸면 저작권 위반인지에 대한 대법원 판결</a></h1>
+<p>유튜브 등 링크를 무단으로 걸면 저작권 등 침해일까?</p>
+<p>https://www.youtube.com/watch?v=lqaJvTl5oZA</p>
+<p>대법원 2015. 3. 12. 판결에서 경로를 나타낸 것에 불과하여 저작권 침해가 아니라고 판결.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="자격증"><a class="header" href="#자격증">자격증</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="버스1종-대형-면허"><a class="header" href="#버스1종-대형-면허">버스(1종 대형 면허)</a></h1>
 <p>1종 대형 면허증을 따는 방법에 대해 많은 글들이 있지만 아래 몇 개만 제대로 보면 된다.</p>
@@ -848,6 +948,36 @@ error: could not lock config file C:/Program Files/Git/etc/gitconfig: Permission
 <h2 id="5-인천면허-시험장-실제-시험-영상보고-실제-시험-해-보기"><a class="header" href="#5-인천면허-시험장-실제-시험-영상보고-실제-시험-해-보기">5. 인천면허 시험장 실제 시험 영상보고 실제 시험 해 보기</a></h2>
 <iframe width="800" height="450" src="https://www.youtube.com/embed/IFZnz9Frcgo?si=32eWNNStpQE8efcO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 <p>영상을 틀어놓고 4의 1종 대형 코스별 통과 요령 pdf 파일을 보면서 각 코스를 같이 진행한다.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="전북면허시험장"><a class="header" href="#전북면허시험장">전북면허시험장</a></h1>
+<p>코스의 노란선은 잘 보인다.<br />
+클러치를 완전히 다 올려야 차가 움직인다. 그래서 반클러치가 없다.<br />
+오늘 떨어진 이유도 이 때문.<br />
+처음 시작하자마자 20초 동안 차를 움직이지 못해 벌점 5점 먹었다.  기어를 몇 번이나 다시 넣고 엄청 놀람.<br />
+경사로에서 힘들 거 같다.</p>
+<h2 id="버스-조작"><a class="header" href="#버스-조작">버스 조작</a></h2>
+<ul>
+<li>반 클러치 안 됨. 앞으로 가려면 발에서 클러치를 완전히 떼야 함.</li>
+<li>기어<br />
+<img src="license/bus/img/20241219172025.png" alt="" /></li>
+<li>R 놓을 때 레버 위로 올리는 거 없음. 그냥 R로 가면 됨.</li>
+<li>비상등: 오른쪽 레버 위로 올리면 켜지고, 내리면 꺼진다.</li>
+</ul>
+<h2 id="좋은-점"><a class="header" href="#좋은-점">좋은 점</a></h2>
+<p>처음 시작할 때 코스를 한 번에 해버려서 시간을 더 절약할 수 있고, S코스를 오른쪽에 바로 붙여서 들어갈 수 있어 통과할 확률이 훨씬 높아졌다.</p>
+<h2 id="나쁜-점"><a class="header" href="#나쁜-점">나쁜 점</a></h2>
+<p>그지같은 버스. 반클러치를 할 수가 없다.</p>
+<h2 id="떨어진-이유"><a class="header" href="#떨어진-이유">떨어진 이유</a></h2>
+<ul>
+<li>여기 버스는 반클러치를 할 수가 없다. 클러치에서 발을 떼야 차가 앞으로 간다. 반클러치 성공 못함. 이러다 20초 내에 출발 못해서 5점 깎이면서 엄청 당황함.</li>
+<li>굴절에서 떨어짐. 바퀴를 11자로 놓아야 할 때 핸들을 완전히 오른쪽으로 돌려버려 차가 완전히 이상하게 가버렸다.</li>
+</ul>
+<h2 id="반성-할-일-기대"><a class="header" href="#반성-할-일-기대">반성, 할 일, 기대</a></h2>
+<ul>
+<li>여태까지는 경험이었지만 이제부터는 실전이다. 준비 제대로 해서 가자.</li>
+<li>마인드 트레이닝 확실히 해가자. 굴절에서 후진 시 핸들을 완전히 오른쪽으로 돌려버릴 줄이야.</li>
+<li>기어 외워 가자.</li>
+<li>다음은 꼭 코스 통과까지 가자.</li>
+</ul>
 
                     </main>
 

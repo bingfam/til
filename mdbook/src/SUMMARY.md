@@ -47,13 +47,19 @@
 
 - [유틸리티](./utility/utility.md)
   - [joplin](./utility/joplin.md)
+  - [joplin](./utility/joplin.md)
 
 - [노트](./note/note.md)
   - [mdbook](./note/mdbook/mdbook.md)
     - [extensions](./note/mdbook/mdbook-00001.md)
+  - [mindmap](./note/mindmap/mindmap.md)
 
 - [마케팅](./marketing/marketing.md)
   - [팔지마라. 해결해줘라](./marketing/00001.md)  
+
+- [콘텐츠](./contents/contents.md)
+  - [저작권](./contents/copyright/copyright.md)    
+    - [유튜브 링크를 걸면 저작권 위반인지에 대한 대법원 판결](./contents/copyright/copyright-00001.md)    
 
 - [자격증](./license/license.md)
   - [버스(1종 대형)](./license/bus/00001.md)
