@@ -47,12 +47,16 @@
 
 - [유틸리티](./utility/utility.md)
   - [joplin](./utility/joplin.md)
-  - [joplin](./utility/joplin.md)
+  - [podcast](./utility/podcast.md)
+  - [powertoys](./utility/powertoys/powertoys.md)
 
 - [노트](./note/note.md)
-  - [mdbook](./note/mdbook/mdbook.md)
+  - [mdbook](./note/mdbook/mdbook.md)  
     - [extensions](./note/mdbook/mdbook-00001.md)
+  - [mkdocs](./note/mkdocs/mkdocs.md)
+  - [hugo](./note/hugo/hugo.md)  
   - [mindmap](./note/mindmap/mindmap.md)
+  
 
 - [마케팅](./marketing/marketing.md)
   - [팔지마라. 해결해줘라](./marketing/00001.md)  
@@ -65,3 +69,20 @@
   - [버스(1종 대형)](./license/bus/00001.md)
   #- [인천면허시험장](./license/bus/00002.md)
   - [전북면허시험장](./license/bus/00003.md)
+
+- [취미](./hobby/hobby.md)
+  - [그림그리기](./hobby/drawing/drawing.md)  
+    - [그림그리기](./hobby/drawing/drawing-00001.md)  
+  - [시계만들기](./hobby/clock/clock.md)  
+    - [초침규격](./hobby/clock/clock-00001.md)  
+  - [피아노](./hobby/piano/piano.md)  
+    - [arturia keyLab 61 essential](./hobby/piano/keylab61.md)  
+      - [기본](./hobby/piano/keylab61-00001.md)  
+      - [아이패드와 연결](./hobby/piano/keylab61-00002.md)  
+      - [전원 공급](./hobby/piano/keylab61-00003.md)  
+      - [매뉴얼](./hobby/piano/keylab61-00004.md)  
+
+- [디자인](./design/design.md)
+  - [글꼴](./design/font/font.md)  
+  - [vector graphics](./design/vector/vector.md)
+    - [.AI 파일로 저장하기](./design/vector/vector-00001.md)
