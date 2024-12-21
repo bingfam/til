@@ -25,6 +25,7 @@
     - [github private repository에 git bash에서 접속하기](./dev/git/00002.md)
     - [.gitconfig 파일의 내용을 전부 다 지워도 git config --list 하면 뭔가 정보가 남아있다](./dev/git/00003.md)
     - [git 한글 파일명이 숫자처럼 보이는 경우 해결](./dev/git/00004.md)
+    - [tag](./dev/git/00005.md)
 
   - [visual studio](./dev/visualstudio/visualstudo.md)
     - [컴파일 오류 목록 중 하나를 더블클릭하면 문제 세부 정보 창이 나올 때 없애는 방법](./dev/visualstudio/00001.md)
@@ -39,6 +40,8 @@
     - [vscode 작업 영역](./dev/vscode/00001.md)
     - [visual studio code 에서 terminal에서 한글이 안될 때](./dev/vscode/00002.md)
     - [markdown custom css](./dev/vscode/00003.md)
+
+  - [settings](./dev/settings/settings.md)
 
   - [기타](./dev/etc.md)
     - [miniconda](./dev/miniconda/miniconda.md)

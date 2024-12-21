@@ -721,6 +721,22 @@ error: could not lock config file C:/Program Files/Git/etc/gitconfig: Permission
 <p>나는 credential.helper은 다 지워버렸다. 이 파일을 수정하려면 관리자 권한으로 열어야 한다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="git-한글-파일명이-숫자처럼-보이는-경우-해결"><a class="header" href="#git-한글-파일명이-숫자처럼-보이는-경우-해결">git 한글 파일명이 숫자처럼 보이는 경우 해결</a></h1>
 <p>git config –global core.quotepath false</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tag"><a class="header" href="#tag">tag</a></h1>
+<h2 id="태그-목록-보기"><a class="header" href="#태그-목록-보기">태그 목록 보기</a></h2>
+<pre><code>git tag
+</code></pre>
+<h2 id="태그-걸기"><a class="header" href="#태그-걸기">태그 걸기</a></h2>
+<pre><code>git tag v1.0.0
+</code></pre>
+<h2 id="태그를-포함해서-push하기"><a class="header" href="#태그를-포함해서-push하기">태그를 포함해서 push하기</a></h2>
+<p>그냥 push하면 태그없이 올라간다.<br />
+모든 태그를 포함해서 올리려면</p>
+<pre><code>git push origin --tags
+</code></pre>
+<p>만약 특정 태그만 올리려면</p>
+<pre><code>git push origin v1.0.0
+</code></pre>
+<p>참조: https://minsone.github.io/git/git-addtion-and-modified-delete-tag</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="visual-studio"><a class="header" href="#visual-studio">visual studio</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="컴파일-오류-목록-중-하나를-더블클릭하면-문제-세부-정보-창이-나올-때-없애는-방법"><a class="header" href="#컴파일-오류-목록-중-하나를-더블클릭하면-문제-세부-정보-창이-나올-때-없애는-방법">컴파일 오류 목록 중 하나를 더블클릭하면 문제 세부 정보 창이 나올 때 없애는 방법</a></h1>
 <p><img src="dev/visualstudio/img/20241201153112.png" alt="" /></p>
@@ -828,6 +844,15 @@ h6 {
 <p>pdf 파일은</p>
 <p>C:\Users\_USERID_.vscode\extensions\yzane.markdown-pdf-1.5.0\styles\markdown-pdf.css</p>
 <p>파일을 수정하면 된다.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="settings"><a class="header" href="#settings">settings</a></h1>
+<h2 id="세팅파일-만드는-데-사용되는-파일-포맷들"><a class="header" href="#세팅파일-만드는-데-사용되는-파일-포맷들">세팅파일 만드는 데 사용되는 파일 포맷들</a></h2>
+<p>https://velog.io/@jk01019/TOML-VS-YAML</p>
+<h3 id="toml"><a class="header" href="#toml">TOML</a></h3>
+<p>쓰기 쉽다. 설정파일 만들 때 가장 좋음.</p>
+<h3 id="yaml"><a class="header" href="#yaml">YAML</a></h3>
+<p>구조화된 데이터 사용 가능, 조금 복잡할 수도.</p>
+<h3 id="json"><a class="header" href="#json">JSON</a></h3>
+<p>가볍고 처리속도 빠르고 많이 사용. 불편.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="기타"><a class="header" href="#기타">기타</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="miniconda"><a class="header" href="#miniconda">miniconda</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="miniconda-사용법"><a class="header" href="#miniconda-사용법">miniconda 사용법</a></h1>
@@ -960,6 +985,9 @@ mdbook serve --open
 Replaced package `mdbook v0.4.40` with `mdbook v0.4.43` (executable `mdbook.exe`)
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="extensions-1"><a class="header" href="#extensions-1">extensions</a></h1>
+<h2 id="mdbook-backlinks"><a class="header" href="#mdbook-backlinks">mdbook-backlinks</a></h2>
+<p>https://crates.io/crates/mdbook-backlinks/0.2.7<br />
+backlink를 걸어줌.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="mkdocs"><a class="header" href="#mkdocs">mkdocs</a></h1>
 <h2 id="nav에서-섹션을-클릭했을-때도-문서가-열리도록"><a class="header" href="#nav에서-섹션을-클릭했을-때도-문서가-열리도록">nav에서 섹션을 클릭했을 때도 문서가 열리도록</a></h2>
 <p>theme features에
