@@ -52,7 +52,7 @@
 
 - [노트](./note/note.md)
   - [mdbook](./note/mdbook/mdbook.md)  
-    - [extensions](./note/mdbook/mdbook-00001.md)
+    - [extensions](./note/mdbook/mdbook-00001.md)    
   - [mkdocs](./note/mkdocs/mkdocs.md)
   - [hugo](./note/hugo/hugo.md)  
   - [mindmap](./note/mindmap/mindmap.md)
@@ -62,8 +62,11 @@
   - [팔지마라. 해결해줘라](./marketing/00001.md)  
 
 - [콘텐츠](./contents/contents.md)
-  - [저작권](./contents/copyright/copyright.md)    
+  - [저작권](./contents/copyright/copyright.md)
     - [유튜브 링크를 걸면 저작권 위반인지에 대한 대법원 판결](./contents/copyright/copyright-00001.md)    
+  - [유튜브](./youtube/youtube.md)
+    - [유튜브에서 광고차단 프로그램 제거 요청](./youtube/youtube-00001.md)
+
 
 - [자격증](./license/license.md)
   - [버스(1종 대형)](./license/bus/00001.md)
@@ -86,3 +89,6 @@
   - [글꼴](./design/font/font.md)  
   - [vector graphics](./design/vector/vector.md)
     - [.AI 파일로 저장하기](./design/vector/vector-00001.md)
+
+- [어휘](./words/words.md)
+  - [여기서 장사하면 안된다 vs 안 된다](./words/words-00001.md)      
