@@ -94,4 +94,7 @@
     - [.AI 파일로 저장하기](./design/vector/vector-00001.md)
 
 - [어휘](./words/words.md)
-  - [여기서 장사하면 안된다 vs 안 된다](./words/words-00001.md)      
+  - [여기서 장사하면 안된다 vs 안 된다](./words/words-00001.md)
+
+- [생산성](./productivity/productivity.md)
+  - [KWL 전략](./productivity/productivity-00001.md)
