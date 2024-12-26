@@ -91,7 +91,7 @@
 - [디자인](./design/design.md)
   - [글꼴](./design/font/font.md)  
   - [vector graphics](./design/vector/vector.md)
-    - [.AI 파일로 저장하기](./design/vector/vector-00001.md)
+    - [.AI 파일로 저장하기](./design/vector/vector-00001.md)  
 
 - [어휘](./words/words.md)
   - [여기서 장사하면 안된다 vs 안 된다](./words/words-00001.md)
