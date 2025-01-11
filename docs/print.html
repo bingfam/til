@@ -571,6 +571,174 @@ https://learn.microsoft.com/en-us/windows/apps/winui/winui3/create-your-first-wi
 <p>GONG 컴퓨터에서는 설치할 때 offline 버전 설치했지만 관리자 권한으로 설치하지 않았는데 한방에 잘 설치됨. 헐.</p>
 </li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="godot4"><a class="header" href="#godot4">godot4</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="godot4-배경을-투명하게-하고-뒷면의-앱으로-마우스-통과시키기"><a class="header" href="#godot4-배경을-투명하게-하고-뒷면의-앱으로-마우스-통과시키기">Godot4 배경을 투명하게 하고 뒷면의 앱으로 마우스 통과시키기</a></h1>
+<h2 id="개요"><a class="header" href="#개요">개요</a></h2>
+<ul>
+<li>버전: Godot 4.3</li>
+<li>하고 싶은 거
+<ul>
+<li>게임의 배경을 투명하게 한다.</li>
+<li>항상 맨 위에 올라온다.</li>
+<li>일정 영역 외에는 마우스가 그 뒷면에 있는(배경이 투명하니 밑에 보이는) 앱을 마우스로 처리할 수 있도록 한다.</li>
+</ul>
+</li>
+<li>예
+<ul>
+<li>https://www.youtube.com/watch?v=QGwaZ89vrzo
+<img src="godot4/img/20250111153850.png" alt="" /><br />
+<br>이렇게 어떤 프로그램을 띄어도 맨 위에 올라오고 배경이 투명하고, 바탕화면의 아이콘을 누르면 그 처리가 되고, 고양이를 클릭하면 고양이가 선택됨.</li>
+</ul>
+</li>
+</ul>
+<h2 id="튜토리얼"><a class="header" href="#튜토리얼">튜토리얼</a></h2>
+<h3 id="프로젝트-생성"><a class="header" href="#프로젝트-생성">프로젝트 생성</a></h3>
+<p><img src="godot4/img/20250111155620.png" alt="" /></p>
+<p>렌더러를 “호환성“으로 한 거는 그냥 자원을 조금 쓰게 하기 위한 것. 꼭 호환성으로 해야 하는 건 아님.</p>
+<h3 id="2d-노드-생성"><a class="header" href="#2d-노드-생성">2D 노드 생성</a></h3>
+<p><img src="godot4/img/20250111155905.png" alt="" /></p>
+<p>이 노드에 GD script를 붙인다. (node_2d.gd)</p>
+<p>이 상태에서 scene을 저장하고 실행하면(그러니까 아무 것도 하지 않고 실행하는 경우) 다음 그림과 같이 나온다.</p>
+<p><img src="godot4/img/20250111160154.png" alt="" /></p>
+<h3 id="배경-투명하게"><a class="header" href="#배경-투명하게">배경 투명하게</a></h3>
+<p><img src="godot4/img/20250111161626.png" alt="" /></p>
+<p>프로젝트 설정창을 띄운 다음 검색어로 <code>trans</code>를 입력하고,</p>
+<p>표시 &gt; 창 에서 위와 같이 크기/투명, 픽셀당 투명도/허용됨 을 모두 체크한다.</p>
+<p>이 상태로 실행하면,</p>
+<p><img src="godot4/img/20250111161827.png" alt="" /></p>
+<p>이렇게 타이틀바가 나타나고 배경이 투명하게 된다.</p>
+<p>하지만 이 상태에서는 뒷 배경을, 예를 들면 MuseScore Studio 4를 클릭할 수 없다.</p>
+<p>우리 게임의 뒷 배경을 클릭하게 하는 방법은</p>
+<p><code>Window.mouse_passthrough_polygon</code> 를 사용하는 거다.</p>
+<p>저 속성에는 하나의 폴리곤을 넘겨줄 수 있다. 그럼 이 게임에서는 그 폴리곤의 영역만 마우스로 클릭할 수 있고, 그 외의 영역에서 발생한 마우스 이벤트는 그 뒤에 있는 앱으로 넘어간다. 그리고 그 폴리곤의 영역만 화면에 표시된다.</p>
+<p>테스트를 위해 아이콘을 화면에 추가한다.</p>
+<p><img src="godot4/img/20250111163018.png" alt="" /></p>
+<p>이렇게 하고 실행하면</p>
+<p><img src="godot4/img/20250111164156.png" alt="" /></p>
+<p>이렇게 내가 추가한 건 제대로 보이고 그 외는 모두 투명하게 보이는 걸 알 수 있다. 훌륭하군. 이제 폴리곤을 넣어보자.</p>
+<p><strong>node_2d.gd</strong> 파일</p>
+<pre><code class="language-gdscript">func _ready() -&gt; void:
+	# 다각형
+	var polygon = [
+		Vector2(100, 100),		
+		Vector2(200, 100),
+		Vector2(200, 200),
+		Vector2(100, 200)
+	]
+
+	var window = get_viewport().get_window()	
+	window.mouse_passthrough_polygon = polygon
+</code></pre>
+<p><img src="godot4/img/20250111163614.png" alt="" /></p>
+<p>상황은 다음과 같다. 정확한 상황을 파악하기 위해 다음과 같이 한다.</p>
+<p>좀전에 프로젝트 설정했던 것들을 다 원래대로 돌려 준다.</p>
+<p><img src="godot4/img/20250111170044.png" alt="" /></p>
+<p>그리고 스크립트 파일을 다음과 같이 맨 밑에 한 줄 추가한다.</p>
+<p><strong>node_2d.gd</strong> 파일</p>
+<pre><code class="language-gdscript">func _ready() -&gt; void:
+	# 다각형
+	var polygon = [
+		Vector2(100, 100),		
+		Vector2(200, 100),
+		Vector2(200, 200),
+		Vector2(100, 200)
+	]
+
+	var window = get_viewport().get_window()	
+	window.mouse_passthrough_polygon = polygon
+
+    window.transparent_bg = true    
+</code></pre>
+<p>그럼 아래와 같이 내가 만들어준 (100, 100) - (200, 200)의 정사각형 폴리곤이 검은 색으로 보이고, 딱 그 부분만 아이콘이 제대로 보이는 걸 알 수 있다.</p>
+<p>(100, 100)인데 윗 부분이 더 길어 보이는데 싶은데, 그건 게임의 title bar의 높이 만큼 더 길어보이는 거다.</p>
+<p><img src="godot4/img/20250111170241.png" alt="" /></p>
+<p>정리하면, 위 이미지만큼이 원래 게임 앱의 크기인데, Window.mouse_passthrough_polygon에 넣어준 (100, 100) 크기의 폴리곤 만큼만 화면에 나타나고 게임 내에서 처리할 수 있는 클릭이 된다. 그 외의 영역은 뒷 부분이 보이고 뒷 부분의 앱에서 마우스로 클릭도 할 수 있다. 그래서 저 아이콘들을 눌러 실행할 수 있다.</p>
+<p>만약 아래 글을 계속 볼 거면 현재 상태로 그냥 놔둔다.</p>
+<p>그렇지 않고 바로 개발을 시작할 거면 다시 프로젝트 세팅 2개 설정하고 스크립트에 추가했던 맨 밑 한 줄을 지우자. 이 상태로 프로그램을 만들면 된다.</p>
+<h2 id="여러-개의-폴리곤을-사용해야-하는-경우"><a class="header" href="#여러-개의-폴리곤을-사용해야-하는-경우">여러 개의 폴리곤을 사용해야 하는 경우</a></h2>
+<p>Window.mouse_passthrough_polygon 에는 한 개의 폴리곤만 넣을 수 있다.</p>
+<p>만약 2개의 폴리곤을 사용하고 싶으면 이걸 하나로 합쳐야 한다.</p>
+<p>예를 들어,</p>
+<p><img src="godot4/img/20250111173105.png" alt="" /></p>
+<p>이렇게 2개의 폴리곤을 설정해 줘야 하는 경우, 생각없이 만들면,</p>
+<p><img src="godot4/img/20250111174538.png" alt="" /></p>
+<p>이런 식으로 된다. 그래서 이걸 제대로 만드는 방법을 설명하려 한다. 이 문제를 해결하려면</p>
+<p><img src="godot4/img/20250111173331.png" alt="" /></p>
+<p>이렇게 생긴 폴리곤으로 만들어야 위와 같이 이상한 모양이 나타나는 걸 막을 수 있다.</p>
+<p>방법은,</p>
+<pre><code class="language-gdscript">var polygon1 = [
+		Vector2(200, 200),
+        Vector2(100, 200),
+        Vector2(100, 100),		
+		Vector2(200, 100),
+        Vector2(200, 200)
+	]
+</code></pre>
+<p>와 같이 4각형이면 점을 5개해서, 연결되는 점인 (200, 200)이 시작점이자 끝점이 되도록 해야 한다.</p>
+<pre><code class="language-gdscript">var polygon2 = [
+		Vector2(400, 300),
+        Vector2(500, 300),
+        Vector2(500, 400),		
+		Vector2(400, 400),
+        Vector2(400, 300)
+	]
+</code></pre>
+<p>과 같이 두 번째 폴리곤도 연결되어야 하는 점인 (400, 300)이 시작점이자 끝점이 되도록 만든다.</p>
+<p>연결되는 점 선정 기준: 두 폴리곤 사이를 가장 가깝게 연결하는 두 점</p>
+<p>그리고 연결하는 선을 정의한다.</p>
+<pre><code class="language-gdscript">var polygon_br = [
+		Vector2(200, 200),        
+        Vector2(400, 300)
+	]
+</code></pre>
+<p>이제 새로운 폴리곤을 만들고 첫 번째 폴리곤, 브릿지, 두 번째 폴리곤 순서로 추가한다.</p>
+<pre><code>var polygon = []
+polygon.append_array(polygon1)
+polygon.append_array(polygon_br)
+polygon.append_array(polygon2)
+
+window.mouse_passthrough_polygon = polygon
+</code></pre>
+<p>이렇게 해주면 된다.</p>
+<p>전체 코드</p>
+<pre><code class="language-gdscript">func _ready() -&gt; void:
+	# 다각
+	var polygon1 = [
+		Vector2(200, 200),
+		Vector2(100, 200),
+		Vector2(100, 100),		
+		Vector2(200, 100),
+		Vector2(200, 200)
+	]
+	
+	var polygon2 = [
+		Vector2(400, 300),
+		Vector2(500, 300),
+		Vector2(500, 400),		
+		Vector2(400, 400),
+		Vector2(400, 300)
+	]
+	
+	var polygon_br = [
+		Vector2(200, 200),        
+		Vector2(400, 300)
+	]
+	
+	var polygon = []
+	polygon.append_array(polygon1)
+	polygon.append_array(polygon_br)
+	polygon.append_array(polygon2)
+	
+	var window = get_viewport().get_window()	
+	window.mouse_passthrough_polygon = polygon
+	
+	window.transparent_bg = true
+</code></pre>
+<p><img src="godot4/img/20250111174309.png" alt="" /></p>
+<p>중간 브릿지는 안 보인다.</p>
+<h2 id="게임-앱을-제일-위에"><a class="header" href="#게임-앱을-제일-위에">게임 앱을 제일 위에</a></h2>
+<p>아무래도 투명하게 보여서 밑에 있는 앱을 마우스로 클릭할 수 있다보니 그렇게 하면 이 앱이 다른 앱의 밑으로 내려가 버린다. 그러니 게임 앱을 always on top으로 설정해 줘야 한다.</p>
+<p><img src="godot4/img/20250111180447.png" alt="" /></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="git"><a class="header" href="#git">git</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="window-11-arm64에서-git-auth-창이-투명하게-보인다"><a class="header" href="#window-11-arm64에서-git-auth-창이-투명하게-보인다">window 11 arm64에서 git auth 창이 투명하게 보인다.</a></h1>
 <p><img src="dev/git/img/20241201144214.png" alt="" /></p>
@@ -844,6 +1012,85 @@ h6 {
 <p>pdf 파일은</p>
 <p>C:\Users\_USERID_.vscode\extensions\yzane.markdown-pdf-1.5.0\styles\markdown-pdf.css</p>
 <p>파일을 수정하면 된다.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="비동기화"><a class="header" href="#비동기화">비동기화</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="자바스크립트-비동기화"><a class="header" href="#자바스크립트-비동기화">자바스크립트 비동기화</a></h1>
+<p>자바스크립트 비동기화는 Promise 클래스와 async/await로 대표된다.</p>
+<p>현재까지는 도저히 자바스크립트 비동기화를 이해 못하고 있다.</p>
+<p>fetch() 같은 비동기화 함수를 쓰면 굳이 Promise 클래스나 async 키워드 없어도 그냥 바로 비동기가 된다. 오히려 fetch() 함수를 쓰면 동기화 방식으로 할 수 없는 거 같다.</p>
+<h2 id="현재까지-해-본-것"><a class="header" href="#현재까지-해-본-것">현재까지 해 본 것</a></h2>
+<p>먼저 firebase Cloud Function에서 함수를 하나 만들었다.</p>
+<p>firebase Cloud Function의 index.js 파일을 통쨰로 보면,</p>
+<pre><code class="language-js">const {onRequest} = require("firebase-functions/v2/https");
+const logger = require("firebase-functions/logger");
+
+ exports.add = onRequest((request, response) =&gt; {
+    logger.info("add!", {structuredData: true});
+
+    const a = request.query.a;
+    const b = request.query.b;
+    const sum = parseInt(a) + parseInt(b);
+
+    const wakeUpTime = Date.now() + 5000;
+    while (Date.now() &lt; wakeUpTime) 
+    {
+
+    }    
+
+    response.send("add from Firebase! sum = " + sum);
+  });
+</code></pre>
+<p>이렇게 add 함수를 만들었고, 5초후에 결과를 보내주도록 만들었다.</p>
+<p>그리고 내 로컬에 node.js 같은 거 없이 그냥 index.html과 index.js 파일을 만들었다.</p>
+<p><strong>index.html</strong></p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+    &lt;script src="index.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;button onclick="LongTask_async()"&gt;웹에서 자료 가져오기&lt;/button&gt;
+    &lt;button onclick="javascript:alert('버튼 눌림')"&gt;버튼&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><strong>index.js</strong></p>
+<pre><code class="language-js">function LongTask()
+{
+    var request = new XMLHttpRequest();
+    request.open('GET', 'http://127.0.0.1:5001/asynctest002/us-central1/add?a=1&amp;b=7', false);
+    request.send();
+
+    console.log(request.responseText);
+}  
+
+function LongTask_async()
+{
+    console.log("LongTask_sync 함수 시작");
+    const promise = new Promise((resolve, reject) =&gt; {
+        LongTask(); 
+    });
+    console.log("LongTask_sync 함수 끝");
+    
+}
+</code></pre>
+<p><img src="asynchronous/./img/20250110022105.png" alt="" /></p>
+<p>이렇게 해 놓고,</p>
+<pre><code>firebase emulators:start
+</code></pre>
+<p>라고 하면 이걸 deploy 하지 않고도 local에서 바로 테스트할 수 있다.
+5001번 포트에서 열린다.</p>
+<p>여기서 XMLHttpRequest() 함수는 동기화 함수이다.<br />
+이 상황에서 어떻게 해도 LongTask 함수의 내용을 동기적으로 처리할 수가 없다. 무조건 5초 기다린다.</p>
+<p>반면에 XMLHttpRequest()가 아니라 애초에 비동기화 함수인 fetch() 함수를 이용하면 어떻게 해도 동기화로 처리할 수가 없다. 이거 어떻게 해야 하냐.</p>
+<h2 id="알게-된-것"><a class="header" href="#알게-된-것">알게 된 것.</a></h2>
+<p>Promise는 비동기화를 가능하게 해주는 클래스가 아니다. 그냥 비동기로 처리되는 것들에 대해 callback을 관리하고 쉽게 쓸 수 있도록 해주는 클래스였던 것.</p>
+<p>자바스크립트도 별 거 없다. UI와의 비동기화를 하고 싶으면 타이머써야 한다.</p>
+<p>async 예약어는 비동기화를 가능하게 해주는 예약어가 아니다. 그냥 Promise를 쉽게 쓸 수 있게 해 주는 역할만 한다.</p>
+<p>그리고 자동으로 Promise로 리턴하게 해준다. return 1 이라고 하면 1을 Promise로 감싸서 리턴해준다.</p>
+<p>await는 비동기화 함수 앞에서만 쓸 수 있는데 그걸 동기화되도록 쓰는 거. 죄다 쓰면 도대체 왜 비동기화 하는 거냐.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="settings"><a class="header" href="#settings">settings</a></h1>
 <h2 id="세팅파일-만드는-데-사용되는-파일-포맷들"><a class="header" href="#세팅파일-만드는-데-사용되는-파일-포맷들">세팅파일 만드는 데 사용되는 파일 포맷들</a></h2>
 <p>https://velog.io/@jk01019/TOML-VS-YAML</p>
@@ -965,7 +1212,7 @@ apple이 <a href="https://podcasts.apple.com" title="" target="_blank">웹</a>�
 <li>공식: https://rust-lang.github.io/mdBook/guide/installation.html</li>
 <li>블로그: https://piatoss3612.tistory.com/105</li>
 </ul>
-<h3 id="프로젝트-생성"><a class="header" href="#프로젝트-생성">프로젝트 생성</a></h3>
+<h3 id="프로젝트-생성-1"><a class="header" href="#프로젝트-생성-1">프로젝트 생성</a></h3>
 <pre><code>mdbook init &lt;프로젝트명&gt;
 </code></pre>
 <h3 id="프로젝트-실시간-보기"><a class="header" href="#프로젝트-실시간-보기">프로젝트 실시간 보기</a></h3>
