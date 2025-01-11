@@ -19,6 +19,8 @@
   - [게임](./dev/game/game.md)
     - [O3DE](./dev/game/O3DE/O3DE.md)
       - [O3DE 설치하기](./dev/game/O3DE/00001.md)
+    - [godot4](./godot4/godot4.md)
+      - [Godot4 배경을 투명하게 하고 뒷면의 앱으로 마우스 통과시키기](./godot4/transparent_bg.md)
 
   - [git](./dev/git/git.md)
     - [window 11 arm64에서 git auth 창이 투명하게 보인다](./dev/git/00001.md)
@@ -40,6 +42,9 @@
     - [vscode 작업 영역](./dev/vscode/00001.md)
     - [visual studio code 에서 terminal에서 한글이 안될 때](./dev/vscode/00002.md)
     - [markdown custom css](./dev/vscode/00003.md)
+
+  - [비동기화](./asynchronous/asynchronous.md)
+    - [javascript 비동기화](./asynchronous/javascript_async.md)
 
   - [settings](./dev/settings/settings.md)
 
