@@ -1105,6 +1105,17 @@ function LongTask_async()
 <p>async 예약어는 비동기화를 가능하게 해주는 예약어가 아니다. 그냥 Promise를 쉽게 쓸 수 있게 해 주는 역할만 한다.</p>
 <p>그리고 자동으로 Promise로 리턴하게 해준다. return 1 이라고 하면 1을 Promise로 감싸서 리턴해준다.</p>
 <p>await는 비동기화 함수 앞에서만 쓸 수 있는데 그걸 동기화되도록 쓰는 거. 죄다 쓰면 도대체 왜 비동기화 하는 거냐.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="웹"><a class="header" href="#웹">웹</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="docker"><a class="header" href="#docker">docker</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="local-파일을-docker로-보내기"><a class="header" href="#local-파일을-docker로-보내기">local 파일을 docker로 보내기</a></h1>
+<pre><code>docker cp . httpd:/usr/local/apache2/htdocs/js1
+</code></pre>
+<ul>
+<li><code>.</code> : 현재 폴더의 모든 파일을</li>
+<li><code>httpd:</code> : httpd 란 이름의 컨테이너에</li>
+<li><code>/usr/local/apache2/htdocs/js1</code> : 폴더에<br />
+복사한다.</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="settings"><a class="header" href="#settings">settings</a></h1>
 <h2 id="세팅파일-만드는-데-사용되는-파일-포맷들"><a class="header" href="#세팅파일-만드는-데-사용되는-파일-포맷들">세팅파일 만드는 데 사용되는 파일 포맷들</a></h2>
 <p>https://velog.io/@jk01019/TOML-VS-YAML</p>

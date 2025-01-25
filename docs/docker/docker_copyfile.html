@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>javascript 비동기화 - TIL</title>
+        <title>local 파일을 docker로 보내기 - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -153,94 +153,25 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="자바스크립트-비동기화"><a class="header" href="#자바스크립트-비동기화">자바스크립트 비동기화</a></h1>
-<p>자바스크립트 비동기화는 Promise 클래스와 async/await로 대표된다.</p>
-<p>현재까지는 도저히 자바스크립트 비동기화를 이해 못하고 있다.</p>
-<p>fetch() 같은 비동기화 함수를 쓰면 굳이 Promise 클래스나 async 키워드 없어도 그냥 바로 비동기가 된다. 오히려 fetch() 함수를 쓰면 동기화 방식으로 할 수 없는 거 같다.</p>
-<h2 id="현재까지-해-본-것"><a class="header" href="#현재까지-해-본-것">현재까지 해 본 것</a></h2>
-<p>먼저 firebase Cloud Function에서 함수를 하나 만들었다.</p>
-<p>firebase Cloud Function의 index.js 파일을 통쨰로 보면,</p>
-<pre><code class="language-js">const {onRequest} = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
-
- exports.add = onRequest((request, response) =&gt; {
-    logger.info("add!", {structuredData: true});
-
-    const a = request.query.a;
-    const b = request.query.b;
-    const sum = parseInt(a) + parseInt(b);
-
-    const wakeUpTime = Date.now() + 5000;
-    while (Date.now() &lt; wakeUpTime) 
-    {
-
-    }    
-
-    response.send("add from Firebase! sum = " + sum);
-  });
+                        <h1 id="local-파일을-docker로-보내기"><a class="header" href="#local-파일을-docker로-보내기">local 파일을 docker로 보내기</a></h1>
+<pre><code>docker cp . httpd:/usr/local/apache2/htdocs/js1
 </code></pre>
-<p>이렇게 add 함수를 만들었고, 5초후에 결과를 보내주도록 만들었다.</p>
-<p>그리고 내 로컬에 node.js 같은 거 없이 그냥 index.html과 index.js 파일을 만들었다.</p>
-<p><strong>index.html</strong></p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-    &lt;title&gt;Document&lt;/title&gt;
-    &lt;script src="index.js"&gt;&lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;button onclick="LongTask_async()"&gt;웹에서 자료 가져오기&lt;/button&gt;
-    &lt;button onclick="javascript:alert('버튼 눌림')"&gt;버튼&lt;/button&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<p><strong>index.js</strong></p>
-<pre><code class="language-js">function LongTask()
-{
-    var request = new XMLHttpRequest();
-    request.open('GET', 'http://127.0.0.1:5001/asynctest002/us-central1/add?a=1&amp;b=7', false);
-    request.send();
-
-    console.log(request.responseText);
-}  
-
-function LongTask_async()
-{
-    console.log("LongTask_sync 함수 시작");
-    const promise = new Promise((resolve, reject) =&gt; {
-        LongTask(); 
-    });
-    console.log("LongTask_sync 함수 끝");
-    
-}
-</code></pre>
-<p><img src="./img/20250110022105.png" alt="" /></p>
-<p>이렇게 해 놓고,</p>
-<pre><code>firebase emulators:start
-</code></pre>
-<p>라고 하면 이걸 deploy 하지 않고도 local에서 바로 테스트할 수 있다.
-5001번 포트에서 열린다.</p>
-<p>여기서 XMLHttpRequest() 함수는 동기화 함수이다.<br />
-이 상황에서 어떻게 해도 LongTask 함수의 내용을 동기적으로 처리할 수가 없다. 무조건 5초 기다린다.</p>
-<p>반면에 XMLHttpRequest()가 아니라 애초에 비동기화 함수인 fetch() 함수를 이용하면 어떻게 해도 동기화로 처리할 수가 없다. 이거 어떻게 해야 하냐.</p>
-<h2 id="알게-된-것"><a class="header" href="#알게-된-것">알게 된 것.</a></h2>
-<p>Promise는 비동기화를 가능하게 해주는 클래스가 아니다. 그냥 비동기로 처리되는 것들에 대해 callback을 관리하고 쉽게 쓸 수 있도록 해주는 클래스였던 것.</p>
-<p>자바스크립트도 별 거 없다. UI와의 비동기화를 하고 싶으면 타이머써야 한다.</p>
-<p>async 예약어는 비동기화를 가능하게 해주는 예약어가 아니다. 그냥 Promise를 쉽게 쓸 수 있게 해 주는 역할만 한다.</p>
-<p>그리고 자동으로 Promise로 리턴하게 해준다. return 1 이라고 하면 1을 Promise로 감싸서 리턴해준다.</p>
-<p>await는 비동기화 함수 앞에서만 쓸 수 있는데 그걸 동기화되도록 쓰는 거. 죄다 쓰면 도대체 왜 비동기화 하는 거냐.</p>
+<ul>
+<li><code>.</code> : 현재 폴더의 모든 파일을</li>
+<li><code>httpd:</code> : httpd 란 이름의 컨테이너에</li>
+<li><code>/usr/local/apache2/htdocs/js1</code> : 폴더에<br />
+복사한다.</li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../asynchronous/asynchronous.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../docker/docker.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../web/web.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../dev/settings/settings.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -250,11 +181,11 @@ function LongTask_async()
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../asynchronous/asynchronous.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../docker/docker.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../web/web.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../dev/settings/settings.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
