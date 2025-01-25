@@ -739,6 +739,19 @@ window.mouse_passthrough_polygon = polygon
 <h2 id="게임-앱을-제일-위에"><a class="header" href="#게임-앱을-제일-위에">게임 앱을 제일 위에</a></h2>
 <p>아무래도 투명하게 보여서 밑에 있는 앱을 마우스로 클릭할 수 있다보니 그렇게 하면 이 앱이 다른 앱의 밑으로 내려가 버린다. 그러니 게임 앱을 always on top으로 설정해 줘야 한다.</p>
 <p><img src="godot4/img/20250111180447.png" alt="" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="웹개발-시-url-param-가져오기"><a class="header" href="#웹개발-시-url-param-가져오기">웹개발 시 url param 가져오기</a></h1>
+<pre><code class="language-gdscript">func _ready() -&gt; void:
+	var a = JavaScriptBridge.eval("const urlParams = new URL(location.href).searchParams; const a = urlParams.get('a'); a")
+	print("a=", a)
+</code></pre>
+<p>이렇게 하면 gdscript의 변수 a에</p>
+<p><code>http://localhost:8060/tmp_js_export.html?a=105</code></p>
+<p>와 같이 url을 적어줬을 때 url에 적은 파라마티 a의 값이 들어간다.</p>
+<p><img src="godot4/img/20250125202732.png" alt="" /></p>
+<p>이렇게 실행하면 되고, 웹 브라우저가 자동으로 실행되는데</p>
+<p><code>http://localhost:8060/tmp_js_export.html?a=105</code></p>
+<p>과 같이 하면 a 값으로 105가 찍힌다.</p>
+<p><img src="godot4/img/20250125202908.png" alt="" /></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="git"><a class="header" href="#git">git</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="window-11-arm64에서-git-auth-창이-투명하게-보인다"><a class="header" href="#window-11-arm64에서-git-auth-창이-투명하게-보인다">window 11 arm64에서 git auth 창이 투명하게 보인다.</a></h1>
 <p><img src="dev/git/img/20241201144214.png" alt="" /></p>

@@ -21,6 +21,7 @@
       - [O3DE 설치하기](./dev/game/O3DE/00001.md)
     - [godot4](./godot4/godot4.md)
       - [Godot4 배경을 투명하게 하고 뒷면의 앱으로 마우스 통과시키기](./godot4/transparent_bg.md)
+      - [웹개발 시 url param 가져오기](./godot4/web_url_param.md)
 
   - [git](./dev/git/git.md)
     - [window 11 arm64에서 git auth 창이 투명하게 보인다](./dev/git/00001.md)
