@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>About - TIL</title>
+        <title>infra - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -153,14 +153,23 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="about"><a class="header" href="#about">About</a></h1>
+                        <h1 id="infra"><a class="header" href="#infra">infra</a></h1>
+<h2 id="특정-포트를-윈도우가-점유해서-쓸-수-없는-경우-해결법"><a class="header" href="#특정-포트를-윈도우가-점유해서-쓸-수-없는-경우-해결법">특정 포트를 윈도우가 점유해서 쓸 수 없는 경우 해결법</a></h2>
+<p>윈도우가 일정 영역을 자기가 쓰기 위해 미리 예약해 두는데 가끔 8080이나 3000번을 예약해서 못 쓰게 되기도 한다. 이럴 때 해결하는 가장 쉬운 방법</p>
+<pre><code class="language-shell">net stop winnat
+net start winnat
+</code></pre>
+<p>출처: https://hiperzstudio.tistory.com/63</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../it/it.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
-                            <a rel="next prefetch" href="../it/it.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../dev/dev.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -170,8 +179,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../it/it.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
-                    <a rel="next prefetch" href="../it/it.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../dev/dev.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

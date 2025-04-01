@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>About - TIL</title>
+        <title>vscode에서 lualatex 사용 - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -153,14 +153,54 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="about"><a class="header" href="#about">About</a></h1>
+                        <h1 id="visual-studio-code에서-lualatex-사용하기"><a class="header" href="#visual-studio-code에서-lualatex-사용하기">Visual Studio Code에서 lualatex 사용하기</a></h1>
+<p>LaTeX는 기본적으로 시스템에 설치된 true type 글꼴을 지원하지 않기 때문에 lualatex를 사용해야 한다. lualatex는 기본적으로 한글을 지원한다(utf-8)</p>
+<p>vscode에서 LaTeX workshop 익스텐션을 설치한 상태에서 lualatex를 사용하려면 다음과 같이 해야 한다.</p>
+<p><img src="img/20250401135927.png" alt="" /></p>
+<ol>
+<li>
+<p>설치한 LaTeX Workshop 익스텐션을 찾아 톱니바퀴를 누른다.</p>
+</li>
+<li>
+<p>settings가 나오면 검색창 뒤에 ’force’를 붙여 <code>LaTeX-Workshop &gt; Latex &gt; Build: Force Recipe Usage</code> 항목을 찾는다.</p>
+</li>
+<li>
+<p>디폴트로 체크되어 있는건데, 이 체크를 풀어준다(체크 표시가 없어져야 함). 매직 커멘트를 적어놔도 무시하고 recipe를 무조건 쓰겠다는 옵션인데 우리는 매직 커멘트를 쓸 것이기 때문.</p>
+</li>
+<li>
+<p>vscode를 닫고 다시 실행한다.</p>
+</li>
+<li>
+<p>.tex 파일의 맨 위에 아래 매직 커멘트를 붙인다.</p>
+<pre><code class="language-tex">% !TEX TS-program = lualatex
+</code></pre>
+<p>가장 간단한 전체 코드는 다음과 같다.</p>
+<pre><code class="language-tex">% !TEX TS-program = lualatex
+
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{Nanum Gothic}
+
+\begin{document}
+한글도 잘 된다. 이제 나눔고딕 글꼴을 기본 글꼴로 사용할 수 있다.
+\end{document}
+</code></pre>
+</li>
+<li>
+<p>빌드(Ctrl + Alt + B)해서 확인한다.
+<img src="img/20250401140837.png" alt="" /></p>
+</li>
+</ol>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../latex/latex002.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
-                            <a rel="next prefetch" href="../it/it.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../latex/latex003.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -170,8 +210,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../latex/latex002.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
-                    <a rel="next prefetch" href="../it/it.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../latex/latex003.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

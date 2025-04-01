@@ -2,6 +2,9 @@
 
 - [About](./About/About.md)
 
+- [IT](./it/it.md)
+  - [infra](./it/infra.md)
+
 - [개발](./dev/dev.md)
   - [언어 / framework](./dev/lang/lang.md)
     - [rust](./dev/rust/rust.md)
@@ -64,6 +67,16 @@
   - [mkdocs](./note/mkdocs/mkdocs.md)
   - [hugo](./note/hugo/hugo.md)  
   - [mindmap](./note/mindmap/mindmap.md)
+
+  - [pandoc](./pandoc/index.md)
+
+  - [LaTeX](./latex/index.md)
+    - [LaTeX](./latex/latex.md)
+      - [LaTeX 설치](./latex/latex002.md)
+      - [vscode에서 lualatex 사용](./latex/latex001.md)      
+      - [소스코드 보여주기](./latex/latex003.md)
+    - [tkiz](./tkiz/tkiz.md)
+      - [각 표시 삼각형](./tkiz/tkiz001.md)
   
 
 - [마케팅](./marketing/marketing.md)
@@ -104,3 +117,6 @@
 
 - [생산성](./productivity/productivity.md)
   - [KWL 전략](./productivity/productivity-00001.md)
+
+- [공주](./gongju/gongju.md)
+  - [식당](./gongju/food.md)

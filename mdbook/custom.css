@@ -1,3 +1,8 @@
 :root {
     --content-max-width: 80%;
   }
+
+img {
+    border-radius: 5px;
+    border : 1px solid #bbb;
+  }  
