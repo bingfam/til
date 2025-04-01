@@ -747,6 +747,19 @@ window.mouse_passthrough_polygon = polygon
 <h2 id="게임-앱을-제일-위에"><a class="header" href="#게임-앱을-제일-위에">게임 앱을 제일 위에</a></h2>
 <p>아무래도 투명하게 보여서 밑에 있는 앱을 마우스로 클릭할 수 있다보니 그렇게 하면 이 앱이 다른 앱의 밑으로 내려가 버린다. 그러니 게임 앱을 always on top으로 설정해 줘야 한다.</p>
 <p><img src="godot4/img/20250111180447.png" alt="" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="웹개발-시-url-param-가져오기"><a class="header" href="#웹개발-시-url-param-가져오기">웹개발 시 url param 가져오기</a></h1>
+<pre><code class="language-gdscript">func _ready() -&gt; void:
+	var a = JavaScriptBridge.eval("const urlParams = new URL(location.href).searchParams; const a = urlParams.get('a'); a")
+	print("a=", a)
+</code></pre>
+<p>이렇게 하면 gdscript의 변수 a에</p>
+<p><code>http://localhost:8060/tmp_js_export.html?a=105</code></p>
+<p>와 같이 url을 적어줬을 때 url에 적은 파라마티 a의 값이 들어간다.</p>
+<p><img src="godot4/img/20250125202732.png" alt="" /></p>
+<p>이렇게 실행하면 되고, 웹 브라우저가 자동으로 실행되는데</p>
+<p><code>http://localhost:8060/tmp_js_export.html?a=105</code></p>
+<p>과 같이 하면 a 값으로 105가 찍힌다.</p>
+<p><img src="godot4/img/20250125202908.png" alt="" /></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="git"><a class="header" href="#git">git</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="window-11-arm64에서-git-auth-창이-투명하게-보인다"><a class="header" href="#window-11-arm64에서-git-auth-창이-투명하게-보인다">window 11 arm64에서 git auth 창이 투명하게 보인다.</a></h1>
 <p><img src="dev/git/img/20241201144214.png" alt="" /></p>
@@ -1100,6 +1113,17 @@ function LongTask_async()
 <p>async 예약어는 비동기화를 가능하게 해주는 예약어가 아니다. 그냥 Promise를 쉽게 쓸 수 있게 해 주는 역할만 한다.</p>
 <p>그리고 자동으로 Promise로 리턴하게 해준다. return 1 이라고 하면 1을 Promise로 감싸서 리턴해준다.</p>
 <p>await는 비동기화 함수 앞에서만 쓸 수 있는데 그걸 동기화되도록 쓰는 거. 죄다 쓰면 도대체 왜 비동기화 하는 거냐.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="웹"><a class="header" href="#웹">웹</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="docker"><a class="header" href="#docker">docker</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="local-파일을-docker로-보내기"><a class="header" href="#local-파일을-docker로-보내기">local 파일을 docker로 보내기</a></h1>
+<pre><code>docker cp . httpd:/usr/local/apache2/htdocs/js1
+</code></pre>
+<ul>
+<li><code>.</code> : 현재 폴더의 모든 파일을</li>
+<li><code>httpd:</code> : httpd 란 이름의 컨테이너에</li>
+<li><code>/usr/local/apache2/htdocs/js1</code> : 폴더에<br />
+복사한다.</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="settings"><a class="header" href="#settings">settings</a></h1>
 <h2 id="세팅파일-만드는-데-사용되는-파일-포맷들"><a class="header" href="#세팅파일-만드는-데-사용되는-파일-포맷들">세팅파일 만드는 데 사용되는 파일 포맷들</a></h2>
 <p>https://velog.io/@jk01019/TOML-VS-YAML</p>
@@ -1510,13 +1534,51 @@ caption=파이썬 샘플 2 인데 이게 caption파이썬= 샘플2가 된다.</p
 <p>brave browser 쓰는 데 2024. 12. 21.에 이 메시지 처음 보여줌.<br />
 <img src="youtube/img/20241221091624.png" alt="" /></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="자격증"><a class="header" href="#자격증">자격증</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="전북면허시험장"><a class="header" href="#전북면허시험장">전북면허시험장</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="버스1종-대형-면허"><a class="header" href="#버스1종-대형-면허">버스(1종 대형 면허)</a></h1>
+<p>1종 대형 면허증을 따는 방법에 대해 많은 글들이 있지만 아래 몇 개만 제대로 보면 된다.</p>
+<h2 id="1-전체-진행-파악"><a class="header" href="#1-전체-진행-파악">1. 전체 진행 파악</a></h2>
+<iframe width="1280" height="720" src="https://www.youtube.com/embed/rLWJMhwvsB0?si=Oj1ZivaayG0EkaAo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<h2 id="2-코스-및-점수-내역-파악"><a class="header" href="#2-코스-및-점수-내역-파악">2. 코스 및 점수 내역 파악</a></h2>
+<p><a href="https://www.koroad.or.kr/main/board/9/87890/board_view.do?&cp=1&listType=list&bdOpenYn=Y&bdNoticeYn=N" title="" target="_blank">https://www.koroad.or.kr/main/board/9/87890/board_view.do?&amp;cp=1&amp;listType=list&amp;bdOpenYn=Y&amp;bdNoticeYn=N</a></p>
+<p>내가 응시할 면허 시험장의 코스가 있는지 찾아보는 것도 필요함.</p>
+<h2 id="3-인천면허-시험장-실제-시험-영상보고-실제-시험-감각-잡기"><a class="header" href="#3-인천면허-시험장-실제-시험-영상보고-실제-시험-감각-잡기">3. 인천면허 시험장 실제 시험 영상보고 실제 시험 감각 잡기</a></h2>
+<iframe width="1280" height="720" src="https://www.youtube.com/embed/IFZnz9Frcgo?si=32eWNNStpQE8efcO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<p>이 영상까지 보면 아 시험을 이렇게 보는구나 싶은데 각 코스마다 실제로 어떻게 해야 통과하는지는 알 수 없다. 버스 운전은 자가용 자동차 운전과는 좀 다르니까. 아래 4번의 글을 보고 일종의 공식같은 걸 외우면 된다. 이런 공식이 왜 필요해라고 생각할 수 있는데, 공식이라기 보다는 거의 유일한 방법이라 생각하자.</p>
+<h2 id="4-1종-대형-코스별-통과-요령-숙지"><a class="header" href="#4-1종-대형-코스별-통과-요령-숙지">4. 1종 대형 코스별 통과 요령 숙지</a></h2>
+<p><a href="https://m.blog.naver.com/jakejeong/221551323349" title="" target="_blank">https://m.blog.naver.com/jakejeong/221551323349</a></p>
+<p>원본은 어디에 있는지 모르겠음. 암튼 위 사이트에서 “1종대형 코스별 통과요령(1).pdf” 와 같은 pdf 파일 5개를 다운로드받아 보면 시험 과정을 모두 확인할 수 있다.</p>
+<h2 id="5-인천면허-시험장-실제-시험-영상보고-실제-시험-해-보기"><a class="header" href="#5-인천면허-시험장-실제-시험-영상보고-실제-시험-해-보기">5. 인천면허 시험장 실제 시험 영상보고 실제 시험 해 보기</a></h2>
+<iframe width="1280" height="720" src="https://www.youtube.com/embed/IFZnz9Frcgo?si=32eWNNStpQE8efcO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<p>영상을 틀어놓고 4의 1종 대형 코스별 통과 요령 pdf 파일을 보면서 각 코스를 같이 진행한다.</p>
+<h2 id="6-시뮬레이션"><a class="header" href="#6-시뮬레이션">6. 시뮬레이션</a></h2>
+<p>OMSI2로 한다 함.<br />
+<a href="https://gall.dcinside.com/mini/board/view/?id=omsi2&no=6375&s_type=search_subject_memo&s_keyword=%EB%A9%B4%ED%97%88&page=1" title="" target="_blank">청주 면허시험장 맵</a>을 공유하는 사람들도 있음.</p>
+<iframe width="1280" height="720" src="https://www.youtube.com/embed/6sSiaVxCLSk" title="[1종대형] 01 굴절 수정 - 학원 안 가고 합격하기 - 3D 입체시각" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><div style="break-before: page; page-break-before: always;"></div><h1 id="전북면허시험장"><a class="header" href="#전북면허시험장">전북면허시험장</a></h1>
 <p>코스의 노란선은 잘 보인다.<br />
 클러치를 완전히 다 올려야 차가 움직인다. 그래서 반클러치가 없다.<br />
 오늘 떨어진 이유도 이 때문.<br />
 처음 시작하자마자 20초 동안 차를 움직이지 못해 벌점 5점 먹었다.  기어를 몇 번이나 다시 넣고 엄청 놀람.<br />
 경사로에서 힘들 거 같다.</p>
+<h1 id="head"><a class="header" href="#head">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</a></h1>
 <p>전북면허시험장 1종 대형은 대우 NEW BS106을 사용한다고 한다.(<a href="https://namu.wiki/w/%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD%EC%9D%98%20%EC%9A%B4%EC%A0%84%EB%A9%B4%ED%97%88%20%EC%8B%9C%ED%97%98%EC%9E%A5#s-4.5.1" title="" target="_blank">나무위키</a>)</p>
+<h2 id="동영상"><a class="header" href="#동영상">동영상</a></h2>
+<iframe width="800" height="450" src="https://www.youtube.com/embed/ER6Q2nGIZQo?list=TLPQMjYwMTIwMjUPxl1fcQCoPA" title="전북운전면허시험장 💡1종 대형 기능시험 코스 안내💡" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<p>이 영상 끝에 드론에서 내려다 본 영상 나옴.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>1330d4736a5d0cec2bc699f381e358a95d825a60</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 <h2 id="버스-조작"><a class="header" href="#버스-조작">버스 조작</a></h2>
 <ul>
 <li>반 클러치 안 됨. 앞으로 가려면 발에서 클러치를 완전히 떼야 함.</li>
@@ -1595,6 +1657,28 @@ caption=파이썬 샘플 2 인데 이게 caption파이썬= 샘플2가 된다.</p
 <li>굴절에서 검지선 2번 건드림 10점. 시간 초과 5점</li>
 <li>T코스에서 시간 초과 5점.</li>
 <li>횡단보도에서 멀리 떨어진 곳에서 멈춰서 5점 감점 꽤 바짝붙었었는데. 물어보니 기울어져서 들어와서 센서가 인식하지 못했던 거라 함.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="부동산"><a class="header" href="#부동산">부동산</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="임대"><a class="header" href="#임대">임대</a></h1>
+<h2 id="계약일보다-한-달-후에-임차인이-나간-경우"><a class="header" href="#계약일보다-한-달-후에-임차인이-나간-경우">계약일보다 한 달 후에 임차인이 나간 경우</a></h2>
+<p>예를 들어, 2024. 12. 31.까지 계약인데 1달 더 살아 2025. 1. 31.까지 살고, 새 임차인 계약 시작일이 2025. 2. 1.라면<br />
+rent home에 등록할 때, 다음과 같이 함.</p>
+<ul>
+<li>
+<p>1년 이하 계약: 상관없음. 그냥 그 한 달은 비워놓고 신고하면 됨.</p>
+</li>
+<li>
+<p>2년 계약</p>
+<ul>
+<li>만기일 이전에 새 임차인 계약: 상관없음. 그냥 그 한 달은 비워놓고 신고하면 됨.</li>
+<li>만기일 이후에 새 임차인 계약: 다음 둘 중 하나 선택(빨리 해야 함)
+<ul>
+<li>새로 1달짜리 계약서를 쓰고 신고.</li>
+<li>연장에 대한 묵시적 갱신으로 신고.</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="취미"><a class="header" href="#취미">취미</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="그림그리기"><a class="header" href="#그림그리기">그림그리기</a></h1>

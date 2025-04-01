@@ -24,6 +24,7 @@
       - [O3DE 설치하기](./dev/game/O3DE/00001.md)
     - [godot4](./godot4/godot4.md)
       - [Godot4 배경을 투명하게 하고 뒷면의 앱으로 마우스 통과시키기](./godot4/transparent_bg.md)
+      - [웹개발 시 url param 가져오기](./godot4/web_url_param.md)
 
   - [git](./dev/git/git.md)
     - [window 11 arm64에서 git auth 창이 투명하게 보인다](./dev/git/00001.md)
@@ -48,6 +49,12 @@
 
   - [비동기화](./asynchronous/asynchronous.md)
     - [javascript 비동기화](./asynchronous/javascript_async.md)
+
+  - [웹](./web/web.md)
+
+  - [docker](./docker/docker.md)
+    - [local 파일을 docker로 보내기](./docker/docker_copyfile.md)
+    
 
   - [settings](./dev/settings/settings.md)
 
@@ -89,10 +96,18 @@
     - [유튜브에서 광고차단 프로그램 제거 요청](./youtube/youtube-00001.md)
 
 
-- [자격증](./license/license.md)
+- [자격증](./license/license.md)  
   - [버스(1종 대형)](./license/bus/00001.md)
-  <!-- - [인천면허시험장](./license/bus/00002.md) -->
+    <!-- - [인천면허시험장](./license/bus/00002.md)-->
   - [전북면허시험장](./license/bus/00003.md)
+
+
+- [부동산](./realestate/realestate.md)  
+  - [임대](./realestate/rent.md)
+
+  
+
+  
   
 
 - [취미](./hobby/hobby.md)
