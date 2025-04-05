@@ -64,11 +64,14 @@
     - [miniconda](./dev/miniconda/miniconda.md)
       - [miniconda 사용법](./dev/miniconda/00001.md)
 
+- [데이터베이스](./db/db.md)
+  - [postgresql](./db/postgresql/postgresql.md)
 
 - [유틸리티](./utility/utility.md)
   - [joplin](./utility/joplin.md)
   - [podcast](./utility/podcast.md)
   - [powertoys](./utility/powertoys/powertoys.md)
+  - [powerShell](./utility/powershell/powershell.md)
 
 - [노트](./note/note.md)
   - [mdbook](./note/mdbook/mdbook.md)  
