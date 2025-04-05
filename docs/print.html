@@ -1115,6 +1115,23 @@ function LongTask_async()
 <p>await는 비동기화 함수 앞에서만 쓸 수 있는데 그걸 동기화되도록 쓰는 거. 죄다 쓰면 도대체 왜 비동기화 하는 거냐.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="웹"><a class="header" href="#웹">웹</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="docker"><a class="header" href="#docker">docker</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="docker-환경설정"><a class="header" href="#docker-환경설정">docker 환경설정</a></h1>
+<h2 id="여러-대의-서버를-하나의-네트워크에-놓고-서버마다-ip-정해줄-때postgresql"><a class="header" href="#여러-대의-서버를-하나의-네트워크에-놓고-서버마다-ip-정해줄-때postgresql">여러 대의 서버를 하나의 네트워크에 놓고 서버마다 IP 정해줄 때(postgresql)</a></h2>
+<h3 id="네트워크-생성네트워크-이름-mynet"><a class="header" href="#네트워크-생성네트워크-이름-mynet">네트워크 생성(네트워크 이름: mynet)</a></h3>
+<pre><code># docker network create --subnet=172.30.0.0/16 mynet 
+</code></pre>
+<h3 id="컨테이너-생성하면서-ip-주기"><a class="header" href="#컨테이너-생성하면서-ip-주기">컨테이너 생성하면서 ip 주기</a></h3>
+<pre><code>docker run -d --net mynet --ip 172.30.0.7 --name postgres -p 43432:5432 -p 43022:22 -e POSTGRES_PASSWORD=My:s3Cr3t/ -e TZ=Asia/Seoul ubuntu/postgres:latest
+</code></pre>
+<h3 id="네트워크-생성없이-ip없이-컨테이너-생성할-때"><a class="header" href="#네트워크-생성없이-ip없이-컨테이너-생성할-때">네트워크 생성없이, IP없이 컨테이너 생성할 때</a></h3>
+<pre><code>docker run -d --name postgres -p 43432:5432 -p 43022:22 -e POSTGRES_PASSWORD=My:s3Cr3t/ -e TZ=Asia/Seoul postgres
+</code></pre>
+<h2 id="webserver"><a class="header" href="#webserver">webserver</a></h2>
+<pre><code>docker run -dit --net mynet --ip 172.30.0.5 --name httpd -p 41080:80 -p 41022:22 -e TZ=Asia/Seoul httpd
+</code></pre>
+<h2 id="tomcat"><a class="header" href="#tomcat">tomcat</a></h2>
+<pre><code> docker run -dit --privileged --net mynet --ip 172.30.0.6 --name tomcat -p 42888:8080 -p 42022:22 -e TZ=Asia/Seoul tomcat:9.0
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="local-파일을-docker로-보내기"><a class="header" href="#local-파일을-docker로-보내기">local 파일을 docker로 보내기</a></h1>
 <pre><code>docker cp . httpd:/usr/local/apache2/htdocs/js1
 </code></pre>
@@ -1164,6 +1181,39 @@ function LongTask_async()
 <br>
 <h2 id="파이썬-버전-변경하기"><a class="header" href="#파이썬-버전-변경하기">파이썬 버전 변경하기</a></h2>
 <pre><code>conda install python=3.10.6
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="데이터베이스"><a class="header" href="#데이터베이스">데이터베이스</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="postgresql"><a class="header" href="#postgresql">postgresql</a></h1>
+<h2 id="사용법"><a class="header" href="#사용법">사용법</a></h2>
+<p>docker에 postgresql을 실행한 다음임.</p>
+<h3 id="유저-생성"><a class="header" href="#유저-생성">유저 생성</a></h3>
+<pre><code class="language-sql"># su - postgres
+postgres@963e6c43fae6:~$ psql    
+psql (17.4 (Debian 17.4-1.pgdg120+2))
+Type "help" for help.
+
+postgres=# create user scott password 'tiger';
+CREATE ROLE
+</code></pre>
+<h3 id="생성된-유저-보기"><a class="header" href="#생성된-유저-보기">생성된 유저 보기</a></h3>
+<pre><code>postgres=# \du
+                             List of roles
+ Role name |                         Attributes                         
+-----------+------------------------------------------------------------
+ postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS
+ scott     |
+</code></pre>
+<h3 id="데이터베이스-생성"><a class="header" href="#데이터베이스-생성">데이터베이스 생성</a></h3>
+<pre><code class="language-sql">postgres=# create database test owner scott;
+CREATE DATABASE
+</code></pre>
+<h3 id="scott으로-접속하기"><a class="header" href="#scott으로-접속하기">scott으로 접속하기</a></h3>
+<pre><code class="language-sql">postgres=# exit
+postgres@963e6c43fae6:~$ psql -U scott test
+psql (17.4 (Debian 17.4-1.pgdg120+2))
+Type "help" for help.
+
+test=&gt; 
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="유틸리티"><a class="header" href="#유틸리티">유틸리티</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="joplin"><a class="header" href="#joplin">joplin</a></h1>
@@ -1223,6 +1273,46 @@ apple이 <a href="https://podcasts.apple.com" title="" target="_blank">웹</a>�
 <p><img src="utility/powertoys/img/20241220222538.png" alt="" /><br />
 <img src="utility/powertoys/img/20241220222545.png" alt="" /></p>
 <p>이렇게 설정하면 한 번에 자동으로 확장자를 붙여줄 수 있다.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="powershell"><a class="header" href="#powershell">powerShell</a></h1>
+<h2 id="powershell-버전확인"><a class="header" href="#powershell-버전확인">powerShell 버전확인</a></h2>
+<pre><code>PS E:\TEST\nextjs&gt; $PSVersionTable
+
+Name                           Value
+----                           -----
+PSVersion                      5.1.19041.5607
+PSEdition                      Desktop
+PSCompatibleVersions           {1.0, 2.0, 3.0, 4.0...}
+BuildVersion                   10.0.19041.5607
+CLRVersion                     4.0.30319.42000
+WSManStackVersion              3.0
+PSRemotingProtocolVersion      2.3
+SerializationVersion           1.1.0.1
+</code></pre>
+<h2 id="powershell-최신버전-확인"><a class="header" href="#powershell-최신버전-확인">powerShell 최신버전 확인</a></h2>
+<pre><code>PS E:\TEST\nextjs&gt; winget search Microsoft.PowerShell
+'msstore' 원본을 사용하려면 다음 계약을 확인해야 합니다.
+Terms of Transaction: https://aka.ms/microsoft-store-terms-of-transaction
+원본이 제대로 작동하려면 현재 컴퓨터의 두 글자 지리적 지역을 백 엔드 서비스로 보내야 합니다(예: "미국").
+
+모든 원본 사용 약관에 동의하십니까?
+[Y] 예  [N] 아니요: y
+이름               장치 ID                      버전    원본
+---------------------------------------------------------------
+PowerShell         Microsoft.PowerShell         7.5.0.0 winget
+PowerShell Preview Microsoft.PowerShell.Preview 7.6.0.3 winget
+</code></pre>
+<h2 id="powershell-최신버전-설치"><a class="header" href="#powershell-최신버전-설치">powerShell 최신버전 설치</a></h2>
+<pre><code>PS E:\TEST\nextjs&gt; winget install Microsoft.PowerShell
+찾음 PowerShell [Microsoft.PowerShell] 버전 7.5.0.0
+이 응용 프로그램의 라이선스는 그 소유자가 사용자에게 부여했습니다.
+Microsoft는 타사 패키지에 대한 책임을 지지 않고 라이선스를 부여하지도 않습니다.
+다운로드 중 https://github.com/PowerShell/PowerShell/releases/download/v7.5.0/PowerShell-7.5.0-win-x64.msi
+  ██████████████████████████████   107 MB /  107 MB
+설치 관리자 해시를 확인했습니다.
+패키지 설치를 시작하는 중...
+설치 성공
+</code></pre>
+<p>이렇게 설치하면 기존 파란 화면의 powerShell이 남아있고 검은 화면의 PowerShell 7이 생겨남. PowerShell 7이 지금 새로 설치한 것임.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="노트"><a class="header" href="#노트">노트</a></h1>
 <p>노트 혹은 메모하는 방법 정리.</p>
 <h2 id="노트를-위한-폴더-만드는-법"><a class="header" href="#노트를-위한-폴더-만드는-법">노트를 위한 폴더 만드는 법</a></h2>

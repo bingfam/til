@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>노트 - TIL</title>
+        <title>docker 환경설정 - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -153,44 +153,33 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="노트"><a class="header" href="#노트">노트</a></h1>
-<p>노트 혹은 메모하는 방법 정리.</p>
-<h2 id="노트를-위한-폴더-만드는-법"><a class="header" href="#노트를-위한-폴더-만드는-법">노트를 위한 폴더 만드는 법</a></h2>
-<p>예를 들어,</p>
-<ul>
-<li>노트<br />
-+– MDBook<br />
-+– MKDocs<br />
-+– HUGO</li>
-</ul>
-<p>와 같은 식으로 메뉴를 만들고 싶다면, 폴더도 저런 식으로 만들고 싶어진다.</p>
-<p>그런데 폴더는 저런 식으로 만들면 안 된다.</p>
-<p>폴더 자체는,</p>
-<p>/노트<br />
-/MDBook<br />
-/MKDocs<br />
-/HUGO</p>
-<p>로 각각 4개를 만들고, summary.md 파일처럼 목록을 정해주는 곳에서<br />
-메뉴 구성만</p>
-<ul>
-<li>노트<br />
-+– MDBook<br />
-+– MKDocs<br />
-+– HUGO</li>
-</ul>
-<p>sub category 구조로 해줘야 한다.</p>
-<p>대부분의 컨텐츠는 한 category에만 속하지 않고 여러 category에 걸쳐 속해 있기 때문이다. 그래서 나중에 폴더 구조를 바꿔야 할 때도 있는데 그 때 변경을 쉽게 하려면 컨텐츠 폴더는 각각 만들고 목록 정해주는 파일만 고쳐주면 되도록 준비해 놔야 한다.</p>
-<p>지금 이미 note 밑에 MDBook 폴더를 만들어 놔서 이거 어떻게 다 고칠지 걱정이다. MDBook은 그냥 note 폴더에 놔둘까…</p>
+                        <h1 id="docker-환경설정"><a class="header" href="#docker-환경설정">docker 환경설정</a></h1>
+<h2 id="여러-대의-서버를-하나의-네트워크에-놓고-서버마다-ip-정해줄-때postgresql"><a class="header" href="#여러-대의-서버를-하나의-네트워크에-놓고-서버마다-ip-정해줄-때postgresql">여러 대의 서버를 하나의 네트워크에 놓고 서버마다 IP 정해줄 때(postgresql)</a></h2>
+<h3 id="네트워크-생성네트워크-이름-mynet"><a class="header" href="#네트워크-생성네트워크-이름-mynet">네트워크 생성(네트워크 이름: mynet)</a></h3>
+<pre><code># docker network create --subnet=172.30.0.0/16 mynet 
+</code></pre>
+<h3 id="컨테이너-생성하면서-ip-주기"><a class="header" href="#컨테이너-생성하면서-ip-주기">컨테이너 생성하면서 ip 주기</a></h3>
+<pre><code>docker run -d --net mynet --ip 172.30.0.7 --name postgres -p 43432:5432 -p 43022:22 -e POSTGRES_PASSWORD=My:s3Cr3t/ -e TZ=Asia/Seoul ubuntu/postgres:latest
+</code></pre>
+<h3 id="네트워크-생성없이-ip없이-컨테이너-생성할-때"><a class="header" href="#네트워크-생성없이-ip없이-컨테이너-생성할-때">네트워크 생성없이, IP없이 컨테이너 생성할 때</a></h3>
+<pre><code>docker run -d --name postgres -p 43432:5432 -p 43022:22 -e POSTGRES_PASSWORD=My:s3Cr3t/ -e TZ=Asia/Seoul postgres
+</code></pre>
+<h2 id="webserver"><a class="header" href="#webserver">webserver</a></h2>
+<pre><code>docker run -dit --net mynet --ip 172.30.0.5 --name httpd -p 41080:80 -p 41022:22 -e TZ=Asia/Seoul httpd
+</code></pre>
+<h2 id="tomcat"><a class="header" href="#tomcat">tomcat</a></h2>
+<pre><code> docker run -dit --privileged --net mynet --ip 172.30.0.6 --name tomcat -p 42888:8080 -p 42022:22 -e TZ=Asia/Seoul tomcat:9.0
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../utility/powershell/powershell.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../docker/docker.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../note/mdbook/mdbook.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../docker/docker_copyfile.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -200,11 +189,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../utility/powershell/powershell.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../docker/docker.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../note/mdbook/mdbook.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../docker/docker_copyfile.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>노트 - TIL</title>
+        <title>powerShell - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -12,33 +12,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../favicon.svg">
-        <link rel="shortcut icon" href="../favicon.png">
-        <link rel="stylesheet" href="../css/variables.css">
-        <link rel="stylesheet" href="../css/general.css">
-        <link rel="stylesheet" href="../css/chrome.css">
-        <link rel="stylesheet" href="../css/print.css" media="print">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../fonts/fonts.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="../highlight.css">
-        <link rel="stylesheet" href="../tomorrow-night.css">
-        <link rel="stylesheet" href="../ayu-highlight.css">
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../custom.css">
+        <link rel="stylesheet" href="../../custom.css">
 
 
         <!-- Provide site root to javascript -->
         <script>
-            var path_to_root = "../";
+            var path_to_root = "../../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc.js"></script>
+        <script src="../../toc.js"></script>
     </head>
     <body>
     <div id="body-container">
@@ -90,7 +90,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -124,7 +124,7 @@
                     <h1 class="menu-title">TIL</h1>
 
                     <div class="right-buttons">
-                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -153,44 +153,56 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="노트"><a class="header" href="#노트">노트</a></h1>
-<p>노트 혹은 메모하는 방법 정리.</p>
-<h2 id="노트를-위한-폴더-만드는-법"><a class="header" href="#노트를-위한-폴더-만드는-법">노트를 위한 폴더 만드는 법</a></h2>
-<p>예를 들어,</p>
-<ul>
-<li>노트<br />
-+– MDBook<br />
-+– MKDocs<br />
-+– HUGO</li>
-</ul>
-<p>와 같은 식으로 메뉴를 만들고 싶다면, 폴더도 저런 식으로 만들고 싶어진다.</p>
-<p>그런데 폴더는 저런 식으로 만들면 안 된다.</p>
-<p>폴더 자체는,</p>
-<p>/노트<br />
-/MDBook<br />
-/MKDocs<br />
-/HUGO</p>
-<p>로 각각 4개를 만들고, summary.md 파일처럼 목록을 정해주는 곳에서<br />
-메뉴 구성만</p>
-<ul>
-<li>노트<br />
-+– MDBook<br />
-+– MKDocs<br />
-+– HUGO</li>
-</ul>
-<p>sub category 구조로 해줘야 한다.</p>
-<p>대부분의 컨텐츠는 한 category에만 속하지 않고 여러 category에 걸쳐 속해 있기 때문이다. 그래서 나중에 폴더 구조를 바꿔야 할 때도 있는데 그 때 변경을 쉽게 하려면 컨텐츠 폴더는 각각 만들고 목록 정해주는 파일만 고쳐주면 되도록 준비해 놔야 한다.</p>
-<p>지금 이미 note 밑에 MDBook 폴더를 만들어 놔서 이거 어떻게 다 고칠지 걱정이다. MDBook은 그냥 note 폴더에 놔둘까…</p>
+                        <h1 id="powershell"><a class="header" href="#powershell">powerShell</a></h1>
+<h2 id="powershell-버전확인"><a class="header" href="#powershell-버전확인">powerShell 버전확인</a></h2>
+<pre><code>PS E:\TEST\nextjs&gt; $PSVersionTable
+
+Name                           Value
+----                           -----
+PSVersion                      5.1.19041.5607
+PSEdition                      Desktop
+PSCompatibleVersions           {1.0, 2.0, 3.0, 4.0...}
+BuildVersion                   10.0.19041.5607
+CLRVersion                     4.0.30319.42000
+WSManStackVersion              3.0
+PSRemotingProtocolVersion      2.3
+SerializationVersion           1.1.0.1
+</code></pre>
+<h2 id="powershell-최신버전-확인"><a class="header" href="#powershell-최신버전-확인">powerShell 최신버전 확인</a></h2>
+<pre><code>PS E:\TEST\nextjs&gt; winget search Microsoft.PowerShell
+'msstore' 원본을 사용하려면 다음 계약을 확인해야 합니다.
+Terms of Transaction: https://aka.ms/microsoft-store-terms-of-transaction
+원본이 제대로 작동하려면 현재 컴퓨터의 두 글자 지리적 지역을 백 엔드 서비스로 보내야 합니다(예: "미국").
+
+모든 원본 사용 약관에 동의하십니까?
+[Y] 예  [N] 아니요: y
+이름               장치 ID                      버전    원본
+---------------------------------------------------------------
+PowerShell         Microsoft.PowerShell         7.5.0.0 winget
+PowerShell Preview Microsoft.PowerShell.Preview 7.6.0.3 winget
+</code></pre>
+<h2 id="powershell-최신버전-설치"><a class="header" href="#powershell-최신버전-설치">powerShell 최신버전 설치</a></h2>
+<pre><code>PS E:\TEST\nextjs&gt; winget install Microsoft.PowerShell
+찾음 PowerShell [Microsoft.PowerShell] 버전 7.5.0.0
+이 응용 프로그램의 라이선스는 그 소유자가 사용자에게 부여했습니다.
+Microsoft는 타사 패키지에 대한 책임을 지지 않고 라이선스를 부여하지도 않습니다.
+다운로드 중 https://github.com/PowerShell/PowerShell/releases/download/v7.5.0/PowerShell-7.5.0-win-x64.msi
+  ██████████████████████████████   107 MB /  107 MB
+설치 관리자 해시를 확인했습니다.
+패키지 설치를 시작하는 중...
+설치 성공
+</code></pre>
+<p>이렇게 설치하면 기존 파란 화면의 powerShell이 남아있고 검은 화면의 PowerShell 7이 생겨남. PowerShell 7이 지금 새로 설치한 것임.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../utility/powershell/powershell.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../utility/powertoys/powertoys.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../note/mdbook/mdbook.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../note/note.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -200,11 +212,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../utility/powershell/powershell.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../utility/powertoys/powertoys.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../note/mdbook/mdbook.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../note/note.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -219,13 +231,13 @@
         </script>
 
 
-        <script src="../elasticlunr.min.js"></script>
-        <script src="../mark.min.js"></script>
-        <script src="../searcher.js"></script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
 
-        <script src="../clipboard.min.js"></script>
-        <script src="../highlight.js"></script>
-        <script src="../book.js"></script>
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
 
