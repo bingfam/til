@@ -53,9 +53,10 @@
   - [웹](./web/web.md)
 
   - [docker](./docker/docker.md)
+    - [docker 환경설정](./docker/setup.md)
     - [local 파일을 docker로 보내기](./docker/docker_copyfile.md)
     
-  - [next.js](./next.js/next.js.md)
+  - [next.js](./next.js/next.js.md)  
 
   - [settings](./dev/settings/settings.md)
 
