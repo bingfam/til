@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>.AI 파일로 저장하기 - TIL</title>
+        <title>blender - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -153,24 +153,30 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="ai-파일로-저장하기"><a class="header" href="#ai-파일로-저장하기">.AI 파일로 저장하기</a></h1>
-<h2 id="affinity"><a class="header" href="#affinity">affinity</a></h2>
-<p>url: https://affinity.serif.com
-affinity Designer가 .ai로 저장할 수 <strong>있었던</strong> 거 같다.</p>
-<p>sobi@g로 체험판을 신청해 사용해 봄.
-https://store.serif.com/en-us/account/downloads</p>
-<p>직접 사용해 보니 .ai로는 export 할 수 없었음.<br />
-지금 블랙프라이데이 50% 할인 기간이지만 사용하지 않겠음.</p>
+                        <h1 id="blender"><a class="header" href="#blender">blender</a></h1>
+<h2 id="toon-shader"><a class="header" href="#toon-shader">toon shader</a></h2>
+<h3 id="그림자-연하게-하기-1-world-조정"><a class="header" href="#그림자-연하게-하기-1-world-조정">그림자 연하게 하기 1: world 조정</a></h3>
+<p><img src="img/20250423232946.png" alt="" /></p>
+<ol>
+<li>light를 sun으로 바꾸고 각도를 0도로 해서 fall off가 되지 않도록 한다.</li>
+<li>light의 세기를 5 정도로 작게 한다. world의 밝기에 따라 조정한다.</li>
+<li>world를 밝게 한다. 그림자가 연해진다.</li>
+</ol>
+<h3 id="그림자-연하게-하기-2-바닥의-재질을-color-ramp로-해서"><a class="header" href="#그림자-연하게-하기-2-바닥의-재질을-color-ramp로-해서">그림자 연하게 하기 2: 바닥의 재질을 color ramp로 해서</a></h3>
+<p><img src="img/20250423234214.png" alt="" /></p>
+<p>plane위에 그림자 부분이 그려지는 것도 material의 영향을 받는다.</p>
+<p><img src="img/20250423234344.png" alt="" /></p>
+<p>위와 같이 plane의 material을 color ramp로 잡아주면 바닥 전체는 가장 밝은 색으로 표현되고(world를 밝게 설정해서 전반적으로 밝으니까), 그림자 부분은 중간에 있는 색으로 표현된다.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../design/vector/vector.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../design/assets.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../design/assets.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../words/words.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -180,11 +186,11 @@ https://store.serif.com/en-us/account/downloads</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../design/vector/vector.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../design/assets.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../design/assets.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../words/words.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
