@@ -26,6 +26,14 @@
       - [Godot4 배경을 투명하게 하고 뒷면의 앱으로 마우스 통과시키기](./godot4/transparent_bg.md)
       - [웹개발 시 url param 가져오기](./godot4/web_url_param.md)
 
+    
+  - [AI](./ai/ai.md)
+    - [LM Studio](./ai/lmstudio.md)
+    - [Chainlit](./ai/chainlit.md)
+    - [LM Studio & chainlit](./ai/lm_chatnlit.md)
+    - [MCP](./ai/mcp.md)
+
+
   - [git](./dev/git/git.md)
     - [window 11 arm64에서 git auth 창이 투명하게 보인다](./dev/git/00001.md)
     - [github private repository에 git bash에서 접속하기](./dev/git/00002.md)
@@ -140,6 +148,8 @@
 
 - [생산성](./productivity/productivity.md)
   - [KWL 전략](./productivity/productivity-00001.md)
+
+
 
 - [공주](./gongju/gongju.md)
   - [식당](./gongju/food.md)

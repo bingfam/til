@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>웹개발 시 url param 가져오기 - TIL</title>
+        <title>Chainlit - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -153,29 +153,17 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="웹개발-시-url-param-가져오기"><a class="header" href="#웹개발-시-url-param-가져오기">웹개발 시 url param 가져오기</a></h1>
-<pre><code class="language-gdscript">func _ready() -&gt; void:
-	var a = JavaScriptBridge.eval("const urlParams = new URL(location.href).searchParams; const a = urlParams.get('a'); a")
-	print("a=", a)
-</code></pre>
-<p>이렇게 하면 gdscript의 변수 a에</p>
-<p><code>http://localhost:8060/tmp_js_export.html?a=105</code></p>
-<p>와 같이 url을 적어줬을 때 url에 적은 파라마티 a의 값이 들어간다.</p>
-<p><img src="img/20250125202732.png" alt="" /></p>
-<p>이렇게 실행하면 되고, 웹 브라우저가 자동으로 실행되는데</p>
-<p><code>http://localhost:8060/tmp_js_export.html?a=105</code></p>
-<p>과 같이 하면 a 값으로 105가 찍힌다.</p>
-<p><img src="img/20250125202908.png" alt="" /></p>
+                        <h1 id="chainlit"><a class="header" href="#chainlit">Chainlit</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../godot4/transparent_bg.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../ai/lmstudio.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../ai/ai.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../ai/lm_chatnlit.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -185,11 +173,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../godot4/transparent_bg.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../ai/lmstudio.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../ai/ai.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../ai/lm_chatnlit.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

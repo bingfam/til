@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>웹개발 시 url param 가져오기 - TIL</title>
+        <title>LM Studio &amp; chainlit - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -153,29 +153,74 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="웹개발-시-url-param-가져오기"><a class="header" href="#웹개발-시-url-param-가져오기">웹개발 시 url param 가져오기</a></h1>
-<pre><code class="language-gdscript">func _ready() -&gt; void:
-	var a = JavaScriptBridge.eval("const urlParams = new URL(location.href).searchParams; const a = urlParams.get('a'); a")
-	print("a=", a)
+                        <h1 id="lm-studio--chainlit"><a class="header" href="#lm-studio--chainlit">LM Studio &amp; chainlit</a></h1>
+<h2 id="파이썬-설치"><a class="header" href="#파이썬-설치">파이썬 설치</a></h2>
+<p>** 아래 미니콘다 방식은 uv 로 바꿈</p>
+<h2 id="miniconda로-환경설정"><a class="header" href="#miniconda로-환경설정">miniconda로 환경설정</a></h2>
+<h3 id="새-환경-만들기"><a class="header" href="#새-환경-만들기">새 환경 만들기</a></h3>
+<pre><code>conda create -n ai
 </code></pre>
-<p>이렇게 하면 gdscript의 변수 a에</p>
-<p><code>http://localhost:8060/tmp_js_export.html?a=105</code></p>
-<p>와 같이 url을 적어줬을 때 url에 적은 파라마티 a의 값이 들어간다.</p>
-<p><img src="img/20250125202732.png" alt="" /></p>
-<p>이렇게 실행하면 되고, 웹 브라우저가 자동으로 실행되는데</p>
-<p><code>http://localhost:8060/tmp_js_export.html?a=105</code></p>
-<p>과 같이 하면 a 값으로 105가 찍힌다.</p>
-<p><img src="img/20250125202908.png" alt="" /></p>
+<h3 id="새로-만든-환경-활성화"><a class="header" href="#새로-만든-환경-활성화">새로 만든 환경 활성화</a></h3>
+<pre><code class="language-PS">conda activate ai
+</code></pre>
+<h2 id="chainlit-설치"><a class="header" href="#chainlit-설치">chainlit 설치</a></h2>
+<pre><code class="language-PS">pip install openai chainlit
+</code></pre>
+<p><strong>참고자료</strong>
+<a href="https://www.youtube.com/watch?v=dBSYt-vuEmA" title="" target="_blank">
+<img src="https://img.youtube.com/vi/dBSYt-vuEmA/0.jpg" alt="" /></a></p>
+<p><strong>pip 를 아래와 같이 uv 방식으로 바꿈. 이제 이 아래부터가 새로 정리한 처음임.</strong></p>
+<h2 id="프로젝트-폴더-만들고-프로젝트-생성"><a class="header" href="#프로젝트-폴더-만들고-프로젝트-생성">프로젝트 폴더 만들고 프로젝트 생성</a></h2>
+<pre><code class="language-PS">e:\test\lmstudio
+</code></pre>
+<p>이 폴더에서 powershell 띄우고 아래의 방법으로 프로젝트 생성</p>
+<pre><code class="language-PS">PS E:\test\lmstudio&gt; uv init lm001
+</code></pre>
+<h3 id="새-환경-만들고-파이썬-설치"><a class="header" href="#새-환경-만들고-파이썬-설치">새 환경 만들고 파이썬 설치</a></h3>
+<pre><code class="language-PS">PS E:\test\lmstudio&gt; cd lm001
+
+PS E:\test\lmstudio\lm001&gt; uv venv --python 3.12.3
+</code></pre>
+<p>결과</p>
+<pre><code class="language-PS">Using CPython 3.12.3
+Creating virtual environment at: .venv
+Activate with: .venv\Scripts\activate
+</code></pre>
+<h3 id="필요한-패키지-설치-chainlit을-쓰기-위한-준비"><a class="header" href="#필요한-패키지-설치-chainlit을-쓰기-위한-준비">필요한 패키지 설치: chainlit을 쓰기 위한 준비</a></h3>
+<pre><code class="language-PS">PS E:\test\lmstudio\lm001&gt; uv add requests openai chainlit
+</code></pre>
+<h3 id="파일-다운로드-apppy"><a class="header" href="#파일-다운로드-apppy">파일 다운로드: app.py</a></h3>
+<p><a href="https://github.com/Zenulous/local-ai-mcp-chainlit/blob/main/app.py" title="" target="_blank">https://github.com/Zenulous/local-ai-mcp-chainlit/blob/main/app.py</a></p>
+<p>위 파일을 다운로드 받아</p>
+<p><code>E:\test\lmstudio\lm001\app.py</code></p>
+<p>로 저장한다.</p>
+<h3 id="chainlit-실행"><a class="header" href="#chainlit-실행">chainlit 실행</a></h3>
+<pre><code class="language-PS">PS E:\test\lmstudio\lm001&gt; uv run chainlit run app.py
+</code></pre>
+<p><img src="img/20250429020157.png" alt="" /></p>
+<h2 id="lm-studio-실행"><a class="header" href="#lm-studio-실행">LM Studio 실행</a></h2>
+<h3 id="llm-다운로드-gemma-3-4b-it-qat-gguf"><a class="header" href="#llm-다운로드-gemma-3-4b-it-qat-gguf">LLM 다운로드: gemma-3-4B-it-qat-GGUF</a></h3>
+<p><img src="img/20250429020617.png" alt="" /></p>
+<p>다운로드받은 모델을 로드한다.</p>
+<h3 id="서버-실행"><a class="header" href="#서버-실행">서버 실행</a></h3>
+<p><img src="img/20250429020953.png" alt="" /></p>
+<p>왼쪽 위 빨간 표시한 것처럼 <code>Status stopped</code> 오른쪽을 클릭해 <code>Status: Running</code> 부분의 오른쪽이 초록색이 되도록 만들면 localhost:1234로 서버가 실행된다.</p>
+<p>다시 chainlit으로 가서</p>
+<p><code>hi</code>라고 쳐본다.</p>
+<p><img src="img/20250429021115.png" alt="" /> 연결이 되면 이렇게 답이 나오고 밑에 모델명도 나온다(Used gemma-3-4b-it-qat 라고)</p>
+<p>만약 lm studio에서 서버를 실행하지 않았다면 아래와 같이 Connection Error라고 나온다.</p>
+<p><img src="img/20250429021305.png" alt="" /></p>
+<p><code>gemma-3-4b-it-qat</code>는 반응속도가 굉장히 빠르다.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../godot4/transparent_bg.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../ai/chainlit.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../ai/ai.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../ai/mcp.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -185,11 +230,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../godot4/transparent_bg.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../ai/chainlit.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../ai/ai.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../ai/mcp.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
