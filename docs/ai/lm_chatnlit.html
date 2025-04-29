@@ -208,7 +208,7 @@ Creating virtual environment at: .venv
 Activate with: .venv\Scripts\activate
 </code></pre>
 <h3 id="필요한-패키지-설치-chainlit을-쓰기-위한-준비"><a class="header" href="#필요한-패키지-설치-chainlit을-쓰기-위한-준비">필요한 패키지 설치: chainlit을 쓰기 위한 준비</a></h3>
-<pre><code class="language-PS">PS E:\test\lmstudio\lm001&gt; uv add requests openai chainlit
+<pre><code class="language-PS">PS E:\test\lmstudio\lm001&gt; uv add chainlit
 </code></pre>
 <h3 id="파일-다운로드-apppy"><a class="header" href="#파일-다운로드-apppy">파일 다운로드: app.py</a></h3>
 <p><a href="https://github.com/Zenulous/local-ai-mcp-chainlit/blob/main/app.py" title="" target="_blank">https://github.com/Zenulous/local-ai-mcp-chainlit/blob/main/app.py</a></p>
@@ -232,6 +232,65 @@ Activate with: .venv\Scripts\activate
 <p>만약 lm studio에서 서버를 실행하지 않았다면 아래와 같이 Connection Error라고 나온다.</p>
 <p><img src="img/20250429021305.png" alt="" /></p>
 <p><code>gemma-3-4b-it-qat</code>는 반응속도가 굉장히 빠르다.</p>
+<br />
+<h2 id="mcp-적용"><a class="header" href="#mcp-적용">MCP 적용</a></h2>
+<p>MCP를 위해 사용할 패키지를 설치한다.</p>
+<pre><code class="language-PS">PS E:\test\lmstudio\lm001&gt; uv add requests openai chainlit
+</code></pre>
+<h3 id="mcp-서버-생성"><a class="header" href="#mcp-서버-생성">MCP 서버 생성</a></h3>
+<p>lm001 폴더에 server.py 파일을 생성한다.</p>
+<pre><code class="language-python"># server.py
+from mcp.server.fastmcp import FastMCP
+
+# MCP 서버 생성
+app = FastMCP("My MCP Server")
+
+# 도구 정의: BMI 계산. AI는 함수명을 보고 유추하는 듯.
+@app.tool()
+def calculate_bmi(weight: float, height: float) -&gt; float:
+    return weight / (height ** 2)
+
+# 도구 정의: 두 숫자 더하기
+@app.tool()
+def add(a: int, b: int) -&gt; int:
+    return a + b
+
+# 리소스 정의: 사용자 이름에 맞춘 인사말 제공
+@app.resource("greeting://{name}")
+def get_greeting(name: str) -&gt; str:
+    return f"Hello, {name}!"
+
+# 서버 실행
+if __name__ == "__main__":
+    app.run()
+</code></pre>
+<p>이 파일이 에러는 없는지 확인한다.</p>
+<pre><code class="language-PS">uv run server.py
+</code></pre>
+<p>일단 에러가 나지 않고 실행된 채로 가만히 있으면 큰 문제 없는 거. ctrl+c를 눌러 실행을 종료한다.</p>
+<h2 id="chainlit에서-uv-실행할-수-있도록-환경설정"><a class="header" href="#chainlit에서-uv-실행할-수-있도록-환경설정">chainlit에서 uv 실행할 수 있도록 환경설정</a></h2>
+<p>.chainlit / config.toml 파일을 열고</p>
+<pre><code>[features.mcp.stdio]
+    enabled = true
+    allowed_executables = [ "npx", "uvx", "uv"]
+</code></pre>
+<p>allowed_executables 값에 “uv” 도 추가해준다.</p>
+<h2 id="mcp-서버-등록"><a class="header" href="#mcp-서버-등록">MCP 서버 등록</a></h2>
+<p><img src="img/20250429161916.png" alt="" /></p>
+<p>맨 아래 플러그인 모양 버튼을 눌러 아래 화면에서 다음과 같이 mcp 서버를 등록한다.</p>
+<p><img src="img/20250429161828.png" alt="" /></p>
+<ul>
+<li>name: test001</li>
+<li>type: stdio</li>
+<li>command: uv run D:\test\lmstudio\lm001\server.py</li>
+</ul>
+<p><img src="img/20250429162257.png" alt="" /></p>
+<p>문제없으면 이렇게 MCP 서버 등록에 성공한다.</p>
+<p>MCP 서버에서 제공하는 함수도 아래에 2개 보여진다.</p>
+<p><img src="img/20250429162633.png" alt="" /></p>
+<p>BMI를 물어보면 내가 제공한 함수를 이용해 계산한다.</p>
+<p>키는 단위를 m로 줘야 하는구나. cm로 줬더니 이상한 값이 나왔다.</p>
+<p>mcp 함수 찾기까지 속도가 굉장히 느리다.</p>
 
                     </main>
 
