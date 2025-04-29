@@ -31,4 +31,11 @@ cargo install mdbook
 ...
 
 Replaced package `mdbook v0.4.40` with `mdbook v0.4.43` (executable `mdbook.exe`)
-````
+```
+
+
+### 한글 검색이 안됨.
+한글 검색 되게 하려면
+
+```
+이런 작업$$task$$들은 식으로 영문도 옆에 적어두고 뭐 치환하라는데 장난하냐. 한글 검색 안 되어서 쓸모가 없어지네.
