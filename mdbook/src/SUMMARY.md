@@ -70,6 +70,10 @@
   - [LM Studio & chainlit](./ai/lm_chatnlit.md)
   - [MCP](./ai/mcp.md)
 
+- [공간정보](./gis/gis.md)
+  - [QGIS](./gis/qgis/qgis.md)
+    - [plugin 개발](./gis/qgis/plugin_dev.md)
+
 - [데이터베이스](./db/db.md)
   - [postgresql](./db/postgresql/postgresql.md)
 
