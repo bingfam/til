@@ -19,6 +19,8 @@
       - [auto 를 반환하는 함수를 정의하기 전에 사용할 수 없다는 에러메시지가 나올 때](./dev/winui3/00001.md)
       - [winui 3 패키징하지 않고 탐색기에서 exe 파일 실행하기](./dev/winui3/00002.md)
 
+    - [python](./dev/python/python.md)      
+
   - [게임](./dev/game/game.md)
     - [O3DE](./dev/game/O3DE/O3DE.md)
       - [O3DE 설치하기](./dev/game/O3DE/00001.md)

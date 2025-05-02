@@ -2,27 +2,8 @@
 
 ## 파이썬 설치
 
-** 아래 미니콘다 방식은 uv 로 바꿈
-## miniconda로 환경설정
-
-### 새 환경 만들기
-```
-conda create -n ai
-```
-
-### 새로 만든 환경 활성화
-```PS
-conda activate ai
-```
-
-
-## chainlit 설치
-```PS
-pip install openai chainlit
-```
-
-
 **참고자료**
+
 [![](https://img.youtube.com/vi/dBSYt-vuEmA/0.jpg)](https://www.youtube.com/watch?v=dBSYt-vuEmA)
 
 
@@ -40,24 +21,14 @@ PS E:\test\lmstudio> uv init lm001
 ```
 
 
-### 새 환경 만들고 파이썬 설치
+### 프로젝트로 이동
 ```PS
 PS E:\test\lmstudio> cd lm001
-
-PS E:\test\lmstudio\lm001> uv venv --python 3.12.3
 ```
-
-결과
-```PS
-Using CPython 3.12.3
-Creating virtual environment at: .venv
-Activate with: .venv\Scripts\activate
-```
-
 
 ### 필요한 패키지 설치: chainlit을 쓰기 위한 준비
 ```PS
-PS E:\test\lmstudio\lm001> uv add chainlit
+PS E:\test\lmstudio\lm001> uv add chainlit openai
 ```
 
 ### 파일 다운로드: app.py
@@ -109,7 +80,7 @@ PS E:\test\lmstudio\lm001> uv run chainlit run app.py
 ## MCP 적용
 MCP를 위해 사용할 패키지를 설치한다.
 ```PS
-PS E:\test\lmstudio\lm001> uv add requests openai chainlit
+PS E:\test\lmstudio\lm001> uv add requests
 ```
 
 ### MCP 서버 생성
