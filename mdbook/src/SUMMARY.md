@@ -76,6 +76,7 @@
 
 - [데이터베이스](./db/db.md)
   - [postgresql](./db/postgresql/postgresql.md)
+    - [postgresql 암호화](./db/postgresql/postgresql_crypt.md)
 
 - [유틸리티](./utility/utility.md)
   - [joplin](./utility/joplin.md)
