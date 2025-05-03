@@ -75,6 +75,8 @@
 - [공간정보](./gis/gis.md)
   - [QGIS](./gis/qgis/qgis.md)
     - [plugin 개발](./gis/qgis/plugin_dev.md)
+  - [cesium](.gis/cesium/cesium.md)
+    - [cesium과 google earth 차이점](.gis/cesium/cesium_google_earth.md)    
 
 - [데이터베이스](./db/db.md)
   - [postgresql](./db/postgresql/postgresql.md)
