@@ -19,6 +19,8 @@
       - [auto 를 반환하는 함수를 정의하기 전에 사용할 수 없다는 에러메시지가 나올 때](./dev/winui3/00001.md)
       - [winui 3 패키징하지 않고 탐색기에서 exe 파일 실행하기](./dev/winui3/00002.md)
 
+    - [python](./dev/python/python.md)      
+
   - [게임](./dev/game/game.md)
     - [O3DE](./dev/game/O3DE/O3DE.md)
       - [O3DE 설치하기](./dev/game/O3DE/00001.md)
@@ -64,9 +66,18 @@
     - [miniconda](./dev/miniconda/miniconda.md)
       - [miniconda 사용법](./dev/miniconda/00001.md)
 
+- [AI](./ai/ai.md)
+  - [LM Studio](./ai/lmstudio.md)
+  - [Chainlit](./ai/chainlit.md)
+  - [LM Studio & chainlit](./ai/lm_chatnlit.md)
+  - [MCP](./ai/mcp.md)
+
+- [공간정보](./gis/gis.md)
+  - [QGIS](./gis/qgis/qgis.md)
+    - [plugin 개발](./gis/qgis/plugin_dev.md)
+
 - [데이터베이스](./db/db.md)
   - [postgresql](./db/postgresql/postgresql.md)
-  - [sqlite3](./db/sqlite3/sqlite3.md)
 
 - [유틸리티](./utility/utility.md)
   - [joplin](./utility/joplin.md)
@@ -141,6 +152,8 @@
 
 - [생산성](./productivity/productivity.md)
   - [KWL 전략](./productivity/productivity-00001.md)
+
+
 
 - [공주](./gongju/gongju.md)
   - [식당](./gongju/food.md)
