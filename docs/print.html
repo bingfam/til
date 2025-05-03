@@ -1400,28 +1400,6 @@ test=&gt;
 <p>sqlite3 홈페이지(<a href="https://www.sqlite.org/download.html" title="" target="_blank">https://www.sqlite.org/download.html</a>)에 들어가서 툴을 다운로드 받는다.</p>
 <p><img src="db/sqlite3/img/20250426193620.png" alt="" /></p>
 <p>압축을 풀고 그 폴더를 path에 걸어준다.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="postgresql-암호화"><a class="header" href="#postgresql-암호화">postgresql 암호화</a></h1>
-<h2 id="암호화-모듈-설치"><a class="header" href="#암호화-모듈-설치">암호화 모듈 설치</a></h2>
-<p>super user가 아니어도 된다. 누구나 설치할 수 있는 듯.</p>
-<pre><code>CREATE EXTENSION pgcrypto;
-</code></pre>
-<h3 id="암호화-저장단방향"><a class="header" href="#암호화-저장단방향">암호화 저장(단방향)</a></h3>
-<pre><code class="language-sql">insert into person 
-	(id, nickname, pwd)
-values
-(
-	'user01'
-	,'nickname'
-	, crypt('entered password', gen_salt('bf'))	
-);
-</code></pre>
-<p>gen_salt(‘bf’) 로 하면 60자리 암호화 문자열이 만들어진다.</p>
-<h3 id="암호확인"><a class="header" href="#암호확인">암호확인</a></h3>
-<pre><code class="language-sql">select * 
-from person
-where 
-	pwd = crypt('entered password', pwd);
-</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="유틸리티"><a class="header" href="#유틸리티">유틸리티</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="joplin"><a class="header" href="#joplin">joplin</a></h1>
 <h2 id="joplin에서-mdbook으로-넘어온-이유"><a class="header" href="#joplin에서-mdbook으로-넘어온-이유">joplin에서 mdbook으로 넘어온 이유</a></h2>
