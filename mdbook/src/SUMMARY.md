@@ -114,6 +114,7 @@
     - [유튜브 링크를 걸면 저작권 위반인지에 대한 대법원 판결](./contents/copyright/copyright-00001.md)    
   - [유튜브](./youtube/youtube.md)
     - [유튜브에서 광고차단 프로그램 제거 요청](./youtube/youtube-00001.md)
+  - [팟캐스트](./podcast/podcast.md)
 
 
 - [자격증](./license/license.md)  
