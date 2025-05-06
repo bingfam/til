@@ -62,6 +62,8 @@
 
   - [settings](./dev/settings/settings.md)
 
+  - [mac](./dev/mac/mac.md)
+
   - [기타](./dev/etc.md)
     - [miniconda](./dev/miniconda/miniconda.md)
       - [miniconda 사용법](./dev/miniconda/00001.md)
