@@ -77,10 +77,12 @@
 - [공간정보](./gis/gis.md)
   - [QGIS](./gis/qgis/qgis.md)
     - [plugin 개발](./gis/qgis/plugin_dev.md)
+  - [cesium](.gis/cesium/cesium.md)
+    - [cesium과 google earth 차이점](.gis/cesium/cesium_google_earth.md)    
 
 - [데이터베이스](./db/db.md)
   - [postgresql](./db/postgresql/postgresql.md)
-    - [postgresql 암호화](./db/postgresql/postgresql_crypt.md)
+  - [sqlite3](./db/sqlite3/sqlite3.md)
 
 - [유틸리티](./utility/utility.md)
   - [joplin](./utility/joplin.md)
@@ -155,6 +157,10 @@
 
 - [생산성](./productivity/productivity.md)
   - [KWL 전략](./productivity/productivity-00001.md)
+
+
+- [DIY](./diy/diy.md)
+  - [승화전사 프린트](./diy/markprint.md)
 
 
 
