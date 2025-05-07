@@ -115,3 +115,9 @@ $ podman compose up
 검색결과가 나오긴 했는데 도커 desktop과 달리 메타데이터 같은 설명이 없어 뭘 다운로드 받아야 할 지 알 수가 없다. 
 
 지금은 어디가서 봐야 상세 정보를 할지 알 수가 없다. 
+
+
+## docker와 충돌
+
+podman 이 실행 중이면 [docker](../docker/docker.md)가 access denied가 났다면서 실행 안된다. docker 중지시키고 podman을 quit 하면 바로 제대로 실행된다. 아마 반대도 마찬가지지 않을까.
+
