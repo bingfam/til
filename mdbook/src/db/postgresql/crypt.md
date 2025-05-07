@@ -76,3 +76,16 @@ where
 위에서 본 것 처럼 get_salt('bf')를 할 때마다 값이 달라지는데, 왜 salt 값을 저장.. 하는 거야. 
 
 [https://postgresql.kr/docs/9.6/pgcrypto.html](https://postgresql.kr/docs/9.6/pgcrypto.html) 을 봐도 salt 값을 저장하라는 말은 없다.
+
+perplexity 답:
+```
+PostgreSQL pgcrypto 확장 모듈을 이용해 비밀번호를 해시할 때, salt 값을 별도로 저장하지 않는 것이 일반적입니다. 이유는 crypt() 함수가 해시 결과 안에 salt 정보를 함께 포함하기 때문입니다.
+
+비밀번호를 처음 저장할 때는 gen_salt() 함수로 salt를 생성하고, crypt(비밀번호, salt)로 해시를 만듭니다.
+
+이 해시 문자열 안에 salt와 알고리즘 정보가 모두 포함되어 저장됩니다.
+
+로그인 검증 시에는 저장된 해시 값을 salt 인자로 다시 crypt()에 넣어 같은 방식으로 해시를 생성하고, 결과를 비교합니다.
+
+즉, salt를 별도의 컬럼에 저장하지 않고, 해시 문자열 자체에 포함시키는 방식이 표준입니다.
+```
