@@ -91,6 +91,7 @@
 
 - [데이터베이스](./db/db.md)
   - [postgresql](./db/postgresql/postgresql.md)
+    - [보안](./db/postgresql/crypt.md)
   - [sqlite3](./db/sqlite3/sqlite3.md)
 
 - [유틸리티](./utility/utility.md)
