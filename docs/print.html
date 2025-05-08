@@ -1387,8 +1387,248 @@ function LongTask_async()
 <h2 id="실행"><a class="header" href="#실행">실행</a></h2>
 <pre><code>npm run dev
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="nextauth"><a class="header" href="#nextauth">nextauth</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="next-auth"><a class="header" href="#next-auth">next-auth</a></h1>
 <p>좋은 자료: <a href="https://mycodings.fly.dev/blog/2023-05-31-nextjs-nextauth-tutorial-1-setup" title="" target="_blank">https://mycodings.fly.dev/blog/2023-05-31-nextjs-nextauth-tutorial-1-setup</a></p>
+<p>지금은 auth.js로 이름을 바꾸었다.</p>
+<h2 id="next-auth-설치"><a class="header" href="#next-auth-설치">next-auth 설치</a></h2>
+<pre><code>npm install next-auth
+</code></pre>
+<h2 id="appauthnextauthroutets"><a class="header" href="#appauthnextauthroutets">/app/auth/[…nextauth]/route.ts</a></h2>
+<p>next-auth는 이 파일을 중심으로 돌아간다. 로그인 방법, 로그인 버튼의 위치, 로그인 성공 시 이후 절차 같은 것들이 여기에 기술된다.</p>
+<h3 id="로그인-방법"><a class="header" href="#로그인-방법">로그인 방법</a></h3>
+<h4 id="credentials"><a class="header" href="#credentials">credentials</a></h4>
+<p>아이디, 패스워드로 인증하는 방법. 인증에 필요한 항목(예: 아이디, 패스워드)를 정해주면 기본폼으로 로그인 페이지를 만들어준다. 물론 이걸 쓰는 사람은 없을 듯. 로그인 페이지는 커스터마이징이 가능하다.</p>
+<h3 id="sns"><a class="header" href="#sns">sns</a></h3>
+<p>google id, facebook id 로 로그인하는 방법 제공. 아직 해 본 적 없음.</p>
+<h2 id="로그인로그아웃-버튼"><a class="header" href="#로그인로그아웃-버튼">로그인/로그아웃 버튼</a></h2>
+<pre><code class="language-ts">import { signIn, signOut, useSession } from "next-auth/react";
+
+return(
+&lt;span onClick={() =&gt; signIn()}&gt;로그인&lt;/span&gt;
+);
+</code></pre>
+<p>버튼을 클릭하면 next-auth/react의 <code>signIn()</code> 함수를 호출한다. 이렇게 되면 next-auth에서 제공하는 기본 로그인 폼이 나타난다.</p>
+<p>로그아웃할 때는 <code>signOut()</code> 함수를 호출하면 된다. next-auth가 로그아웃에 필요한 처리(세션값을 삭제.. 까지만 확인함)를 해 준다.</p>
+<h2 id="로그인-절차"><a class="header" href="#로그인-절차">로그인 절차</a></h2>
+<p>next-auth를 이용해 로그인하면 세션에 값이 자동으로 들어가는 등 상당히 많은 부분들이 자동화된다.</p>
+<p>로그인은 authorize()함수 내에서 처리된다.</p>
+<p>이 함수에서 뭔가 자료를 리턴하면 로그인된거고, null을 리턴하면 로그인에 실패한거다.</p>
+<p>그러니 이 authorize() 함수 내에서 아이디와 비밀번호로 DB 검색을 하고 그 결과를 담은 user 객체를 리턴하면 로그인이 일단 끝난다.</p>
+<p>이렇게 리턴된 user 객체는 callback에서 처리된다.</p>
+<h3 id="callbacks"><a class="header" href="#callbacks">callbacks</a></h3>
+<p>next-auth는 로그인에서 2개의 callback을 제공한다.</p>
+<h4 id="jwt-콜백-함수"><a class="header" href="#jwt-콜백-함수">jwt() 콜백 함수</a></h4>
+<p>JWT가 생성되거나 업데이트될 때 실행되는데, authorize() 함수에서 값이 리턴되면 바로 JWT를 만들기 때문에 이 콜백함수도 실행된다.</p>
+<p>2개의 파라미터를 받는다. token, user 를 받는데,<br />
+authorize() 함수에서 로그인 성공 시 리턴된 user 객체가 user 파라미터로 넘어온다.</p>
+<pre><code class="language-ts">console.log("[jwt] user = ", user);
+</code></pre>
+<p>결과</p>
+<pre><code>[jwt] user =  {
+  id: 'A10001',
+  nickname: '교육생 1',
+  role_cd: 11
+}
+</code></pre>
+<p>이 값을 전부 token에 넣어주면, user 객체의 값과 jwt 값이 token 안에 다 들어가 세션을 유지하는데 사용할 수 있게 된다.</p>
+<pre><code class="language-ts">callbacks: {
+    jwt({ token, user }) 
+    {
+      if (user) 
+      {
+        token.id = user.id;
+        token.nickname = user.nickname;                
+        token.role_cd = user.role_cd;
+      }
+      
+      return token;
+    },
+</code></pre>
+<p>token의 type을 바꾸지 않아도 저렇게 잘 된다.</p>
+<p>이렇게 하면 다음과 같이 token 값이 나온다. jti 등의 항목이 자동으로 추가되어 있다.</p>
+<pre><code>[jwt] token =  {
+  sub: 'A10001',
+  id: 'A10001',
+  nickname: '교육생 1',
+  role_cd: 11,
+  iat: 1746703602,
+  exp: 1749295602,
+  jti: '241f89fd-2e2a-424e-bab8-OOXOOXOXOX'
+}
+
+[jwt] user =  undefined
+</code></pre>
+<p>가만 보면 jwt()가 두 번 호출 되는데, 처음엔 user값이 있는 채로, 두 번째는 user 값이 없는 채로 들어온다.</p>
+<p>이렇게 jwt() 콜백을 통해 token에 값을 채워 넣으면 이 token 값이 세션에 계속 유지된다.</p>
+<h4 id="session-콜백-함수"><a class="header" href="#session-콜백-함수">session() 콜백 함수</a></h4>
+<p>session() 콜백 함수는 로그인할 때는 상관이 없다가 사용자가 세션값을 달라고 하면 그 때 이 session() 함수가 실행된다.</p>
+<p>세션값을 달라고 하는 때는 클라이언트 컴퍼넌트가 useSession hook을 사용하거나 server 컴퍼넌트가 getServerSession() 함수를 호출할 때이다.</p>
+<p>그래서 그 때마다 session.user 에 값을 채워준다.</p>
+<pre><code class="language-ts">async session({ session, token, user }) 
+    {   
+      session.user = {
+        id : token.id as string,
+        nickname: token.nickname as string,
+        role_cd: token.role_cd as number
+      };
+
+      console.log("[session] session.user = ", session.user);
+      
+      return session;
+    },
+  },
+</code></pre>
+<p>위 log의 결과는 다음과 같다.</p>
+<pre><code class="language-ts">[session] session.user =  {
+  id: 'A10001',
+  nickname: '교육생 1',
+  role_cd: 11
+}
+</code></pre>
+<p>jwt() 콜백 함수에서 챙겨놨던 token의 값을 session() 콜백 함수에서 사용하는 모습이다.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="nextauth-튜토리얼"><a class="header" href="#nextauth-튜토리얼">nextauth 튜토리얼</a></h1>
+<ul>
+<li>next.js 버전: 15.3.52</li>
+<li>nextauth 버전 4.24.11</li>
+<li>postgresql 버전: 17.4</li>
+<li>pg 라이브러리 버전: 8.15.6</li>
+<li>작성: 2025. 5. 8.</li>
+</ul>
+<h2 id="db-설정"><a class="header" href="#db-설정">DB 설정</a></h2>
+<pre><code class="language-sql">-- user 생성은 생략
+
+root@31dfb447326c:/# su - postgres
+
+
+postgres@31dfb447326c:~$ psql 
+psql (17.4 (Debian 17.4-1.pgdg120+2))
+Type "help" for help.
+
+
+postgres=# create database nextauth owner scott;
+CREATE DATABASE
+
+
+postgres=# exit
+
+
+postgres@31dfb447326c:~$ psql -U scott -d nextauth
+psql (17.4 (Debian 17.4-1.pgdg120+2))
+Type "help" for help.
+
+
+nextauth=&gt; create table member
+(
+    id varchar(10) primary key
+    , nickname varchar(10) not null
+    , pwd varchar(62) not null
+    , email varchar(100)
+);
+CREATE TABLE
+
+
+-- member 하나 추가
+nextauth=&gt; insert into member(id, nickname, pwd, email) values 
+('user01', 'nickname01', crypt('1234', gen_salt('bf')), 'test@gmail.com');
+INSERT 0 1
+
+
+-- crypt extension 생성. 로그인 위해
+nextauth=&gt; create extension pgcrypto;
+CREATE EXTENSION
+
+
+-- data 테이블 추가하고 데이터 2개 추가. session 테스트 위해.
+nextauth=&gt; create table data (id int primary key, title varchar(100) not null);
+CREATE TABLE
+nextauth=&gt; insert into data (id, title) values (1, 'about next.js');
+INSERT 0 1
+nextauth=&gt; insert into data (id, title) values (2, 'about react');
+INSERT 0 1
+</code></pre>
+<h2 id="nextjs-프로젝트-생성"><a class="header" href="#nextjs-프로젝트-생성">next.js 프로젝트 생성</a></h2>
+<h3 id="프로젝트-생성-2"><a class="header" href="#프로젝트-생성-2">프로젝트 생성</a></h3>
+<pre><code class="language-ps">npx create-next-app
+√ What is your project named? ... nextauth
+√ Would you like to use TypeScript? ... No / Yes
+√ Would you like to use ESLint? ... No / Yes
+√ Would you like to use Tailwind CSS? ... No / Yes
+√ Would you like your code inside a `src/` directory? ... No / Yes
+√ Would you like to use App Router? (recommended) ... No / Yes
+√ Would you like to use Turbopack for `next dev`? ... No / Yes
+√ Would you like to customize the import alias (`@/*` by default)? ... No / Yes
+Creating a new Next.js app in D:\test\nextauth001\src\nextauth.
+
+Using npm.
+
+Initializing project with template: app-tw
+
+
+Installing dependencies:
+- react
+- react-dom
+- next
+
+Installing devDependencies:
+- typescript
+- @types/node
+- @types/react
+- @types/react-dom
+- @tailwindcss/postcss
+- tailwindcss
+- eslint
+- eslint-config-next
+- @eslint/eslintrc
+
+
+added 436 packages, and audited 437 packages in 54s
+
+165 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+Success! Created nextauth at D:\test\nextauth001\src\nextauth
+</code></pre>
+<h3 id="nextauthjs-설치"><a class="header" href="#nextauthjs-설치">nextauth.js 설치</a></h3>
+<pre><code class="language-ps">PS D:\test\nextauth001\src\nextauth&gt; npm install next-auth
+
+added 14 packages, and audited 451 packages in 9s
+
+169 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+PS D:\test\nextauth001\src\nextauth&gt; npm list next-auth
+nextauth@0.1.0 D:\github_stuousk\nextauth001\src\nextauth
+└── next-auth@4.24.11
+</code></pre>
+<h3 id="pg-패키지-설치"><a class="header" href="#pg-패키지-설치">pg 패키지 설치</a></h3>
+<pre><code class="language-ps">PS D:\test\nextauth001\src\nextauth&gt; npm install pg
+
+added 14 packages, and audited 465 packages in 3s
+
+169 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+PS D:\test\nextauth001\src\nextauth&gt; npm list pg
+nextauth@0.1.0 D:\test\nextauth001\src\nextauth
+└─┬ pg@8.15.6
+  └─┬ pg-pool@3.9.6
+    └── pg@8.15.6 deduped
+
+PS D:\test\nextauth001\src\nextauth&gt; npm install --save @types/pg
+
+added 9 packages, and audited 474 packages in 2s
+
+169 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+</code></pre>
+<h2 id="nextjs에서-pg-접속"><a class="header" href="#nextjs에서-pg-접속">next.js에서 pg 접속</a></h2>
+<h2 id="nextauth를-이용한-로그인"><a class="header" href="#nextauth를-이용한-로그인">nextauth를 이용한 로그인</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="settings"><a class="header" href="#settings">settings</a></h1>
 <h2 id="세팅파일-만드는-데-사용되는-파일-포맷들"><a class="header" href="#세팅파일-만드는-데-사용되는-파일-포맷들">세팅파일 만드는 데 사용되는 파일 포맷들</a></h2>
 <p>https://velog.io/@jk01019/TOML-VS-YAML</p>
@@ -1895,7 +2135,7 @@ Microsoft는 타사 패키지에 대한 책임을 지지 않고 라이선스를 
 <li>공식: https://rust-lang.github.io/mdBook/guide/installation.html</li>
 <li>블로그: https://piatoss3612.tistory.com/105</li>
 </ul>
-<h3 id="프로젝트-생성-2"><a class="header" href="#프로젝트-생성-2">프로젝트 생성</a></h3>
+<h3 id="프로젝트-생성-3"><a class="header" href="#프로젝트-생성-3">프로젝트 생성</a></h3>
 <pre><code>mdbook init &lt;프로젝트명&gt;
 </code></pre>
 <h3 id="프로젝트-실시간-보기"><a class="header" href="#프로젝트-실시간-보기">프로젝트 실시간 보기</a></h3>

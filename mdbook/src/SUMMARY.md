@@ -73,6 +73,7 @@
     - [next.js](./next.js/next.js.md)
   
     - [nextauth](./nextauth/nextauth.md)
+      - [nextauth tutorial](./nextauth/nextauth_001.md)
 
   - [settings](./dev/settings/settings.md)
 
