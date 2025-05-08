@@ -17,6 +17,9 @@
 
   - [wsl](./wsl/wsl.md)
 
+  - [linux](./linux/linux.md)
+    - [fedora](./linux/fedora.md)
+
 
 - [개발](./dev/dev.md)
   - [언어 / framework](./dev/lang/lang.md)

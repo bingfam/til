@@ -325,21 +325,47 @@ $ podman compose up
 <p><img src="wsl/img/20250508111049.png" alt="" /></p>
 <p><img src="wsl/img/20250508111725.png" alt="" /></p>
 <p>맨 아래 <code>hyper-v 확장 가능 가상 스위치</code>가 꺼져있다.</p>
-<p>이걸 켜면</p>
+<p>이걸 켜려고 하면</p>
 <p><img src="wsl/img/20250508111911.png" alt="" /></p>
 <p>가 나옴.</p>
 <p>Hyper-V 확장 가능 가상 서비스를 켜려고 하는건데.</p>
 <p>일단 여기까지만 보고 건드리지는 말고 다른 걸 해보자.</p>
 <h3 id="문제-해결"><a class="header" href="#문제-해결">문제 해결</a></h3>
-<p>다음 방법으로 해결함.</p>
-<p>관리자 권한으로 명령 프롬프트 실행한 다음,</p>
+<p>다음 방법으로 해결함. 네트워크를 재설정하는 거임.</p>
+<p>관리자 권한 명령 프롬프트에서,</p>
 <pre><code class="language-ps">netsh interface ip reset
 netsh winsock reset
 </code></pre>
 <p>재부팅하고 나니 인터넷 연결이 수동으로 바뀌어서 DHCP로 돌려줘야 했음</p>
 <p>그리고 멀티 모니터의 위치 등 설정이 바뀌어 있었음.</p>
 <p><img src="wsl/img/20250508114720.png" alt="" /></p>
-<p>그런데 인터넷은 잘 되는데 여전히 인터넷에 연결되어 있지 않다고 나옴.</p>
+<p>그런데 WSL VM에서 인터넷 잘 되는데 여전히 인터넷에 연결되어 있지 않다고 나옴.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="linux"><a class="header" href="#linux">linux</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="fedora"><a class="header" href="#fedora">fedora</a></h1>
+<h2 id="패키지-관리"><a class="header" href="#패키지-관리">패키지 관리</a></h2>
+<p>fedora는 debian 계열과 달리  apt-get을 쓰지 않고 dnf를 사용한다.</p>
+<div class="table-wrapper"><table><thead><tr><th><strong>APT 명령어</strong></th><th><strong>DNF 명령어</strong></th><th><strong>설명</strong></th></tr></thead><tbody>
+<tr><td><code>apt-get install [패키지명]</code></td><td><code>dnf install [패키지명]</code></td><td>패키지 설치</td></tr>
+<tr><td><code>apt-get update</code></td><td><code>dnf check-update</code></td><td>패키지 목록 업데이트 (DNF는 자동으로 캐시를 갱신하므로 자주 필요하지 않음)</td></tr>
+<tr><td><code>apt-get upgrade</code></td><td><code>dnf upgrade</code></td><td>설치된 패키지 업그레이드</td></tr>
+<tr><td><code>apt-get remove [패키지명]</code></td><td><code>dnf remove [패키지명]</code></td><td>패키지 제거</td></tr>
+<tr><td><code>apt-get autoremove</code></td><td><code>dnf autoremove</code></td><td>더 이상 필요하지 않은 의존성 패키지 제거</td></tr>
+<tr><td><code>apt-cache search [키워드]</code></td><td><code>dnf search [키워드]</code></td><td>패키지 검색</td></tr>
+</tbody></table>
+</div>
+<p><strong>예시</strong>:</p>
+<pre><code class="language-bash"># 패키지 설치
+$ dnf install firefox
+
+# 패키지 제거
+$ dnf remove firefox
+
+# 패키지 목록 업데이트
+$ dnf check-update
+
+# 시스템 업그레이드
+$ dnf upgrade
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="개발"><a class="header" href="#개발">개발</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="언어"><a class="header" href="#언어">언어</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rust"><a class="header" href="#rust">rust</a></h1>
@@ -714,7 +740,7 @@ https://learn.microsoft.com/en-us/windows/apps/winui/winui3/create-your-first-wi
 <pre><code>uv run &lt;python 파일명&gt;
 </code></pre>
 <br />
-<h3 id="패키지-관리"><a class="header" href="#패키지-관리">패키지 관리</a></h3>
+<h3 id="패키지-관리-1"><a class="header" href="#패키지-관리-1">패키지 관리</a></h3>
 <h4 id="패키지-추가"><a class="header" href="#패키지-추가">패키지 추가</a></h4>
 <pre><code>uv add &lt;패키지명&gt;
 </code></pre>
@@ -1876,6 +1902,10 @@ Microsoft는 타사 패키지에 대한 책임을 지지 않고 라이선스를 
 <pre><code>cd &lt;프로젝트명&gt;
 mdbook serve --open
 </code></pre>
+<p>만약 포트번호를 3000번이 아닌 다른 번호(3001)로 주고 싶으면</p>
+<pre><code>mdbook serve --open -p 3001
+</code></pre>
+<p>과 같이 한다.</p>
 <h3 id="프로젝트-build"><a class="header" href="#프로젝트-build">프로젝트 build</a></h3>
 <pre><code>mdbook build
 </code></pre>

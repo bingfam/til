@@ -17,6 +17,14 @@ cd <프로젝트명>
 mdbook serve --open
 ```
 
+만약 포트번호를 3000번이 아닌 다른 번호(3001)로 주고 싶으면
+
+```
+mdbook serve --open -p 3001
+```
+과 같이 한다.
+
+
 ### 프로젝트 build
 ```
 mdbook build

@@ -161,21 +161,21 @@
 <p><img src="img/20250508111049.png" alt="" /></p>
 <p><img src="img/20250508111725.png" alt="" /></p>
 <p>맨 아래 <code>hyper-v 확장 가능 가상 스위치</code>가 꺼져있다.</p>
-<p>이걸 켜면</p>
+<p>이걸 켜려고 하면</p>
 <p><img src="img/20250508111911.png" alt="" /></p>
 <p>가 나옴.</p>
 <p>Hyper-V 확장 가능 가상 서비스를 켜려고 하는건데.</p>
 <p>일단 여기까지만 보고 건드리지는 말고 다른 걸 해보자.</p>
 <h3 id="문제-해결"><a class="header" href="#문제-해결">문제 해결</a></h3>
-<p>다음 방법으로 해결함.</p>
-<p>관리자 권한으로 명령 프롬프트 실행한 다음,</p>
+<p>다음 방법으로 해결함. 네트워크를 재설정하는 거임.</p>
+<p>관리자 권한 명령 프롬프트에서,</p>
 <pre><code class="language-ps">netsh interface ip reset
 netsh winsock reset
 </code></pre>
 <p>재부팅하고 나니 인터넷 연결이 수동으로 바뀌어서 DHCP로 돌려줘야 했음</p>
 <p>그리고 멀티 모니터의 위치 등 설정이 바뀌어 있었음.</p>
 <p><img src="img/20250508114720.png" alt="" /></p>
-<p>그런데 인터넷은 잘 되는데 여전히 인터넷에 연결되어 있지 않다고 나옴.</p>
+<p>그런데 WSL VM에서 인터넷 잘 되는데 여전히 인터넷에 연결되어 있지 않다고 나옴.</p>
 
                     </main>
 
@@ -185,7 +185,7 @@ netsh winsock reset
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../dev/dev.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../linux/linux.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -199,7 +199,7 @@ netsh winsock reset
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../dev/dev.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../linux/linux.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
