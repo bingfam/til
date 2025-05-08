@@ -24,19 +24,18 @@
         <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="../custom.css">
 
 
-        <!-- Provide site root and default themes to javascript -->
+        <!-- Provide site root to javascript -->
         <script>
-            const path_to_root = "../";
-            const default_light_theme = "light";
-            const default_dark_theme = "navy";
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc.js"></script>
@@ -46,8 +45,8 @@
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                let theme = localStorage.getItem('mdbook-theme');
-                let sidebar = localStorage.getItem('mdbook-sidebar');
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -61,8 +60,7 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
-            let theme;
+            var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -75,8 +73,8 @@
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            let sidebar = null;
-            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -112,7 +110,6 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
@@ -164,6 +161,24 @@
 <li>pg 라이브러리 버전: 8.15.6</li>
 <li>작성: 2025. 5. 8.</li>
 </ul>
+<h2 id="podman-설정"><a class="header" href="#podman-설정">podman 설정</a></h2>
+<h3 id="postgresql-이미지-다운로드"><a class="header" href="#postgresql-이미지-다운로드">postgresql 이미지 다운로드</a></h3>
+<pre><code class="language-ps">PS E:\&gt; podman search postgres
+NAME                                DESCRIPTION
+docker.io/library/postgres          The PostgreSQL object-relational database sy...
+
+
+PS E:\&gt; podman pull docker.io/library/postgres
+Trying to pull docker.io/library/postgres:latest...
+Getting image source signatures
+</code></pre>
+<h3 id="postgresql-실행"><a class="header" href="#postgresql-실행">postgresql 실행</a></h3>
+<pre><code class="language-ps">-- 네트워크 설정
+podman network create --subnet=172.31.0.0/16 mynet
+
+-- 실행
+podman run -d --net mynet --ip 172.31.0.7 --name postgres -p 43432:5432 -p 43022:22 -e POSTGRES_PASSWORD=My:s3Cr3t/ -e TZ=Asia/Seoul docker.io/library/postgres:latest
+</code></pre>
 <h2 id="db-설정"><a class="header" href="#db-설정">DB 설정</a></h2>
 <pre><code class="language-sql">-- user 생성은 생략
 
@@ -175,7 +190,11 @@ psql (17.4 (Debian 17.4-1.pgdg120+2))
 Type "help" for help.
 
 
-postgres=# create database nextauth owner scott;
+postgres=# create user scott password 'tiger';
+CREATE ROLE
+
+
+postgres=# create database nextauth owner=scott LC_COLLATE='C.utf8' LC_CTYPE='C.utf8' template=template0;
 CREATE DATABASE
 
 
@@ -197,15 +216,16 @@ nextauth=&gt; create table member
 CREATE TABLE
 
 
+-- crypt extension 생성. 로그인 위해
+nextauth=&gt; create extension pgcrypto;
+CREATE EXTENSION
+
+
 -- member 하나 추가
 nextauth=&gt; insert into member(id, nickname, pwd, email) values 
 ('user01', 'nickname01', crypt('1234', gen_salt('bf')), 'test@gmail.com');
 INSERT 0 1
 
-
--- crypt extension 생성. 로그인 위해
-nextauth=&gt; create extension pgcrypto;
-CREATE EXTENSION
 
 
 -- data 테이블 추가하고 데이터 2개 추가. session 테스트 위해.
@@ -299,6 +319,7 @@ found 0 vulnerabilities
 </code></pre>
 <h2 id="nextjs에서-pg-접속"><a class="header" href="#nextjs에서-pg-접속">next.js에서 pg 접속</a></h2>
 <h2 id="nextauth를-이용한-로그인"><a class="header" href="#nextauth를-이용한-로그인">nextauth를 이용한 로그인</a></h2>
+<p>app/api/auth/[…nextauth]/route.ts 파일 생성</p>
 
                     </main>
 

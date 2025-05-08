@@ -24,19 +24,18 @@
         <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="../../custom.css">
 
 
-        <!-- Provide site root and default themes to javascript -->
+        <!-- Provide site root to javascript -->
         <script>
-            const path_to_root = "../../";
-            const default_light_theme = "light";
-            const default_dark_theme = "navy";
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc.js"></script>
@@ -46,8 +45,8 @@
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                let theme = localStorage.getItem('mdbook-theme');
-                let sidebar = localStorage.getItem('mdbook-sidebar');
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -61,8 +60,7 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
-            let theme;
+            var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -75,8 +73,8 @@
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            let sidebar = null;
-            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -112,7 +110,6 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
@@ -176,8 +173,8 @@ CREATE ROLE
  postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS
  scott     |
 </code></pre>
-<h3 id="데이터베이스-생성"><a class="header" href="#데이터베이스-생성">데이터베이스 생성</a></h3>
-<pre><code class="language-sql">postgres=# create database test owner scott;
+<h3 id="데이터베이스-생성한글-잘-나오게"><a class="header" href="#데이터베이스-생성한글-잘-나오게">데이터베이스 생성(한글 잘 나오게)</a></h3>
+<pre><code class="language-sql">postgres=# create database test owner scott  LC_COLLATE='C.utf8' LC_CTYPE='C.utf8' template=template0;
 CREATE DATABASE
 </code></pre>
 <h3 id="scott으로-접속하기"><a class="header" href="#scott으로-접속하기">scott으로 접속하기</a></h3>
@@ -187,6 +184,39 @@ psql (17.4 (Debian 17.4-1.pgdg120+2))
 Type "help" for help.
 
 test=&gt; 
+</code></pre>
+<h3 id="데이터베이스-목록-보기"><a class="header" href="#데이터베이스-목록-보기">데이터베이스 목록 보기</a></h3>
+<pre><code class="language-sql">nextauth=&gt; \l
+                                                    List of databases
+   Name    |  Owner   | Encoding | Locale Provider |  Collate   |   Ctype    | Locale | ICU Rules |   Access privileges   
+-----------+----------+----------+-----------------+------------+------------+--------+-----------+-----------------------
+ nextauth  | scott    | UTF8     | libc            | C.utf8     | C.utf8     |        |           | 
+ postgres  | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |        |           | 
+
+ (4 rows)
+</code></pre>
+<h3 id="테이블-목록-보기"><a class="header" href="#테이블-목록-보기">테이블 목록 보기</a></h3>
+<pre><code class="language-sql">nextauth=&gt; \dt
+        List of relations
+ Schema |  Name  | Type  | Owner 
+--------+--------+-------+-------
+ public | data   | table | scott
+ public | member | table | scott
+(2 rows)
+</code></pre>
+<h3 id="테이블-구조-보기"><a class="header" href="#테이블-구조-보기">테이블 구조 보기</a></h3>
+<pre><code class="language-sql">nextauth=&gt; \d member
+                       Table "public.member"
+  Column  |          Type          | Collation | Nullable | Default 
+----------+------------------------+-----------+----------+---------
+ id       | character varying(10)  |           | not null | 
+ nickname | character varying(10)  |           | not null | 
+ pwd      | character varying(62)  |           | not null | 
+ email    | character varying(100) |           |          | 
+Indexes:
+    "member_pkey" PRIMARY KEY, btree (id)
+
+nextauth=&gt; 
 </code></pre>
 
                     </main>

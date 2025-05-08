@@ -14,6 +14,7 @@
 
   - [podman](./podman/podman.md)
     - [docker 이미지를 podman에서 사용](./podman/podman_001.md)
+    - [podman 컨테이너 등 삭제 안될 때](./podman/podman_002.md)
 
   - [wsl](./wsl/wsl.md)
 

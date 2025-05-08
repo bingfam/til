@@ -25,19 +25,18 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="custom.css">
 
 
-        <!-- Provide site root and default themes to javascript -->
+        <!-- Provide site root to javascript -->
         <script>
-            const path_to_root = "";
-            const default_light_theme = "light";
-            const default_dark_theme = "navy";
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
@@ -47,8 +46,8 @@
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                let theme = localStorage.getItem('mdbook-theme');
-                let sidebar = localStorage.getItem('mdbook-sidebar');
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -62,8 +61,7 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
-            let theme;
+            var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -76,8 +74,8 @@
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            let sidebar = null;
-            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -113,7 +111,6 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
@@ -320,6 +317,48 @@ $ podman compose up
 <p>docker는 윈도우 자체에서 이미지를 다운로드 받는데, podman은 wsl에서 이미지를 다운로드 받는 형식인가봄.</p>
 <p>그래서 podman과 연결된 vm에서 인터넷이 안되었기 때문에 pull image가 아예 안되었던 것. 권한 문제인줄 알고 github 등에 다 로그인 했으나 그 문제가 아니었음. 어쩐지 계속 io time out 이 나오더라.</p>
 <p>해결방법은 <a href="podman/../wsl/wsl.html">여기</a>에.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="podman-컨테이너-등-삭제-안될-때"><a class="header" href="#podman-컨테이너-등-삭제-안될-때">podman 컨테이너 등 삭제 안될 때</a></h1>
+<p>windows terminal에 탭이 여러 개 있다보니 wsl용 linux 탭을 열어서 그 안에서 podman run을 해 컨테이너를 하나 만들었다. 컨테이너 이름은 postgres 이다.</p>
+<p>그런데 이렇게 만들어진 건 윈도우에서 실행되고 있는 podman desktop에서는 보이지 않는다.</p>
+<p>CLI에서도 컨테이너가 확인이 안된다.</p>
+<pre><code class="language-ps">PS E:\&gt; podman ps -a
+CONTAINER ID  IMAGE       COMMAND     CREATED     STATUS      PORTS       NAMES
+PS E:\&gt;
+</code></pre>
+<p>이 상태에서 같은 이름(postgres)으로 컨테이너를 생성하려 하면 에러가 난다.</p>
+<pre><code class="language-ps">[user@DESKTOP-89UD3IQ e]$ podman run -d --net mynet --ip 172.31.0.7 --name postgres -p 43432:5432 -p 43022:22 -e POSTGRES_PASSWORD=My:s3Cr3t/ -e TZ=Asia/Seoul docker.io/library/postgres:latest
+WARN[0000] Using cgroups-v1 which is deprecated in favor of cgroups-v2 with Podman v5 and will be removed in a future version. Set environment variable `PODMAN_IGNORE_CGROUPSV1_WARNING` to hide this warning.
+
+Error: creating container storage: the container name "postgres" is already in use by f1823105fcf1f9a60dc80c83f009730d513ec996ca4eba2ef928066648030565. You have to remove that container to be able to reuse that name: that name is already in use, or use --replace to instruct Podman to do so.
+[user@DESKTOP-89UD3IQ e]$
+PS E:\&gt;
+</code></pre>
+<p>이걸 wsl 에서 똑같이 해보면,</p>
+<pre><code class="language-ps">[user@DESKTOP-89UD3IQ ~]$ podman ps -a
+WARN[0000] Using cgroups-v1 which is deprecated in favor of cgroups-v2 with Podman v5 and will be removed in a future version. Set environment variable `PODMAN_IGNORE_CGROUPSV1_WARNING` to hide this warning.
+CONTAINER ID  IMAGE                              COMMAND     CREATED         STATUS                    PORTS                                           NAMES
+f1823105fcf1  docker.io/library/postgres:latest  postgres    24 minutes ago  Exited (0) 292 years ago  0.0.0.0:43022-&gt;22/tcp, 0.0.0.0:43432-&gt;5432/tcp  postgres
+</code></pre>
+<p>이렇게 나온다. 이제 찾았으니 지울 수 있게 되었다.</p>
+<p>모든 컨테이너를 다 중지하고,</p>
+<pre><code class="language-ps">[user@DESKTOP-89UD3IQ ~]$ podman stop --all
+WARN[0000] Using cgroups-v1 which is deprecated in favor of cgroups-v2 with Podman v5 and will be removed in a future version. Set environment variable `PODMAN_IGNORE_CGROUPSV1_WARNING` to hide this warning.
+f1823105fcf1f9a60dc80c83f009730d513ec996ca4eba2ef928066648030565
+[user@DESKTOP-89UD3IQ ~]$
+</code></pre>
+<p>모든 컨테이너를 다 삭제한다.</p>
+<pre><code class="language-ps">[user@DESKTOP-89UD3IQ ~]$ podman rm --all
+WARN[0000] Using cgroups-v1 which is deprecated in favor of cgroups-v2 with Podman v5 and will be removed in a future version. Set environment variable `PODMAN_IGNORE_CGROUPSV1_WARNING` to hide this warning.
+f1823105fcf1f9a60dc80c83f009730d513ec996ca4eba2ef928066648030565
+[user@DESKTOP-89UD3IQ ~]$
+</code></pre>
+<p>다시 확인해 보면,</p>
+<pre><code class="language-ps">[user@DESKTOP-89UD3IQ ~]$ podman ps -a
+WARN[0000] Using cgroups-v1 which is deprecated in favor of cgroups-v2 with Podman v5 and will be removed in a future version. Set environment variable `PODMAN_IGNORE_CGROUPSV1_WARNING` to hide this warning.
+CONTAINER ID  IMAGE       COMMAND     CREATED     STATUS      PORTS       NAMES
+[user@DESKTOP-89UD3IQ ~]$
+</code></pre>
+<p>깨끗해졌다. 이젠 wsl 들어가서 podman 명령 내리지 말아야지.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="wsl"><a class="header" href="#wsl">WSL</a></h1>
 <h2 id="wsl-vm에서-인터넷이-안-된다"><a class="header" href="#wsl-vm에서-인터넷이-안-된다">WSL vm에서 인터넷이 안 된다.</a></h2>
 <p><img src="wsl/img/20250508111049.png" alt="" /></p>
@@ -524,8 +563,8 @@ pub trait Math
 <p><img src="dev/rust/img/20241201152819.png" alt="" /></p>
 <h2 id="휴먼편지체"><a class="header" href="#휴먼편지체">휴먼편지체</a></h2>
 <p><img src="dev/rust/img/20241201152827.png" alt="" /></p>
-<pre><pre class="playground"><code class="language-rust">#main.rs 전문
-
+<pre><pre class="playground"><code class="language-rust"><span class="boring">main.rs 전문
+</span>
 use iced::{Element, Sandbox, Settings};
 use iced::{Font};
 use iced::widget::text;
@@ -1387,6 +1426,16 @@ function LongTask_async()
 <h2 id="실행"><a class="header" href="#실행">실행</a></h2>
 <pre><code>npm run dev
 </code></pre>
+<h2 id="node_modules-설치"><a class="header" href="#node_modules-설치">node_modules 설치</a></h2>
+<p>.gitignore 파일을 보면</p>
+<p>/node_modules</p>
+<p>가 포함되어 있다.</p>
+<p>그럼 관련된 패키지들은 git을 통해 공유가 되지 않는다는 건데, 다른 곳에서 clone한 사람들은 프로젝트와 관련된 패키지가 없다는 문제가 생긴다.</p>
+<p>이 문제는 아주 간단하게 해결된다.</p>
+<p>프로젝트 root 디렉토리에서</p>
+<pre><code class="language-ps">npm install
+</code></pre>
+<p>을 하면, <code>package.json</code> 파일에서 <code>dependencies</code>와 <code>devDependencies</code> 섹션에서 모든 패키지를 찾아 node_modules 폴더를 생성하고 설치한다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="next-auth"><a class="header" href="#next-auth">next-auth</a></h1>
 <p>좋은 자료: <a href="https://mycodings.fly.dev/blog/2023-05-31-nextjs-nextauth-tutorial-1-setup" title="" target="_blank">https://mycodings.fly.dev/blog/2023-05-31-nextjs-nextauth-tutorial-1-setup</a></p>
 <p>지금은 auth.js로 이름을 바꾸었다.</p>
@@ -1494,6 +1543,24 @@ authorize() 함수에서 로그인 성공 시 리턴된 user 객체가 user 파�
 <li>pg 라이브러리 버전: 8.15.6</li>
 <li>작성: 2025. 5. 8.</li>
 </ul>
+<h2 id="podman-설정"><a class="header" href="#podman-설정">podman 설정</a></h2>
+<h3 id="postgresql-이미지-다운로드"><a class="header" href="#postgresql-이미지-다운로드">postgresql 이미지 다운로드</a></h3>
+<pre><code class="language-ps">PS E:\&gt; podman search postgres
+NAME                                DESCRIPTION
+docker.io/library/postgres          The PostgreSQL object-relational database sy...
+
+
+PS E:\&gt; podman pull docker.io/library/postgres
+Trying to pull docker.io/library/postgres:latest...
+Getting image source signatures
+</code></pre>
+<h3 id="postgresql-실행"><a class="header" href="#postgresql-실행">postgresql 실행</a></h3>
+<pre><code class="language-ps">-- 네트워크 설정
+podman network create --subnet=172.31.0.0/16 mynet
+
+-- 실행
+podman run -d --net mynet --ip 172.31.0.7 --name postgres -p 43432:5432 -p 43022:22 -e POSTGRES_PASSWORD=My:s3Cr3t/ -e TZ=Asia/Seoul docker.io/library/postgres:latest
+</code></pre>
 <h2 id="db-설정"><a class="header" href="#db-설정">DB 설정</a></h2>
 <pre><code class="language-sql">-- user 생성은 생략
 
@@ -1505,7 +1572,11 @@ psql (17.4 (Debian 17.4-1.pgdg120+2))
 Type "help" for help.
 
 
-postgres=# create database nextauth owner scott;
+postgres=# create user scott password 'tiger';
+CREATE ROLE
+
+
+postgres=# create database nextauth owner=scott LC_COLLATE='C.utf8' LC_CTYPE='C.utf8' template=template0;
 CREATE DATABASE
 
 
@@ -1527,15 +1598,16 @@ nextauth=&gt; create table member
 CREATE TABLE
 
 
+-- crypt extension 생성. 로그인 위해
+nextauth=&gt; create extension pgcrypto;
+CREATE EXTENSION
+
+
 -- member 하나 추가
 nextauth=&gt; insert into member(id, nickname, pwd, email) values 
 ('user01', 'nickname01', crypt('1234', gen_salt('bf')), 'test@gmail.com');
 INSERT 0 1
 
-
--- crypt extension 생성. 로그인 위해
-nextauth=&gt; create extension pgcrypto;
-CREATE EXTENSION
 
 
 -- data 테이블 추가하고 데이터 2개 추가. session 테스트 위해.
@@ -1629,6 +1701,7 @@ found 0 vulnerabilities
 </code></pre>
 <h2 id="nextjs에서-pg-접속"><a class="header" href="#nextjs에서-pg-접속">next.js에서 pg 접속</a></h2>
 <h2 id="nextauth를-이용한-로그인"><a class="header" href="#nextauth를-이용한-로그인">nextauth를 이용한 로그인</a></h2>
+<p>app/api/auth/[…nextauth]/route.ts 파일 생성</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="settings"><a class="header" href="#settings">settings</a></h1>
 <h2 id="세팅파일-만드는-데-사용되는-파일-포맷들"><a class="header" href="#세팅파일-만드는-데-사용되는-파일-포맷들">세팅파일 만드는 데 사용되는 파일 포맷들</a></h2>
 <p>https://velog.io/@jk01019/TOML-VS-YAML</p>
@@ -1924,8 +1997,8 @@ CREATE ROLE
  postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS
  scott     |
 </code></pre>
-<h3 id="데이터베이스-생성"><a class="header" href="#데이터베이스-생성">데이터베이스 생성</a></h3>
-<pre><code class="language-sql">postgres=# create database test owner scott;
+<h3 id="데이터베이스-생성한글-잘-나오게"><a class="header" href="#데이터베이스-생성한글-잘-나오게">데이터베이스 생성(한글 잘 나오게)</a></h3>
+<pre><code class="language-sql">postgres=# create database test owner scott  LC_COLLATE='C.utf8' LC_CTYPE='C.utf8' template=template0;
 CREATE DATABASE
 </code></pre>
 <h3 id="scott으로-접속하기"><a class="header" href="#scott으로-접속하기">scott으로 접속하기</a></h3>
@@ -1935,6 +2008,39 @@ psql (17.4 (Debian 17.4-1.pgdg120+2))
 Type "help" for help.
 
 test=&gt; 
+</code></pre>
+<h3 id="데이터베이스-목록-보기"><a class="header" href="#데이터베이스-목록-보기">데이터베이스 목록 보기</a></h3>
+<pre><code class="language-sql">nextauth=&gt; \l
+                                                    List of databases
+   Name    |  Owner   | Encoding | Locale Provider |  Collate   |   Ctype    | Locale | ICU Rules |   Access privileges   
+-----------+----------+----------+-----------------+------------+------------+--------+-----------+-----------------------
+ nextauth  | scott    | UTF8     | libc            | C.utf8     | C.utf8     |        |           | 
+ postgres  | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |        |           | 
+
+ (4 rows)
+</code></pre>
+<h3 id="테이블-목록-보기"><a class="header" href="#테이블-목록-보기">테이블 목록 보기</a></h3>
+<pre><code class="language-sql">nextauth=&gt; \dt
+        List of relations
+ Schema |  Name  | Type  | Owner 
+--------+--------+-------+-------
+ public | data   | table | scott
+ public | member | table | scott
+(2 rows)
+</code></pre>
+<h3 id="테이블-구조-보기"><a class="header" href="#테이블-구조-보기">테이블 구조 보기</a></h3>
+<pre><code class="language-sql">nextauth=&gt; \d member
+                       Table "public.member"
+  Column  |          Type          | Collation | Nullable | Default 
+----------+------------------------+-----------+----------+---------
+ id       | character varying(10)  |           | not null | 
+ nickname | character varying(10)  |           | not null | 
+ pwd      | character varying(62)  |           | not null | 
+ email    | character varying(100) |           |          | 
+Indexes:
+    "member_pkey" PRIMARY KEY, btree (id)
+
+nextauth=&gt; 
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="postgresql-보안"><a class="header" href="#postgresql-보안">postgresql 보안</a></h1>
 <h2 id="암호화-pgcrypto"><a class="header" href="#암호화-pgcrypto">암호화: pgcrypto</a></h2>

@@ -6,6 +6,30 @@
 - pg 라이브러리 버전: 8.15.6
 - 작성: 2025. 5. 8.
 
+## podman 설정
+
+### postgresql 이미지 다운로드
+```ps
+PS E:\> podman search postgres
+NAME                                DESCRIPTION
+docker.io/library/postgres          The PostgreSQL object-relational database sy...
+
+
+PS E:\> podman pull docker.io/library/postgres
+Trying to pull docker.io/library/postgres:latest...
+Getting image source signatures
+```
+
+### postgresql 실행
+```ps
+-- 네트워크 설정
+podman network create --subnet=172.31.0.0/16 mynet
+
+-- 실행
+podman run -d --net mynet --ip 172.31.0.7 --name postgres -p 43432:5432 -p 43022:22 -e POSTGRES_PASSWORD=My:s3Cr3t/ -e TZ=Asia/Seoul docker.io/library/postgres:latest
+```
+
+
 
 ## DB 설정
 ```sql
@@ -19,7 +43,11 @@ psql (17.4 (Debian 17.4-1.pgdg120+2))
 Type "help" for help.
 
 
-postgres=# create database nextauth owner scott;
+postgres=# create user scott password 'tiger';
+CREATE ROLE
+
+
+postgres=# create database nextauth owner=scott LC_COLLATE='C.utf8' LC_CTYPE='C.utf8' template=template0;
 CREATE DATABASE
 
 
@@ -41,15 +69,16 @@ nextauth=> create table member
 CREATE TABLE
 
 
+-- crypt extension 생성. 로그인 위해
+nextauth=> create extension pgcrypto;
+CREATE EXTENSION
+
+
 -- member 하나 추가
 nextauth=> insert into member(id, nickname, pwd, email) values 
 ('user01', 'nickname01', crypt('1234', gen_salt('bf')), 'test@gmail.com');
 INSERT 0 1
 
-
--- crypt extension 생성. 로그인 위해
-nextauth=> create extension pgcrypto;
-CREATE EXTENSION
 
 
 -- data 테이블 추가하고 데이터 2개 추가. session 테스트 위해.

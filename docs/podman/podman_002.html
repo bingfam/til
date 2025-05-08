@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>LaTeX 설치 - TIL</title>
+        <title>podman 컨테이너 등 삭제 안될 때 - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -153,25 +153,58 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="latex-설치"><a class="header" href="#latex-설치">LaTeX 설치</a></h1>
-<h3 id="1-perl-설치"><a class="header" href="#1-perl-설치">1. perl 설치</a></h3>
-<p>LaTeX Build는 Perl로 이루어진다.<br />
-<a href="https://strawberryperl.com" title="" target="_blank">strawberry perl</a> 설치해 사용함.</p>
-<h3 id="2-vscode-extension-중-latex-workshop-설치"><a class="header" href="#2-vscode-extension-중-latex-workshop-설치">2. vscode extension 중 <code>LaTeX Workshop</code> 설치</a></h3>
-<p>LuaLaTeX를 사용하려면 <a href="./latex001.html">여기</a>를 눌러 vscode를 세팅해야 함.</p>
-<h3 id="3-latex-live-설치"><a class="header" href="#3-latex-live-설치">3. LaTeX Live 설치</a></h3>
-<p>https://www.tug.org/texlive/windows.html#install</p>
-<p>엄청 오래 걸림.</p>
+                        <h1 id="podman-컨테이너-등-삭제-안될-때"><a class="header" href="#podman-컨테이너-등-삭제-안될-때">podman 컨테이너 등 삭제 안될 때</a></h1>
+<p>windows terminal에 탭이 여러 개 있다보니 wsl용 linux 탭을 열어서 그 안에서 podman run을 해 컨테이너를 하나 만들었다. 컨테이너 이름은 postgres 이다.</p>
+<p>그런데 이렇게 만들어진 건 윈도우에서 실행되고 있는 podman desktop에서는 보이지 않는다.</p>
+<p>CLI에서도 컨테이너가 확인이 안된다.</p>
+<pre><code class="language-ps">PS E:\&gt; podman ps -a
+CONTAINER ID  IMAGE       COMMAND     CREATED     STATUS      PORTS       NAMES
+PS E:\&gt;
+</code></pre>
+<p>이 상태에서 같은 이름(postgres)으로 컨테이너를 생성하려 하면 에러가 난다.</p>
+<pre><code class="language-ps">[user@DESKTOP-89UD3IQ e]$ podman run -d --net mynet --ip 172.31.0.7 --name postgres -p 43432:5432 -p 43022:22 -e POSTGRES_PASSWORD=My:s3Cr3t/ -e TZ=Asia/Seoul docker.io/library/postgres:latest
+WARN[0000] Using cgroups-v1 which is deprecated in favor of cgroups-v2 with Podman v5 and will be removed in a future version. Set environment variable `PODMAN_IGNORE_CGROUPSV1_WARNING` to hide this warning.
+
+Error: creating container storage: the container name "postgres" is already in use by f1823105fcf1f9a60dc80c83f009730d513ec996ca4eba2ef928066648030565. You have to remove that container to be able to reuse that name: that name is already in use, or use --replace to instruct Podman to do so.
+[user@DESKTOP-89UD3IQ e]$
+PS E:\&gt;
+</code></pre>
+<p>이걸 wsl 에서 똑같이 해보면,</p>
+<pre><code class="language-ps">[user@DESKTOP-89UD3IQ ~]$ podman ps -a
+WARN[0000] Using cgroups-v1 which is deprecated in favor of cgroups-v2 with Podman v5 and will be removed in a future version. Set environment variable `PODMAN_IGNORE_CGROUPSV1_WARNING` to hide this warning.
+CONTAINER ID  IMAGE                              COMMAND     CREATED         STATUS                    PORTS                                           NAMES
+f1823105fcf1  docker.io/library/postgres:latest  postgres    24 minutes ago  Exited (0) 292 years ago  0.0.0.0:43022-&gt;22/tcp, 0.0.0.0:43432-&gt;5432/tcp  postgres
+</code></pre>
+<p>이렇게 나온다. 이제 찾았으니 지울 수 있게 되었다.</p>
+<p>모든 컨테이너를 다 중지하고,</p>
+<pre><code class="language-ps">[user@DESKTOP-89UD3IQ ~]$ podman stop --all
+WARN[0000] Using cgroups-v1 which is deprecated in favor of cgroups-v2 with Podman v5 and will be removed in a future version. Set environment variable `PODMAN_IGNORE_CGROUPSV1_WARNING` to hide this warning.
+f1823105fcf1f9a60dc80c83f009730d513ec996ca4eba2ef928066648030565
+[user@DESKTOP-89UD3IQ ~]$
+</code></pre>
+<p>모든 컨테이너를 다 삭제한다.</p>
+<pre><code class="language-ps">[user@DESKTOP-89UD3IQ ~]$ podman rm --all
+WARN[0000] Using cgroups-v1 which is deprecated in favor of cgroups-v2 with Podman v5 and will be removed in a future version. Set environment variable `PODMAN_IGNORE_CGROUPSV1_WARNING` to hide this warning.
+f1823105fcf1f9a60dc80c83f009730d513ec996ca4eba2ef928066648030565
+[user@DESKTOP-89UD3IQ ~]$
+</code></pre>
+<p>다시 확인해 보면,</p>
+<pre><code class="language-ps">[user@DESKTOP-89UD3IQ ~]$ podman ps -a
+WARN[0000] Using cgroups-v1 which is deprecated in favor of cgroups-v2 with Podman v5 and will be removed in a future version. Set environment variable `PODMAN_IGNORE_CGROUPSV1_WARNING` to hide this warning.
+CONTAINER ID  IMAGE       COMMAND     CREATED     STATUS      PORTS       NAMES
+[user@DESKTOP-89UD3IQ ~]$
+</code></pre>
+<p>깨끗해졌다. 이젠 wsl 들어가서 podman 명령 내리지 말아야지.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../latex/latex.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../podman/podman_001.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../latex/latex001.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../wsl/wsl.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -181,11 +214,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../latex/latex.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../podman/podman_001.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../latex/latex001.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../wsl/wsl.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
