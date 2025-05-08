@@ -315,6 +315,31 @@ $ podman compose up
 </code></pre>
 </li>
 </ol>
+<h2 id="podman에서-이미지-pull-할-수-없는-문제-해결"><a class="header" href="#podman에서-이미지-pull-할-수-없는-문제-해결">podman에서 이미지 pull 할 수 없는 문제 해결</a></h2>
+<p>위와 같이 docker에서 이미지를 다운로드 받아 사용하려 헀던 이유는 이제보니 podman과 연결된 wsl에서 인터넷이 안되었기 때문이었음.</p>
+<p>docker는 윈도우 자체에서 이미지를 다운로드 받는데, podman은 wsl에서 이미지를 다운로드 받는 형식인가봄.</p>
+<p>그래서 podman과 연결된 vm에서 인터넷이 안되었기 때문에 pull image가 아예 안되었던 것. 권한 문제인줄 알고 github 등에 다 로그인 했으나 그 문제가 아니었음. 어쩐지 계속 io time out 이 나오더라.</p>
+<p>해결방법은 <a href="podman/../wsl/wsl.html">여기</a>에.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="wsl"><a class="header" href="#wsl">WSL</a></h1>
+<h2 id="wsl-vm에서-인터넷이-안-된다"><a class="header" href="#wsl-vm에서-인터넷이-안-된다">WSL vm에서 인터넷이 안 된다.</a></h2>
+<p><img src="wsl/img/20250508111049.png" alt="" /></p>
+<p><img src="wsl/img/20250508111725.png" alt="" /></p>
+<p>맨 아래 <code>hyper-v 확장 가능 가상 스위치</code>가 꺼져있다.</p>
+<p>이걸 켜면</p>
+<p><img src="wsl/img/20250508111911.png" alt="" /></p>
+<p>가 나옴.</p>
+<p>Hyper-V 확장 가능 가상 서비스를 켜려고 하는건데.</p>
+<p>일단 여기까지만 보고 건드리지는 말고 다른 걸 해보자.</p>
+<h3 id="문제-해결"><a class="header" href="#문제-해결">문제 해결</a></h3>
+<p>다음 방법으로 해결함.</p>
+<p>관리자 권한으로 명령 프롬프트 실행한 다음,</p>
+<pre><code class="language-ps">netsh interface ip reset
+netsh winsock reset
+</code></pre>
+<p>재부팅하고 나니 인터넷 연결이 수동으로 바뀌어서 DHCP로 돌려줘야 했음</p>
+<p>그리고 멀티 모니터의 위치 등 설정이 바뀌어 있었음.</p>
+<p><img src="wsl/img/20250508114720.png" alt="" /></p>
+<p>그런데 인터넷은 잘 되는데 여전히 인터넷에 연결되어 있지 않다고 나옴.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="개발"><a class="header" href="#개발">개발</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="언어"><a class="header" href="#언어">언어</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rust"><a class="header" href="#rust">rust</a></h1>
@@ -774,7 +799,7 @@ uv run pyinstaller --onefile &lt;python 파일명&gt;
 </ul>
 </li>
 </ul>
-<h3 id="문제-해결"><a class="header" href="#문제-해결">문제 해결</a></h3>
+<h3 id="문제-해결-1"><a class="header" href="#문제-해결-1">문제 해결</a></h3>
 <ul>
 <li>
 <p>CMake 최신 버전으로 offline 버전 재설치</p>
@@ -1336,6 +1361,8 @@ function LongTask_async()
 <h2 id="실행"><a class="header" href="#실행">실행</a></h2>
 <pre><code>npm run dev
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="nextauth"><a class="header" href="#nextauth">nextauth</a></h1>
+<p>좋은 자료: <a href="https://mycodings.fly.dev/blog/2023-05-31-nextjs-nextauth-tutorial-1-setup" title="" target="_blank">https://mycodings.fly.dev/blog/2023-05-31-nextjs-nextauth-tutorial-1-setup</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="settings"><a class="header" href="#settings">settings</a></h1>
 <h2 id="세팅파일-만드는-데-사용되는-파일-포맷들"><a class="header" href="#세팅파일-만드는-데-사용되는-파일-포맷들">세팅파일 만드는 데 사용되는 파일 포맷들</a></h2>
 <p>https://velog.io/@jk01019/TOML-VS-YAML</p>

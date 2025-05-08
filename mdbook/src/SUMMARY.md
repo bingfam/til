@@ -15,6 +15,8 @@
   - [podman](./podman/podman.md)
     - [docker 이미지를 podman에서 사용](./podman/podman_001.md)
 
+  - [wsl](./wsl/wsl.md)
+
 
 - [개발](./dev/dev.md)
   - [언어 / framework](./dev/lang/lang.md)
@@ -64,10 +66,10 @@
     - [javascript 비동기화](./asynchronous/javascript_async.md)
 
   - [웹](./web/web.md)
-
-
     
-  - [next.js](./next.js/next.js.md)  
+    - [next.js](./next.js/next.js.md)
+  
+    - [nextauth](./nextauth/nextauth.md)
 
   - [settings](./dev/settings/settings.md)
 

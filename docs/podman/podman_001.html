@@ -188,6 +188,11 @@
 </code></pre>
 </li>
 </ol>
+<h2 id="podman에서-이미지-pull-할-수-없는-문제-해결"><a class="header" href="#podman에서-이미지-pull-할-수-없는-문제-해결">podman에서 이미지 pull 할 수 없는 문제 해결</a></h2>
+<p>위와 같이 docker에서 이미지를 다운로드 받아 사용하려 헀던 이유는 이제보니 podman과 연결된 wsl에서 인터넷이 안되었기 때문이었음.</p>
+<p>docker는 윈도우 자체에서 이미지를 다운로드 받는데, podman은 wsl에서 이미지를 다운로드 받는 형식인가봄.</p>
+<p>그래서 podman과 연결된 vm에서 인터넷이 안되었기 때문에 pull image가 아예 안되었던 것. 권한 문제인줄 알고 github 등에 다 로그인 했으나 그 문제가 아니었음. 어쩐지 계속 io time out 이 나오더라.</p>
+<p>해결방법은 <a href="../wsl/wsl.html">여기</a>에.</p>
 
                     </main>
 
@@ -197,7 +202,7 @@
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../dev/dev.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../wsl/wsl.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -211,7 +216,7 @@
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../dev/dev.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../wsl/wsl.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
