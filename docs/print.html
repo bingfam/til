@@ -1679,7 +1679,7 @@ added 14 packages, and audited 451 packages in 9s
 found 0 vulnerabilities
 
 PS D:\test\nextauth001\src\nextauth&gt; npm list next-auth
-nextauth@0.1.0 D:\github_stuousk\nextauth001\src\nextauth
+nextauth@0.1.0 D:\test\nextauth001\src\nextauth
 └── next-auth@4.24.11
 </code></pre>
 <h3 id="pg-패키지-설치"><a class="header" href="#pg-패키지-설치">pg 패키지 설치</a></h3>
@@ -2813,6 +2813,203 @@ export default function Home() {
 {children}
 &lt;/Providers&gt;
 </code></pre>
+<h2 id="빌드-문제-해결"><a class="header" href="#빌드-문제-해결">빌드 문제 해결</a></h2>
+<p>이제 다 완성했다 생각하고</p>
+<pre><code class="language-ps">npm run build
+</code></pre>
+<p>하면 많은 에러를 보게 된다. 하나씩 해결해 보자.</p>
+<pre><code class="language-ps">PS D:\test\nextauth001\src\nextauth&gt; npm run build
+
+&gt; nextauth@0.1.0 build
+&gt; next build
+
+   ▲ Next.js 15.3.2
+   - Environments: .env
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 0ms
+   Linting and checking validity of types  ...Failed to compile.
+
+.next/types/app/api/auth/[...nextauth]/route.ts:12:13
+Type error: Type 'OmitWithTag&lt;typeof import("D:/test/nextauth001/src/nextauth/src/app/api/auth/[...nextauth]/route"), "GET" | "POST" | "HEAD" | "OPTIONS" | "PUT" | "DELETE" | "PATCH" | "config" | ... 7 more ... | "maxDuration", ""&gt;' does not satisfy the constraint '{ [x: string]: never; }'.
+  Property 'authOptions' is incompatible with index signature.
+    Type 'AuthOptions' is not assignable to type 'never'.
+
+  10 |
+  11 | // Check that the entry is a valid entry
+&gt; 12 | checkFields&lt;Diff&lt;{
+     |             ^
+  13 |   GET?: Function
+  14 |   HEAD?: Function
+  15 |   OPTIONS?: Function
+Next.js build worker exited with code: 1 and signal: null
+</code></pre>
+<p>여태까지 아무 문제없이 잘 작동했는데 이 에러를 좇다보면 황당한 결론을 얻게 된다. 우리가 사용한 nextauth는 v4인데 v4는 app router를 공식 지원하지 않는다 한다.(우리는 app router 사용)</p>
+<p>.next 폴더와 node_modules 폴더를 지운 후 auth.js v5를 설치했음.</p>
+<pre><code class="language-ps">npm install next-auth@beta
+</code></pre>
+<p>그런데 build 해도 똑같은 에러 발생함.</p>
+<pre><code>.next/types/app/api/auth/[...nextauth]/route.ts:12:13
+Type error: Type 'OmitWithTag&lt;typeof import("D:/github_stuousk/nextauth001/src/nextauth/src/app/api/auth/[...nextauth]/route"), "config" | "generateStaticParams" | "revalidate" | "dynamic" | "dynamicParams" | ... 10 more ... | "PATCH", ""&gt;' does not satisfy the constraint '{ [x: string]: never; }'.
+  Property 'authOptions' is incompatible with index signature.
+    Type 'AuthOptions' is not assignable to type 'never'.
+
+  10 |
+  11 | // Check that the entry is a valid entry
+&gt; 12 | checkFields&lt;Diff&lt;{
+     |             ^
+  13 |   GET?: Function
+  14 |   HEAD?: Function
+  15 |   OPTIONS?: Function
+</code></pre>
+<p>next-auth v4에서 <a href="https://next-auth.js.org/configuration/initialization#route-handlers-app" title="" target="_blank">https://next-auth.js.org/configuration/initialization#route-handlers-app</a> 문서를, 전에는 그냥 대충 봤는데 다시 자세히 보고 있음.</p>
+<p>다시 next-auth v4로 돌려 놓았음.</p>
+<p>이 문제는 app/api/auth/[…nextauth]/route.ts 파일에서 authOptions를 export 해서 벌어진 문제였음. 이 파일에서의 export는 GET, POST 등 HTTP 메소드 관련 핸들러만 가능하다. 그래서 authOptions는 다른 파일에 정의해 놓고 가져다 쓰기로 함.</p>
+<p>app/api/auth/[…nextauth]/authoption.ts 파일 생성하고 authOptions 내용 모두 가져가서 export 하기</p>
+<pre><code class="language-ts">// app/api/auth/[...nextauth]/authoption.ts
+
+import CredentialsProvider from 'next-auth/providers/credentials'
+import DBMan, { SMember } from '@/app/lib/db';
+import { AuthOptions } from 'next-auth';
+
+export const authOptions: AuthOptions = {
+  providers: [
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        username: { label: '아이디', type: 'text', placeholder: '아이디 입력' },
+        password: { label: '비밀번호', type: 'password', placeholder: '비밀번호 입력' },
+      },
+
+      async authorize(credentials, req) {
+          const db = new DBMan();
+          // console.log("credentials?.username", credentials?.username || "");
+          // console.log("credentials?.password", credentials?.password || "");
+          const member: SMember = await db.login(credentials?.username || "", credentials?.password || "")
+          db.disconnect();
+  
+          console.log("[login] member: ", member);       
+          
+          if (member != null)
+          {
+            console.log("[login]로그인 성공. member: ", member);       
+            return member;    // 로그인 성공
+          }
+          else          
+          {
+            console.log("[login] 로그인 실패: ", credentials?.username);
+            return null;  // 로그인 실패
+          }
+      },
+    }),
+  ]
+  , secret: process.env.NEXTAUTH_SECRET
+
+  , pages: 
+  {
+      signIn: '/auth/signin', // Displays signin buttons
+      // signOut: '/auth/signout', // Displays form with sign out button
+      // error: '/auth/error', // Error code passed in query string as ?error=
+      // verifyRequest: '/auth/verify-request', // (used for check email message)
+      // newUser: null, // Will disable the new account creation screen
+  }
+  
+  , callbacks: 
+  {
+      jwt({ token, user }) 
+      {
+          console.log("\n\n");
+          console.log("------------------- [jwt callback] -------------------");
+          console.log("[jwt] token = ", token, "\n");
+          console.log("[jwt] user = ", user);
+
+          if (user) 
+          {
+              token.id = user.id;
+              token.nickname = user.nickname;
+              token.email = user.email;
+          }
+          
+          return token;
+      }
+
+      , async session({ session, token }) 
+      {
+        console.log("\n\n");
+        console.log("------------------- [session] -------------------");
+        console.log("[session] session = ", session);
+        console.log("[session] token = ", token);
+
+        session.user = {
+          id : token.id as string,
+          nickname: token.nickname as string,
+        };
+        
+        return session;
+      }
+  }
+};
+</code></pre>
+<p>app/api/auth/[…nextauth]/route.ts 파일 수정본</p>
+<pre><code class="language-ts">// app/api/auth/[...nextauth]/route.ts
+
+import NextAuth from 'next-auth/next'
+import { authOptions } from './authoption';
+
+const handler = NextAuth(authOptions)
+  
+export { handler as GET, handler as POST }
+</code></pre>
+<p>그리고 app/api/data/route.ts 파일도 authOptions import 하는 부분을 수정했다.</p>
+<pre><code class="language-ts">// app/api/data/route.ts
+import { authOptions } from '@/app/api/auth/[...nextauth]/authoption';
+</code></pre>
+<p>이렇게 했더니 빌드 통과되었다.</p>
+<p>다음 문제는</p>
+<pre><code>./src/app/lib/db.ts:17:21
+Type error: Cannot find namespace 'pg'.
+
+  15 | class DBMan
+  16 | {
+&gt; 17 |     private client: pg.Client;
+     |                     ^
+  18 |
+</code></pre>
+<p>이 문제다. 역시나 pg가 없다고 나온다.</p>
+<p>전에 문제가 있어서 문제가 없도록 수정했었는데 다시 에러가 나온다.</p>
+<p>이 부분은 이렇게 수정헀다.</p>
+<pre><code class="language-ts">// app/lib/db.ts
+
+import pg from 'pg';
+const {Client} = pg;
+
+class DBMan
+{    
+    client = new Client();
+</code></pre>
+<p>이제는 type 에러만 남았다.</p>
+<p>build할 때 eslint를 빼고 싶으면,
+<code>next.config.ts</code> 파일을 수정하면 된다.</p>
+<pre><code class="language-ts">// next.config.ts
+
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true,
+  }
+};
+
+export default nextConfig;
+</code></pre>
+<p>추가한 부분은 다음과 같다.</p>
+<pre><code>eslint: {
+    ignoreDuringBuilds: true,
+  }
+</code></pre>
+<p>관련 문서: <a href="https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules" title="" target="_blank">https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="settings"><a class="header" href="#settings">settings</a></h1>
 <h2 id="세팅파일-만드는-데-사용되는-파일-포맷들"><a class="header" href="#세팅파일-만드는-데-사용되는-파일-포맷들">세팅파일 만드는 데 사용되는 파일 포맷들</a></h2>
 <p>https://velog.io/@jk01019/TOML-VS-YAML</p>
