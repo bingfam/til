@@ -25,19 +25,18 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="custom.css">
 
 
-        <!-- Provide site root and default themes to javascript -->
+        <!-- Provide site root to javascript -->
         <script>
-            const path_to_root = "";
-            const default_light_theme = "light";
-            const default_dark_theme = "navy";
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
@@ -47,8 +46,8 @@
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                let theme = localStorage.getItem('mdbook-theme');
-                let sidebar = localStorage.getItem('mdbook-sidebar');
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -62,8 +61,7 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
-            let theme;
+            var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -76,8 +74,8 @@
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            let sidebar = null;
-            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -113,7 +111,6 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
@@ -566,8 +563,8 @@ pub trait Math
 <p><img src="dev/rust/img/20241201152819.png" alt="" /></p>
 <h2 id="휴먼편지체"><a class="header" href="#휴먼편지체">휴먼편지체</a></h2>
 <p><img src="dev/rust/img/20241201152827.png" alt="" /></p>
-<pre><pre class="playground"><code class="language-rust">#main.rs 전문
-
+<pre><pre class="playground"><code class="language-rust"><span class="boring">main.rs 전문
+</span>
 use iced::{Element, Sandbox, Settings};
 use iced::{Font};
 use iced::widget::text;
@@ -3832,6 +3829,19 @@ caption=파이썬 샘플 2 인데 이게 caption파이썬= 샘플2가 된다.</p
 </code></pre>
 <p>결과</p>
 <p><img src="tkiz/img/20250401143129.png" alt="" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="3줄일기"><a class="header" href="#3줄일기">3줄일기</a></h1>
+<p>하루 딱 3줄만 쓰는 일기</p>
+<p>일본 고바야시 히로유키라는 정신과 의사가 고안했다고 함. 책도 있음.</p>
+<p>관련 글: <a href="https://m.blog.naver.com/28belbong2/222677002193" title="" target="_blank">https://m.blog.naver.com/28belbong2/222677002193</a></p>
+<p>방법이 다양하다.</p>
+<ol>
+<li>가장 안 좋았던 일 / 가장 좋았던 일 / 내일 계획  			| 안 / 좋 / 내</li>
+<li>가장 잘 한일 / 가장 못한 일 / 내일 계획				| 잘 / 못 / 내</li>
+<li>가장 인상깊었던 일 / 그에 대한 나의 감정 / 내일의 다짐|	| 인 / 감 / 내</li>
+</ol>
+<p>책에 적혀 있는 방법은 1번 방법이다.<br />
+최대한 간단하게 써야 한다 함.<br />
+정신건강, 삶의 방향을 관리할 수 있다고.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="마케팅"><a class="header" href="#마케팅">마케팅</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="팔지마라-해결해줘라"><a class="header" href="#팔지마라-해결해줘라">팔지마라. 해결해줘라</a></h1>
 <p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7264963259730976768" title="" target="_blank">https://www.linkedin.com/feed/update/urn:li:activity:7264963259730976768</a></p>

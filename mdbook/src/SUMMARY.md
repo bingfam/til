@@ -123,6 +123,7 @@
       - [소스코드 보여주기](./latex/latex003.md)
     - [tkiz](./tkiz/tkiz.md)
       - [각 표시 삼각형](./tkiz/tkiz001.md)
+  - [3줄일기](./note/threelines.md)
   
 
 - [마케팅](./marketing/marketing.md)
