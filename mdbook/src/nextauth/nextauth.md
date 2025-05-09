@@ -111,6 +111,8 @@ token의 type을 바꾸지 않아도 저렇게 잘 된다.
 
 이렇게 jwt() 콜백을 통해 token에 값을 채워 넣으면 이 token 값이 세션에 계속 유지된다.
 
+여기서 리턴하는 token 값이 JWT 객체이다.
+
 
 #### session() 콜백 함수
 
@@ -121,7 +123,7 @@ session() 콜백 함수는 로그인할 때는 상관이 없다가 사용자가 
 그래서 그 때마다 session.user 에 값을 채워준다.
 
 ```ts
-async session({ session, token, user }) 
+async session({ session, token }) 
     {   
       session.user = {
         id : token.id as string,
@@ -146,5 +148,8 @@ async session({ session, token, user })
 }
  ```
 
-jwt() 콜백 함수에서 챙겨놨던 token의 값을 session() 콜백 함수에서 사용하는 모습이다.
+jwt() 콜백 함수에서 챙겨놨던 token의 값을 session() 콜백 함수에서 사용하는 모습이다. 
 
+처음에 user 의 값은 `undefined`이다. 여기에 token의 값을 채워 사용하는 것이다. 
+
+이렇게 하는 이유는 보안때문이다. token에는 중요한 많은 값들을 보관하고, 화면에 보여지는 값들(만) session.user에 복사해 넣어 사용한다.

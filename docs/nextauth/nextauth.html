@@ -24,18 +24,19 @@
         <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="../highlight.css">
-        <link rel="stylesheet" href="../tomorrow-night.css">
-        <link rel="stylesheet" href="../ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="../custom.css">
 
 
-        <!-- Provide site root to javascript -->
+        <!-- Provide site root and default themes to javascript -->
         <script>
-            var path_to_root = "../";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc.js"></script>
@@ -45,8 +46,8 @@
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -60,7 +61,8 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -73,8 +75,8 @@
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var sidebar = null;
-            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -110,6 +112,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
@@ -226,11 +229,12 @@ authorize() 함수에서 로그인 성공 시 리턴된 user 객체가 user 파�
 </code></pre>
 <p>가만 보면 jwt()가 두 번 호출 되는데, 처음엔 user값이 있는 채로, 두 번째는 user 값이 없는 채로 들어온다.</p>
 <p>이렇게 jwt() 콜백을 통해 token에 값을 채워 넣으면 이 token 값이 세션에 계속 유지된다.</p>
+<p>여기서 리턴하는 token 값이 JWT 객체이다.</p>
 <h4 id="session-콜백-함수"><a class="header" href="#session-콜백-함수">session() 콜백 함수</a></h4>
 <p>session() 콜백 함수는 로그인할 때는 상관이 없다가 사용자가 세션값을 달라고 하면 그 때 이 session() 함수가 실행된다.</p>
 <p>세션값을 달라고 하는 때는 클라이언트 컴퍼넌트가 useSession hook을 사용하거나 server 컴퍼넌트가 getServerSession() 함수를 호출할 때이다.</p>
 <p>그래서 그 때마다 session.user 에 값을 채워준다.</p>
-<pre><code class="language-ts">async session({ session, token, user }) 
+<pre><code class="language-ts">async session({ session, token }) 
     {   
       session.user = {
         id : token.id as string,
@@ -252,6 +256,8 @@ authorize() 함수에서 로그인 성공 시 리턴된 user 객체가 user 파�
 }
 </code></pre>
 <p>jwt() 콜백 함수에서 챙겨놨던 token의 값을 session() 콜백 함수에서 사용하는 모습이다.</p>
+<p>처음에 user 의 값은 <code>undefined</code>이다. 여기에 token의 값을 채워 사용하는 것이다.</p>
+<p>이렇게 하는 이유는 보안때문이다. token에는 중요한 많은 값들을 보관하고, 화면에 보여지는 값들(만) session.user에 복사해 넣어 사용한다.</p>
 
                     </main>
 

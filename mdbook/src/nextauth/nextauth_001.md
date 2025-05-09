@@ -805,7 +805,7 @@ jwt() 함수를 아래처럼 조금 더 고쳤다.
     }
 ```    
 
-vscode에서 user에는 nickname이라는 값이 없다고 아래처럼 빨간 밑줄을 보여 줄거다. 당장은 큰 에러가 나지는 않으니 이 문제는 나중에 해결하자.
+vscode에서 user에는 nickname이라는 값이 없다고 아래처럼 빨간 밑줄을 보여 줄거다. 당장은 큰 에러가 나지는 않으니 이 문제는 [나중에 해결](nextauth_001.md#sessionuser의-데이터-구조-변경) 하자.
 
 ![](img/20250509141949.png)
 
@@ -828,13 +828,12 @@ callbacks: 안에 jwt() 함수 아래에 session() 함수를 추가한다.
 ```ts
 // app/api/auth/signin/page.tsx
 
-, async session({ session, token, user }) 
+, async session({ session, token }) 
 {
   console.log("\n\n");
   console.log("------------------- [session] -------------------");
   console.log("[session] session = ", session);
   console.log("[session] token = ", token);
-  console.log("[session] user = ", user);
   
   return session;
 }
@@ -846,3 +845,710 @@ callbacks: 안에 jwt() 함수 아래에 session() 함수를 추가한다.
 
 ### nextauth session
 
+app/login/sign_in_button_c.tsx 파일을 수정하자. session 값을 확인해서 로그인 된 상태면 로그아웃 버튼을 보여주고, 그렇지 않으면 로그인 버튼을 보여주도록 고치려 한다. 그리고 로그인 되어 있는 상태면 nickname도 보여주자.
+
+react의 useSession 훅을 사용해야 한다. 그러기 위해 client component여야 한다. 우리는 이 컴퍼넌트를 client 컴퍼넌트로 만들었었다.
+
+import 부분을 이렇게 바꾼다.
+
+```ts
+// app/login/sign_in_button_c.tsx
+
+import { signIn, signOut, useSession } from "next-auth/react";
+```
+
+app/login/sign_in_button_c.tsx 파일의 전체 코드는 다음과 같다.
+
+```ts
+// app/login/sign_in_button_c.tsx
+
+"use client";
+import React from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
+
+export default function SignInButton_C() {
+  const { data: session } = useSession();
+
+  if (session && session.user)
+  {
+      return (
+          <span onClick={() => signOut()}>{session.user.nickname}님 로그아웃</span>
+      );
+  }
+  else
+  {
+    return (
+          <span onClick={() => signIn()}>로그인</span>
+    );
+  }    
+}
+```
+
+여기까지 수정하고 `/` 페이지로 가면(http://localhost:3000)
+
+![](img/20250509144332.png)
+
+
+useSession 쓸 꺼면 \<SessionProvider> 로 감싸야 한단다.
+
+그럼 Provider를 만들어 보자.
+
+app/login/providers.tsx 파일을 생성하자.
+
+```ts
+// app/login/providers.tsx
+
+"use client";
+
+import { SessionProvider } from "next-auth/react";
+import React, { ReactNode } from "react";
+
+interface Props 
+{
+  children: ReactNode;
+}
+
+export default function Providers({ children }: Props) 
+{
+  return (
+    <SessionProvider>{children}</SessionProvider>
+  );
+}
+```
+
+그냥 {children}을 \<SessionProvider>로 감싸기만 한다.
+
+이제 우리의 SingInButton_C 컴퍼넌트를 감싸기 위해 app/page.tsx 파일을 수정하자.
+
+```ts
+// app/page.tsx
+
+import Providers from "./login/providers";
+import SignInButton_C from "./login/sign_in_button_c";
+
+export default function Home() {
+  return (
+    <div>
+      nextauth
+      <Providers>
+        <SignInButton_C />
+      </Providers>
+    </div>
+  );
+}
+```
+세션을 사용하는 모든 곳이 감싸지도록 해야 한다. 그래서 대부분 \<Providers> 컴퍼넌트를 return 문의 맨 위와 아래에서 사용한다.
+
+만약 providers를 server component로 만들면(맨 위에 "use client"; 하지 않으면) 아래와 같은 에러를 보게 된다.
+
+![](img/20250509145043.png)
+
+여기까지 진행하면, 
+
+![](img/20250509145211.png)
+
+이렇게 나온다.
+
+`session.user.nickname` 부분에 값이 나오지 않다는 걸 알 수 있다.
+
+이제 다시 vscode 터미널의 로그 값을 확인해 보자.
+
+```ps
+------------------- [jwt callback] -------------------
+[jwt] token =  {
+  email: 'test@gmail.com',
+  sub: 'user01',
+  id: 'user01',
+  nickname: 'nickname01',
+  iat: 1746768710,
+  exp: 1749360710,
+  jti: '02e24704-ae76-4333-b8ee-163d5dbcde40'
+}
+
+[jwt] user =  undefined
+
+
+
+------------------- [session] -------------------
+[session] session =  {
+  user: { name: undefined, email: 'test@gmail.com', image: undefined },
+  expires: '2025-06-08T05:50:56.023Z'
+}
+[session] token =  {
+  email: 'test@gmail.com',
+  sub: 'user01',
+  id: 'user01',
+  nickname: 'nickname01',
+  iat: 1746768710,
+  exp: 1749360710,
+  jti: '02e24704-ae76-4333-b8ee-163d5dbcde40'
+}
+```
+
+로그인할 때마다 jwt() 함수가 콜백되어 로그에 나왔고, 로그인에 성공하면 `/`로 가도록 했는데 그럼 app/page.tsx를 호출한 거고, 거기서 useSession 훅을 사용하니 session() 함수가 콜백되었다. 그래서 세션 로그가 남은 것.
+
+이 로그를 자세히 보면 파라미터로 넘어온 token에는 jwt() 함수 콜백때 적은 값이 그대로 있고, session.user는 처음 로그인했을 때 봤던 것과 같은 상태라는 걸 알 수 있다.
+
+그리고 한 가지 더 알 수 있는 건 token에 jti(JWT ID)에 값이 들어가 있다는 거다. 이는 JWT를 구분하는데 사용된다. 만약 이상한 행동을 하는 사용자가 있으면 이 jti를 넘기는 사용자는(사용자 특정) 더 이상 아무 것도 하지 못하게 막을 수도 있다.
+
+누군가 session 값을 요구하면 화면에 보여줄 내용들만 session.user에 담아 주자. 보안을 위해.
+
+이제 app/login/sign_in_button_c.tsx 파일에서 `session.user.nickname` 값이 보이지 않았던 문제를 해결할 수 있을 거 같다. 
+
+```ts
+, async session({ session, token }) 
+{
+  console.log("\n\n");
+  console.log("------------------- [session] -------------------");
+  console.log("[session] session = ", session);
+  console.log("[session] token = ", token);
+
+  session.user = {
+    id : token.id as string,
+    nickname: token.nickname as string,
+  };
+  
+  return session;
+}
+```
+
+이렇게 session.user 값을 재설정해주면 로그인한 사람의 nickname을 제대로 보여준다.
+
+![](img/20250509152900.png)
+
+음.. 화면 보여지는 부분을 최소화하려니 이런 참사가.
+
+암튼 여기까지 세션값에 따라 로그인과 로그아웃 버튼이 나오는 걸 확인할 수 있다.
+
+
+## 로그인한 사람만 볼 수 있는 페이지
+
+로그인한 사람만 볼 수 있는 페이지를 만들어 보겠다. 먼저 Restful API 서비스를 만들고 거기에 제한을 걸어보려 한다. 
+
+
+### API 서비스 만들기
+
+data 테이블의 값을 읽어서 보여주는 서비스를 만들어 보자.
+
+먼저 DB에서 data 테이블의 값을 모두 가져오는 함수를 만들어야 한다. DBMan 클래스를 수정하자.
+
+```ts
+// app/lib/db.ts
+
+    // 데이터 가져오기
+    public async getData()
+    {
+        const sql = `
+            select * from data
+            `;
+        
+        const result = await this.client.query(sql);
+  
+        const data = result.rows;
+        console.log("[db.ts getData] result.rows = ", data);
+
+        return data;
+    }
+```
+
+위와 같이 DBMan 클래스에 함수를 추가한다.
+
+다음으로 app/api/data/route.ts 파일을 만들고 다음과 같이 작성하자.
+
+```ts
+// app/api/data/route.ts
+
+import { NextRequest, NextResponse } from 'next/server';
+import DBMan from '@/app/lib/db';
+
+export async function GET(req: NextRequest) 
+{  
+  const db = new DBMan();
+  const data = await db.getData();
+  db.disconnect();
+
+  return NextResponse.json(data);
+}
+```
+
+data 테이블의 모든 내용을 보여주는 restful 서비스다. 
+
+![](img/20250509154304.png)
+
+data 테이블의 모든 내용을 json 형태로 리턴해준다.
+
+```json
+[{"id":1,"title":"about next.js"},{"id":2,"title":"about react"}]
+```
+
+이 서비스의 문제는 로그인하지 않아도 아무나 이 사이트에 접속해 데이터를 볼 수 있다는 거다. 이제 여기에 로그인한 사람만 내용을 볼 수 있도록 수정해 보자.
+
+route.ts는 서버 컴퍼넌트니까 useSession이 아니라 getServerSession() 함수를 이용해야 한다.
+
+app/api/data/route.ts 파일을 수정해 보자.
+
+```ts
+import { NextRequest, NextResponse } from 'next/server';
+import DBMan from '@/app/lib/db';
+
+import { getServerSession } from 'next-auth';
+
+export async function GET(req: NextRequest) 
+{  
+    const session = await getServerSession();
+    console.log("\n\n[data/route.ts] session = ", session, "\n");
+
+    const db = new DBMan();
+    const data = await db.getData();
+    db.disconnect();
+
+    return NextResponse.json(data);
+}
+```
+
+이렇게 하고 로그인 한 다음 
+
+`http://localhost:3000/api/data` 에 접속하면 브라우저에서는 아무 문제가 없는 거 같은데 vscode 의 터미널에 나온 로그는 난리가 났다.
+
+```ps
+[next-auth][error][JWT_SESSION_ERROR] 
+https://next-auth.js.org/errors#jwt_session_error decryption operation failed {
+  message: 'decryption operation failed',
+  stack: 'JWEDecryptionFailed: decryption operation failed\n' +
+    '    at gcmDecrypt (D:\\test\\nextauth001\\src\\nextauth\\.next\\server\\chunks\\node_modules_jose_dist_node_cjs_b4a80197._.js:769:15)\n' 
+
+    ... 20줄 정도 나온 거 삭제함.
+    
+  name: 'JWEDecryptionFailed'
+}
+
+
+[data/route.ts] session =  null
+```
+
+우선 제일 처음 드는 생각은 아.. \<Proders> 를 page.tsx가 아니라 layout.tsx에서 사용해야 겠구나. 였지만 일단 그 문제는 아닌거 같다.
+
+getServerSession() 함수는 중요한 인자를 하나 받는다. 여태 클라이언트 컴퍼넌트에서 useSession 훅을 사용할 때는 큰 문제없이 쓸 수 있을 줄 알았는데 서버 컴퍼넌트에서 사용하기 위해서는 nextauth를 좀 더 제대로 설정해야 한다. getServerSession() 함수에 authOptions 인자를 추가하면서 nextauth를 좀 더 제대로, 보안을 강화해 가며 사용해 보자.
+
+여태 우리는 app/api/auth/[...nextauth]/route.ts 파일에서 NextAuth() 함수에 복잡한 값을 파라미터로 던져줬다. 
+
+getServerSession() 함수에서 필수인 파라미터인 authOptions: AuthOptions 의 값이 바로 NextAuth() 함수에 넘겨준 값이었다. 
+
+그러니까 const authOptions = {} 과 같이 값이 설정해 주고, 
+
+```ts
+const handler = NextAuth(authOptions) 
+```
+
+와 같이 넘겨주면 되는 거였다.
+
+이렇게 수정한 버전이 다음과 같다.
+
+```ts
+// app/api/auth/[...nextauth]/route.ts
+
+import NextAuth from 'next-auth/next'
+import CredentialsProvider from 'next-auth/providers/credentials'
+import DBMan, { SMember } from '@/app/lib/db';
+import { AuthOptions } from 'next-auth';
+
+export const authOptions: AuthOptions = {
+  providers: [
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        username: { label: '아이디', type: 'text', placeholder: '아이디 입력' },
+        password: { label: '비밀번호', type: 'password', placeholder: '비밀번호 입력' },
+      },
+
+      async authorize(credentials, req) {
+          const db = new DBMan();
+          // console.log("credentials?.username", credentials?.username || "");
+          // console.log("credentials?.password", credentials?.password || "");
+          const member: SMember = await db.login(credentials?.username || "", credentials?.password || "")
+          db.disconnect();
+  
+          console.log("[login] member: ", member);       
+          
+          if (member != null)
+          {
+            console.log("[login]로그인 성공. member: ", member);       
+            return member;    // 로그인 성공
+          }
+          else          
+          {
+            console.log("[login] 로그인 실패: ", credentials?.username);
+            return null;  // 로그인 실패
+          }
+      },
+    }),
+  ] 
+
+  , pages: 
+  {
+      signIn: '/auth/signin', // Displays signin buttons
+      // signOut: '/auth/signout', // Displays form with sign out button
+      // error: '/auth/error', // Error code passed in query string as ?error=
+      // verifyRequest: '/auth/verify-request', // (used for check email message)
+      // newUser: null, // Will disable the new account creation screen
+  }
+  
+  , callbacks: 
+  {
+      jwt({ token, user }) 
+      {
+          console.log("\n\n");
+          console.log("------------------- [jwt callback] -------------------");
+          console.log("[jwt] token = ", token, "\n");
+          console.log("[jwt] user = ", user);
+
+          if (user) 
+          {
+              token.id = user.id;
+              token.nickname = user.nickname;
+              token.email = user.email;
+          }
+          
+          return token;
+      }
+
+      , async session({ session, token }) 
+      {
+        console.log("\n\n");
+        console.log("------------------- [session] -------------------");
+        console.log("[session] session = ", session);
+        console.log("[session] token = ", token);
+
+        session.user = {
+          id : token.id as string,
+          nickname: token.nickname as string,
+        };
+        
+        return session;
+      }
+  }
+};
+
+const handler = NextAuth(authOptions)
+  
+export { handler as GET, handler as POST }
+```
+
+이것만으로는 아직 getServerSession() 함수가 정상동작하지 않는다. JWT가 서명하기 위해 필요한 키를 입력해 줘야 한다. 
+
+프로젝트 루트 폴더(D:\test\nextauth001\src\nextauth)에 `.env` 파일을 하나 생성하고, 그 파일에 다음과 같이 적는다. 
+
+```ts
+// 프로젝트 루트 폴더 / .env
+
+NEXTAUTH_SECRET=asdflkajweofjaweofawjawofj902384fawoeijfawoefjq2398fjsadffj0234jfalweka
+```
+
+이 `.env` 파일은 git에 올리지 않도록 .gitignore에 추가해 놔야 한다. 저 키는 JWT 서명할 때 사용하는 키라 외부로 나가면 안 된다.
+
+이제 이 키를 사용하도록 authOptions에 추가해야 한다.
+
+```ts
+, secret: process.env.NEXTAUTH_SECRET
+```
+
+를 추가한다. 
+
+여기까지 한 전체 코드는 다음과 같다.
+
+```ts
+import NextAuth from 'next-auth/next'
+import CredentialsProvider from 'next-auth/providers/credentials'
+import DBMan, { SMember } from '@/app/lib/db';
+import { AuthOptions } from 'next-auth';
+
+export const authOptions: AuthOptions = {
+  providers: [
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        username: { label: '아이디', type: 'text', placeholder: '아이디 입력' },
+        password: { label: '비밀번호', type: 'password', placeholder: '비밀번호 입력' },
+      },
+
+      async authorize(credentials, req) {
+          const db = new DBMan();
+          // console.log("credentials?.username", credentials?.username || "");
+          // console.log("credentials?.password", credentials?.password || "");
+          const member: SMember = await db.login(credentials?.username || "", credentials?.password || "")
+          db.disconnect();
+  
+          console.log("[login] member: ", member);       
+          
+          if (member != null)
+          {
+            console.log("[login]로그인 성공. member: ", member);       
+            return member;    // 로그인 성공
+          }
+          else          
+          {
+            console.log("[login] 로그인 실패: ", credentials?.username);
+            return null;  // 로그인 실패
+          }
+      },
+    }),
+  ]
+  , secret: process.env.NEXTAUTH_SECRET
+
+  , pages: 
+  {
+      signIn: '/auth/signin', // Displays signin buttons
+      // signOut: '/auth/signout', // Displays form with sign out button
+      // error: '/auth/error', // Error code passed in query string as ?error=
+      // verifyRequest: '/auth/verify-request', // (used for check email message)
+      // newUser: null, // Will disable the new account creation screen
+  }
+  
+  , callbacks: 
+  {
+      jwt({ token, user }) 
+      {
+          console.log("\n\n");
+          console.log("------------------- [jwt callback] -------------------");
+          console.log("[jwt] token = ", token, "\n");
+          console.log("[jwt] user = ", user);
+
+          if (user) 
+          {
+              token.id = user.id;
+              token.nickname = user.nickname;
+              token.email = user.email;
+          }
+          
+          return token;
+      }
+
+      , async session({ session, token }) 
+      {
+        console.log("\n\n");
+        console.log("------------------- [session] -------------------");
+        console.log("[session] session = ", session);
+        console.log("[session] token = ", token);
+
+        session.user = {
+          id : token.id as string,
+          nickname: token.nickname as string,
+        };
+        
+        return session;
+      }
+  }
+};
+
+const handler = NextAuth(authOptions)
+  
+export { handler as GET, handler as POST }
+```
+
+이제 다시 app/api/data/route.ts 파일을 수정해 위에 수정한 authOptions를 getServerSession() 함수에 파라미터로 넘기도록 해보자.
+
+```ts
+import { NextRequest, NextResponse } from 'next/server';
+import DBMan from '@/app/lib/db';
+
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+
+export async function GET(req: NextRequest) 
+{  
+    console.log("authOptions: ", authOptions);
+    console.log("process.env.NEXTAUTH_SECRET: ", process.env.NEXTAUTH_SECRET);
+    
+    const session = await getServerSession(authOptions);
+    console.log("\n\n[data/route.ts] session = ", session, "\n");
+
+    const db = new DBMan();
+    const data = await db.getData();
+    db.disconnect();
+
+    return NextResponse.json(data);
+}
+```
+
+다시 로그인하자. 그리고 `http://localhost:3000/api/data`에 접속한다.
+
+이제 로그를 보면 다음과 같이 서버에서도 값을 제대로 가져오고 있다는 것을 알 수 있다.
+
+```ps
+authOptions:  {
+  providers: [
+    {
+      id: 'credentials',
+      name: 'Credentials',
+      type: 'credentials',
+      credentials: [Object],
+      authorize: [Function: authorize],
+      options: [Object]
+    }
+  ],
+  secret: 'asdflkajweofjaweofawjawofj902384fawoeijfawoefjq2398fjsadffj0234jfalweka',
+  pages: { signIn: '/auth/signin' },
+  callbacks: { jwt: [Function: jwt], session: [AsyncFunction: session] }
+}
+process.env.NEXTAUTH_SECRET:  asdflkajweofjaweofawjawofj902384fawoeijfawoefjq2398fjsadffj0234jfalweka
+
+
+
+------------------- [jwt callback] -------------------
+[jwt] token =  {
+  email: 'test@gmail.com',
+  sub: 'user01',
+  id: 'user01',
+  nickname: 'nickname01',
+  iat: 1746779367,
+  exp: 1749371367,
+  jti: 'b057cd20-d9e4-4df6-880a-cb4c3b619be7'
+}
+
+[jwt] user =  undefined
+
+
+
+------------------- [session] -------------------
+[session] session =  {
+  user: { name: undefined, email: 'test@gmail.com', image: undefined },
+  expires: '2025-06-08T08:29:32.449Z'
+}
+[session] token =  {
+  email: 'test@gmail.com',
+  sub: 'user01',
+  id: 'user01',
+  nickname: 'nickname01',
+  iat: 1746779367,
+  exp: 1749371367,
+  jti: 'b057cd20-d9e4-4df6-880a-cb4c3b619be7'
+}
+
+
+[data/route.ts] session =  { user: { id: 'user01', nickname: 'nickname01' } }
+
+connect 성공
+[db.ts getData] result.rows =  [ { id: 1, title: 'about next.js' }, { id: 2, title: 'about react' } ]
+```
+
+이제 session 값이 없으면 튕겨내면 된다.
+
+```ts
+import { NextRequest, NextResponse } from 'next/server';
+import DBMan from '@/app/lib/db';
+
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+
+export async function GET(req: NextRequest) 
+{      
+    const session = await getServerSession(authOptions);
+    console.log("\n\n[data/route.ts] session = ", session, "\n");
+
+    if (session)
+    {
+        const db = new DBMan();
+        const data = await db.getData();
+        db.disconnect();
+
+        return NextResponse.json(data);
+    }
+    else
+    {
+        return NextResponse.json("권한 없음");
+    }
+}
+```
+다시 로그인하자. 그리고 `http://localhost:3000/api/data`에 접속해 보자.
+
+```ps
+[data/route.ts] session =  { user: { id: 'user01', nickname: 'nickname01' } }
+```
+
+로그인하면 session에 값이 제대로 들어온다.
+
+![](img/20250509174300.png)
+
+로그아웃하고 `http://localhost:3000/api/data`에 접속하면 위와 같은 메시지만 나오고 데이터는 보여주지 않는다.
+
+getServerSession() 함수를 이용하면 내부적으로 JWT의 서명부분을 자동으로 확인해준다. 암호화하고 복호화하기 위해 authOptions에 NEXTAUTH_SECRET 가 필요했던 것.
+
+
+## Session.User의 데이터 구조 변경
+
+app/api/auth/[...nextauth]/route.ts 파일에서 jwt() 콜백 함수 내에서 아래와 같이 나타나는 걸 볼 수 있다. typescript에서는 이 문제를 해결해야 한다.
+
+![](img/20250509141949.png)
+
+Session.user는 {id, name, email}으로 구성되어 있다. 그래서 nickname이 없다고 저렇게 빨간색으로 나오는 거다. 
+
+이 문제는 Session.user의 타입을 새로 정의해 주면 된다.
+
+app/types 폴더를 하나 만들자.
+
+그 안에 next-auth.d.ts 파일을 생성하자.
+
+```ts
+// app/types/next-auth.d.ts
+
+import NextAuth from "next-auth"
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+        id: string;
+        nickname: string;        
+        email: string | null;
+    }
+  }
+
+  interface User {
+    id: string;
+    nickname: string;    
+    email: string | null;
+  }
+
+}
+```
+
+이렇게 타입을 재정의해주면 된다.
+
+![](img/20250509202909.png)
+
+이제 빨간 줄이 없어졌다. 
+
+![](img/20250509203022.png)
+
+새롭게 여기에 빨간 줄이 새로 생겼는데, 이건 Session.user에 email이 있는데 들어가지 않아서 생긴거다. 
+
+이거마저 안나오게 하고 싶다면
+
+```ts
+email?: string | null;
+```
+이렇게 해주면 된다.
+
+```ts
+// app/types/next-auth.d.ts
+
+import NextAuth from "next-auth"
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+        id: string;
+        nickname: string;        
+        email?: string | null;
+    }
+  }
+
+  // jwt() 콜백 함수에 들어가는 user 파라미터 구조 변경
+  interface User {
+    id: string;
+    nickname: string;    
+    email?: string | null;
+  }
+}
+```
+
+이렇게 해주면 모든 문제가 해결된다.

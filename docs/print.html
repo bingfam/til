@@ -25,18 +25,19 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="custom.css">
 
 
-        <!-- Provide site root to javascript -->
+        <!-- Provide site root and default themes to javascript -->
         <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
@@ -46,8 +47,8 @@
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -61,7 +62,8 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -74,8 +76,8 @@
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var sidebar = null;
-            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -111,6 +113,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
@@ -563,8 +566,8 @@ pub trait Math
 <p><img src="dev/rust/img/20241201152819.png" alt="" /></p>
 <h2 id="휴먼편지체"><a class="header" href="#휴먼편지체">휴먼편지체</a></h2>
 <p><img src="dev/rust/img/20241201152827.png" alt="" /></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">main.rs 전문
-</span>
+<pre><pre class="playground"><code class="language-rust">#main.rs 전문
+
 use iced::{Element, Sandbox, Settings};
 use iced::{Font};
 use iced::widget::text;
@@ -1509,11 +1512,12 @@ authorize() 함수에서 로그인 성공 시 리턴된 user 객체가 user 파�
 </code></pre>
 <p>가만 보면 jwt()가 두 번 호출 되는데, 처음엔 user값이 있는 채로, 두 번째는 user 값이 없는 채로 들어온다.</p>
 <p>이렇게 jwt() 콜백을 통해 token에 값을 채워 넣으면 이 token 값이 세션에 계속 유지된다.</p>
+<p>여기서 리턴하는 token 값이 JWT 객체이다.</p>
 <h4 id="session-콜백-함수"><a class="header" href="#session-콜백-함수">session() 콜백 함수</a></h4>
 <p>session() 콜백 함수는 로그인할 때는 상관이 없다가 사용자가 세션값을 달라고 하면 그 때 이 session() 함수가 실행된다.</p>
 <p>세션값을 달라고 하는 때는 클라이언트 컴퍼넌트가 useSession hook을 사용하거나 server 컴퍼넌트가 getServerSession() 함수를 호출할 때이다.</p>
 <p>그래서 그 때마다 session.user 에 값을 채워준다.</p>
-<pre><code class="language-ts">async session({ session, token, user }) 
+<pre><code class="language-ts">async session({ session, token }) 
     {   
       session.user = {
         id : token.id as string,
@@ -1535,6 +1539,8 @@ authorize() 함수에서 로그인 성공 시 리턴된 user 객체가 user 파�
 }
 </code></pre>
 <p>jwt() 콜백 함수에서 챙겨놨던 token의 값을 session() 콜백 함수에서 사용하는 모습이다.</p>
+<p>처음에 user 의 값은 <code>undefined</code>이다. 여기에 token의 값을 채워 사용하는 것이다.</p>
+<p>이렇게 하는 이유는 보안때문이다. token에는 중요한 많은 값들을 보관하고, 화면에 보여지는 값들(만) session.user에 복사해 넣어 사용한다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="nextauth-튜토리얼"><a class="header" href="#nextauth-튜토리얼">nextauth 튜토리얼</a></h1>
 <ul>
 <li>next.js 버전: 15.3.52</li>
@@ -1542,6 +1548,7 @@ authorize() 함수에서 로그인 성공 시 리턴된 user 객체가 user 파�
 <li>postgresql 버전: 17.4</li>
 <li>pg 라이브러리 버전: 8.15.6</li>
 <li>작성: 2025. 5. 8.</li>
+<li>stuo github에 코드 올림.</li>
 </ul>
 <h2 id="podman-설정"><a class="header" href="#podman-설정">podman 설정</a></h2>
 <h3 id="postgresql-이미지-다운로드"><a class="header" href="#postgresql-이미지-다운로드">postgresql 이미지 다운로드</a></h3>
@@ -1699,9 +1706,1089 @@ added 9 packages, and audited 474 packages in 2s
 
 found 0 vulnerabilities
 </code></pre>
+<h2 id="테스트-실행"><a class="header" href="#테스트-실행">테스트 실행</a></h2>
+<p>프로젝트 폴더에서</p>
+<pre><code>npm run dev
+</code></pre>
+<p><img src="nextauth/img/20250509093037.png" alt="" /></p>
+<h3 id="apppagetsx-수정"><a class="header" href="#apppagetsx-수정">app/page.tsx 수정</a></h3>
+<p>싸그리 지우고 아래만 남긴다.</p>
+<pre><code class="language-ts">export default function Home() {
+  return (
+    &lt;div&gt;
+      nextauth
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p><img src="nextauth/img/20250509093258.png" alt="" /></p>
 <h2 id="nextjs에서-pg-접속"><a class="header" href="#nextjs에서-pg-접속">next.js에서 pg 접속</a></h2>
+<h3 id="applibdbts"><a class="header" href="#applibdbts">app/lib/db.ts</a></h3>
+<p>db관련 처리를 모두 담당할 클래스 생성</p>
+<h4 id="pg-사용"><a class="header" href="#pg-사용">pg 사용</a></h4>
+<pre><code class="language-ts">// app/lib/db.ts
+
+import pg, { Client } from 'pg'
+</code></pre>
+<h4 id="인터페이스-생성"><a class="header" href="#인터페이스-생성">인터페이스 생성</a></h4>
+<p>DB 테이블(member) 구조와 똑같이 만든다.<br />
+다만 pwd는 가져와 쓸 일이 없으니 뺐다.</p>
+<pre><code class="language-ts">//app/lib/db.ts
+
+// 인터페이스 생성
+export interface SMember
+{
+    id: string;
+    nickname: string;        
+    email: string  | null;
+}
+</code></pre>
+<h4 id="클래스-본체"><a class="header" href="#클래스-본체">클래스 본체</a></h4>
+<pre><code class="language-ts">class DBMan
+{    
+    private client: pg.Client;
+
+    constructor()
+    {
+        this.client = new Client(
+            {
+                user: 'scott', 
+                password: 'tiger',
+                host: 'localhost',
+                port: 43432,
+                database: 'nextauth'
+            }
+        );
+
+        this.client.connect()
+            .then( ()=&gt; {
+                console.log("connect 성공");
+            })
+            .catch( () =&gt; {
+                console.log("connect 실패");
+            });
+    }
+
+
+     // 멤버정보 가져오기
+    public async getMembers()
+    {
+        const sql = `
+            select * from member
+            `;
+        
+        const result = await this.client.query(sql);
+  
+        const data = result.rows;
+        console.log("[db.ts getMembers] result.rows = ", data);
+
+        return data;
+    }
+
+
+    // 연결을 끊는다.
+    public async disconnect()
+    {
+        this.client.end();        
+    }
+}
+
+export default DBMan;
+</code></pre>
+<h4 id="db-접속-데이터-가져오기-테스트"><a class="header" href="#db-접속-데이터-가져오기-테스트">DB 접속, 데이터 가져오기 테스트</a></h4>
+<p>app/lib/page.tsx 파일 생성</p>
+<p>가장 간단하게 DB 테스트하는 방법</p>
+<pre><code class="language-ts">// app/lib/page.tsx 파일
+// db 연결 테스트 위한 서버 컴퍼넌트
+
+import DBMan, { SMember } from '@/app/lib/db';
+
+export default async function DBTest() {
+    const db = new DBMan();
+    const members: Array&lt;SMember&gt; = await db.getMembers();
+    db.disconnect();
+  
+    members.forEach(element =&gt; {
+      console.log(element.nickname);    
+    });
+  
+    return (
+      &lt;div&gt;
+        member 테이블 데이터 갯수: {members.length}
+      &lt;/div&gt;
+    );
+}
+</code></pre>
+<p>실행결과: localhost:3000/<strong>lib</strong> 로 접속</p>
+<p><img src="nextauth/img/20250509101540.png" alt="" /></p>
+<p>vscode 터미널에 출력된 콘솔 내용</p>
+<pre><code class="language-ps"> GET /lib 200 in 141ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 304ms
+ ✓ Compiled in 55ms
+ ✓ Compiled /lib in 52ms
+connect 성공
+[db.ts getMembers] result.rows =  [
+  {
+    id: 'user01',
+    nickname: 'nickname01',
+    pwd: '$2a$06--------------------------------가림----------------',
+    email: 'test@gmail.com'
+  }
+]
+nickname01
+ GET /lib 200 in 177ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 287ms
+</code></pre>
+<p>DB 접속 쉽게 잘 되는 것 확인</p>
 <h2 id="nextauth를-이용한-로그인"><a class="header" href="#nextauth를-이용한-로그인">nextauth를 이용한 로그인</a></h2>
-<p>app/api/auth/[…nextauth]/route.ts 파일 생성</p>
+<p>credentials (아이디, 비밀번호)로 로그인</p>
+<h3 id="appapiauthnextauthroutets"><a class="header" href="#appapiauthnextauthroutets">app/api/auth/[…nextauth]/route.ts</a></h3>
+<p>nextauth에서 가장 중심이 되는 파일.</p>
+<p>실제 폴더명이 <code>[...nextauth]</code> 이다.</p>
+<pre><code class="language-ts">// app/api/auth/[...nextauth]/route.ts
+
+import NextAuth from 'next-auth/next'
+import CredentialsProvider from 'next-auth/providers/credentials'
+
+const handler = NextAuth({
+    providers: [
+      CredentialsProvider({
+        name: 'Credentials',
+        credentials: {
+          username: { label: '아이디', type: 'text', placeholder: '아이디 입력' },
+          password: { label: '비밀번호', type: 'password', placeholder: '비밀번호 입력' },
+        },
+  
+        async authorize(credentials, req) {
+          return null;  // null을 넘기면 실패했다는 뜻이다. 
+        },
+      }),
+    ]
+  })
+  
+export { handler as GET, handler as POST }
+</code></pre>
+<p>위 코드가 nextauth에서 credentials 방식을 사용할 때 가장 간단한 형태이다.</p>
+<p>이 코드는 get 방식을 사용하지 않고 POST 방식을 사용하기 때문에 바로 테스트해볼 수는 없다.</p>
+<p><img src="nextauth/img/20250509103426.png" alt="" /></p>
+<p>로그인 버튼을 만들고 누르면 로그인이 실행되도록 하자.</p>
+<h3 id="로그인-버튼"><a class="header" href="#로그인-버튼">로그인 버튼</a></h3>
+<p>app/page.tsx 파일에 로그인 버튼 추가</p>
+<pre><code class="language-ts">// app/page.tsx
+
+import { signIn } from "next-auth/react";
+
+export default function Home() {
+  return (
+    &lt;div&gt;
+      nextauth
+
+      {/* 로그인 버튼 추가 */}
+      &lt;button onClick={() =&gt; signIn()}&gt;로그인&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p><img src="nextauth/img/20250509104905.png" alt="" /></p>
+<p>버튼을 누르면 그에 대한 이벤트 핸들링을 해야 하기 때문에 Client component에서만 이 동작이 가능하다. 그러니 app/page.tsx는 원래대로 돌려 놓고 로그인 버튼을 가지는 client component를 만들자.</p>
+<p>(물론 page.tsx 파일 맨 위에 “use client“를 적으면 가장 간단하게 해결되지만 클라이언트는 컴퍼넌트로 만들어 추가해 쓰자.)</p>
+<pre><code class="language-ts">// app/page.tsx
+
+export default function Home() {
+  return (
+    &lt;div&gt;
+      nextauth
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>app/<strong>login</strong>/<strong>sign_in_button_c.tsx</strong> 컴퍼넌트를 만들자.</p>
+<p>파일명 맨 뒤에 _c 를 붙인 건 이게 client 컴퍼넌트라 구분하기 위해서다.</p>
+<p>nextauth에서는 login을 signin 이라 부른다. logout은 signout. 그래서 따라하기로 했다.</p>
+<pre><code class="language-ts">// app/login/sign_in_button_c.tsx
+
+"use client";
+import React from "react";
+import { signIn } from "next-auth/react";
+
+export default function SignInButton_C() {
+  return (    
+        &lt;div&gt;
+            &lt;button onClick={() =&gt; signIn()}&gt;로그인&lt;/button&gt;
+        &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>이제 이 컴퍼넌트를 사용하도록 app/page.tsx를 수정하자.</p>
+<pre><code class="language-ts">// app/page.tsx
+
+import SignInButton_C from "./login/sign_in_button_c";
+
+export default function Home() {
+  return (
+    &lt;div&gt;
+      nextauth
+
+      &lt;SignInButton_C /&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p><img src="nextauth/img/20250509111049.png" alt="" /></p>
+<p>로그인 버튼에 CSS를 주지 않았더니(현재 tailwind 적용 상태) 그냥 텍스트처럼 보이는데 코드를 단순화하기 위해 css 먹이지 않겠음.</p>
+<p>로그인 버튼을 누르면 아래와 같이 nextauth가 제공하는 기본 로그인 창이 나온다.</p>
+<p><img src="nextauth/img/20250509111205.png" alt="" /></p>
+<p><img src="nextauth/img/20250509111308.png" alt="" /></p>
+<p>아이디 비번 모두 111을 넣고 [Sign in with Credentials] 버튼을 누르면,</p>
+<p><img src="nextauth/img/20250509111322.png" alt="" /></p>
+<p>로그인에 실패했다는 메시지를 볼 수 있다.</p>
+<p>이거 전부 nextauth가 기본적으로 해주는 거다.</p>
+<h3 id="db를-이용한-진짜-로그인"><a class="header" href="#db를-이용한-진짜-로그인">DB를 이용한 진짜 로그인</a></h3>
+<p>app/api/auth/[…nextauth]/route.ts 파일을 다시 열어보자.</p>
+<p>authorize() 함수에서 어떤 값을 리턴하면 로그인 성공이고 null을 리턴하면 로그인 실패다. 리턴하는 값은 나중에 세션을 구성할 때 쓰이니 아무 값이나 리턴하면 안 된다.</p>
+<pre><code class="language-ts">// app/api/auth/[...nextauth]/route.ts 
+
+async authorize(credentials, req) {
+          return null;  // null을 넘기면 실패했다는 뜻이다. 
+        },
+</code></pre>
+<p>이 부분을 수정할 거다.</p>
+<p>이걸 하려면 먼저 DBMan 클래스에서 login을 처리하는 함수가 있어야 한다.</p>
+<pre><code class="language-ts">// app/lib/db.ts
+
+    // 로그인. 결과가 null이면 로그인 실패. 그렇지 않으면 로그인 성공
+    public async login(id: string, password: string)
+    {
+        let sql = `
+                select 
+                    id
+                    , nickname
+                    , email
+                from 
+                    member
+                where
+                    id = '${id}'
+                    and pwd = crypt('${password}', pwd)
+                    `;
+
+        const result = await this.client.query(sql);
+        const rowcount = result?.rowCount || -1;
+        
+        if (1 == rowcount)
+        {
+            const data = result.rows[0];
+            return data;        
+        }
+
+        return null;
+    }
+</code></pre>
+<p>crypt를 이용해 insert 했으니, crypt를 이용해 where문을 만들어야 한다.</p>
+<pre><code class="language-sql"> where pwd = crypt('${password}', pwd)
+</code></pre>
+<p>와 같은 식으로 where 절을 구성하면 된다.</p>
+<p>이제 DB는 준비가 되었으니 authorize 함수를 수정하자.</p>
+<p>app/api/auth/[…nextauth]/route.ts 파일의 윗부분에</p>
+<pre><code class="language-ts">// app/api/auth/[...nextauth]/route.ts 
+
+import DBMan, { SMember } from '@/app/lib/db';
+</code></pre>
+<p>을 추가해 DB를 사용하도록 준비하고,</p>
+<pre><code class="language-ts">// app/api/auth/[...nextauth]/route.ts 
+
+          async authorize(credentials, req) {
+            const db = new DBMan();
+            // console.log("credentials?.username", credentials?.username || "");
+            // console.log("credentials?.password", credentials?.password || "");
+            const member: SMember = await db.login(credentials?.username || "", credentials?.password || "")
+            db.disconnect();
+    
+            console.log("[login] member: ", member);       
+            
+            if (member != null)
+            {
+              console.log("[login]로그인 성공. member: ", member);       
+              return member;    // 로그인 성공
+            }
+            else          
+            {
+              console.log("[login] 로그인 실패: ", credentials?.username);
+              return null;  // 로그인 실패
+            }
+        },
+</code></pre>
+<p>user01 / 1234 로 로그인해 보자. 틀리게도 해보자.</p>
+<p>실패한 경우 로그</p>
+<pre><code class="language-ps">connect 성공
+[login] member:  null
+[login] 로그인 실패:  user01
+ POST /api/auth/callback/credentials 302 in 110ms
+ GET /api/auth/error?error=CredentialsSignin&amp;provider=credentials 302 in 83ms
+ GET /api/auth/signin?error=CredentialsSignin 200 in 79ms
+ GET /favicon.ico 200 in 308ms
+</code></pre>
+<p>성공한 경우 로그</p>
+<pre><code class="language-ps">connect 성공
+[login] member:  { id: 'user01', nickname: 'nickname01', email: 'test@gmail.com' }
+[login]로그인 성공. member:  { id: 'user01', nickname: 'nickname01', email: 'test@gmail.com' }
+ POST /api/auth/callback/credentials 302 in 108ms
+ GET / 200 in 147ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 314ms
+</code></pre>
+<h3 id="custom-로그인-화면"><a class="header" href="#custom-로그인-화면">custom 로그인 화면</a></h3>
+<p>로그인 실패 시 메시지를 보여주는 등 좀 더 다양한 로그인 관련 처리를 하려면 아무래도 custom 로그인 화면이 있어야 한다. nextauth가 만들어서 보여주는 로그인 화면을 그대로 쓰는 경우는 없을거다.</p>
+<p>이를 위해</p>
+<p>app/api/auth/[…nextauth]/route.ts 파일에서 NextAuth() 파라미터로 pages 를 추가해 주면 된다.</p>
+<p>providers: 밑에 pages: 를 추가해 주고 signIn() 함수가 호출될 때 이동할 페이지를 적어준다.</p>
+<pre><code class="language-ts">// app/api/auth/[...nextauth]/route.ts
+
+    , pages: {
+        signIn: '/auth/signin', // Displays signin buttons
+        // signOut: '/auth/signout', // Displays form with sign out button
+        // error: '/auth/error', // Error code passed in query string as ?error=
+        // verifyRequest: '/auth/verify-request', // (used for check email message)
+        // newUser: null, // Will disable the new account creation screen
+      }
+</code></pre>
+<p>밑에 여러 종류가 있지만 일단 signIn만 해보자.</p>
+<p>여기까지만 하고 다시 [로그인] 버튼을 눌러보면</p>
+<p><img src="nextauth/img/20250509132111.png" alt="" /></p>
+<p>아까와 달리 NOT FOUND 에러가 난다.</p>
+<p>app/api/auth/signin 으로 찾아가야 하는데 그런 폴더가 없어서다.</p>
+<p>이제 설정한 것처럼 app/api/auth/signin 폴더를 만들자. 정확한 위치에 폴더가 만들어지지 않으면 dev 서버가 죽기도 한다.</p>
+<p>그리고 그 폴더 아래에 page.tsx 파일을 만든다.</p>
+<pre><code class="language-ts">// app/api/auth/signin/page.tsx
+
+'use client'
+import React, { useRef } from 'react'
+import { signIn } from 'next-auth/react'
+
+
+export default function LoginForm_C() {
+    const useridRef = useRef(null)
+    const passwordRef = useRef(null)
+
+    const handleSubmit = async () =&gt; {
+        //console.log(useridRef.current)
+        //console.log(passwordRef.current)
+
+        const result = await signIn('credentials', {
+            username: useridRef.current,
+            password: passwordRef.current,
+            redirect: false,
+            callbackUrl: '/',        
+        });
+
+        console.log("[Login] result", result);
+        
+        if (result?.ok == false) 
+        {
+          location.href = '/';          
+        }
+        else
+        {
+          alert("로그인에 실패했습니다.");
+        }
+    }
+
+  return (    
+        &lt;div&gt;
+          &lt;label&gt;아이디&lt;/label&gt;&lt;input ref={useridRef} onChange={(e: any) =&gt; {useridRef.current = e.target.value}} id='id' name='id' type='text' required autoFocus={true} /&gt;
+          &lt;label&gt;비밀번호&lt;/label&gt;&lt;input ref={passwordRef} onChange={(e: any) =&gt; {passwordRef.current = e.target.value}} id='password' name='password' type='password' required /&gt;
+          
+          &lt;button onClick={handleSubmit}&gt;로그인&lt;/button&gt;
+        &lt;/div&gt;
+  )
+}
+</code></pre>
+<p>이제 로그인 버튼을 누르면 <code>app/api/auth/signin/page.tsx</code> 파일의 내용이 보여진다.</p>
+<p><img src="nextauth/img/20250509133454.png" alt="" /></p>
+<p>역시나 css 때문에 input box 의 테두리가 안 그려지고 있다.</p>
+<p><img src="nextauth/img/20250509143333.png" alt="" /></p>
+<p>로그인에 성공하면 <code>/</code>로 이동하고, 실패하면 에러메시지가 나온다.</p>
+<p><img src="nextauth/img/20250509133752.png" alt="" /></p>
+<p>signIn() 함수를 호출하면서 다양한 파라미터를 넘기는데, 그 중 redirect를 true로 세팅하면, 로그인 실패 시 그 자리에 가만히 있고, 성공하면 callbackUrl 에서 정해준 위치로 이동하게 된다.</p>
+<p>뭔가 다른 옵션을 좀 더 찾아볼 필요가 있겠다.</p>
+<p>하지만 일단은 내가 원하는대로 조정하려면 redirect를 false로 놓고 그 아래에서 결과에 따라 (await 하니까) 그에 맞는 처리를 해주었다.</p>
+<h2 id="세션-처리"><a class="header" href="#세션-처리">세션 처리</a></h2>
+<p>nextauth는 기본적으로 로그인한 결과를 세션에 넣어주고 JWT(JSON Web Token) 값까지 만들어준다. 아무 것도 안해도 세션에 값이 이미 들어가 있는거다.</p>
+<p>만약 세션에 저장되는 값을 (당연하게도) 바꾸고 싶다면 <code>app/api/auth/[...nextauth]/route.ts</code> 파일에서 이번에는 callbacks: 를 추가해야 한다.</p>
+<p>nextauth는 2개의 callbacks를 제공한다.</p>
+<ul>
+<li>jwt() : <a href="nextauth/./nextauth.html#jwt-%EC%BD%9C%EB%B0%B1-%ED%95%A8%EC%88%98">jws callback</a> 참조</li>
+<li>session() : <a href="nextauth/./nextauth.html#session-%EC%BD%9C%EB%B0%B1-%ED%95%A8%EC%88%98">session callback</a> 참조</li>
+</ul>
+<p>pages 밑에 callbacks: 를 추가해 보자.</p>
+<h3 id="jwt-콜백"><a class="header" href="#jwt-콜백">jwt() 콜백</a></h3>
+<p>우선 jwt()를 추가한다.</p>
+<pre><code class="language-ts">// app/api/auth/signin/page.tsx
+
+    , callbacks: 
+    {
+        jwt({ token, user }) 
+        {
+          console.log("\n\n");
+          console.log("------------------- [jwt callback] -------------------");
+          console.log("[jwt] token = ", token, "\n");
+          console.log("[jwt] user = ", user);
+                    
+          return token;
+        }
+    }
+</code></pre>
+<p>이렇게 해 놓고 로그인을 해보자.
+jwt()는 JWT가 생성되거나 업데이트될 때 실행되는데, authorize() 함수에서 값이 리턴되면 이 값을 기반으로 바로 JWT를 만들기 때문에 이 jwt() 콜백함수도 실행된다.</p>
+<p>이렇게 놓고 로그인이 성공하면 jwt()로 넘어오는 값이 어떤 값들인지 vscode의 terminal에 출력된 로그로 확인하자.</p>
+<pre><code class="language-ps">------------------- [jwt callback] -------------------
+[jwt] token =  {
+  name: undefined,
+  email: 'test@gmail.com',
+  picture: undefined,
+  sub: 'user01'
+}
+
+[jwt] user =  { id: 'user01', nickname: 'nickname01', email: 'test@gmail.com' } 
+</code></pre>
+<p>token을 가만 보면, member 객체가 가지고 있는 것 중 token이 기존에 가지고 있던 항목  중 하나인 email 항목에 자동으로 들어와 있는 걸 확인할 수 있다. 그리고 <code>sub</code> 항목(subject)에 id 값인 ’user01’이 들어가 있는 것도 볼 수 있다.</p>
+<p>nickname은 token의 기존 항목에 없는 항목이라 아무 데에도 들어가 있지 않다.</p>
+<pre><code class="language-ts">// app/api/auth/signin/page.tsx
+
+if (member != null)
+{
+  console.log("[login]로그인 성공. member: ", member);       
+  return member;    // 로그인 성공
+}
+</code></pre>
+<p>위와 같이 authorize() 함수 내에서 로그인 성공 시 이렇게 리턴한 member 객체가 jwt() 함수의 user 객체로 그대로 들어와 있다.</p>
+<p>여기서 쓸 값은 token이니까 token에 user의 값을 옮겨담고 기타 더 필요한 게 있으면 token에 적어주면 된다.</p>
+<p>jwt() 함수를 아래처럼 조금 더 고쳤다.</p>
+<pre><code class="language-ts">// app/api/auth/signin/page.tsx
+
+    , callbacks: 
+    {
+        jwt({ token, user }) 
+        {
+            console.log("\n\n");
+            console.log("------------------- [jwt callback] -------------------");
+            console.log("[jwt] token = ", token, "\n");
+            console.log("[jwt] user = ", user);
+
+            if (user) 
+            {
+                token.id = user.id;
+                token.nickname = user.nickname;
+                token.email = user.email;
+            }
+            
+            return token;
+        }
+    }
+</code></pre>
+<p>vscode에서 user에는 nickname이라는 값이 없다고 아래처럼 빨간 밑줄을 보여 줄거다. 당장은 큰 에러가 나지는 않으니 이 문제는 <a href="nextauth/nextauth_001.html#sessionuser%EC%9D%98-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B5%AC%EC%A1%B0-%EB%B3%80%EA%B2%BD">나중에 해결</a> 하자.</p>
+<p><img src="nextauth/img/20250509141949.png" alt="" /></p>
+<p>여기까지 로그인하는 순간 nextauth가 JWT 값을 생성하고, 그래서 그 때 jwt() 함수가 콜백되어 token에 값을 쓸 수 있게 되었다.</p>
+<p>이 값은 nextauth가 잘 보관하고 있다.</p>
+<h3 id="session-콜백"><a class="header" href="#session-콜백">session() 콜백</a></h3>
+<p>이제 nextauth가 가지고 있던 토큰 값을 사용할 떄가 되었다. 사용자가 session에 저장된 값을 원하면 그 때 session() 콜백이 일어난다.</p>
+<p>구체적으로는 client component가 useSession 훅을 이용하거나 server component가 getServerSession() 함수를 호출할 때다.</p>
+<p>jwt() 함수에서 token에 값이 잘 들어갔는지, 정확히는 어떤 값이 들어갔는지 확인하기 위해서라도 session() 콜백 함수를 만들어보자.</p>
+<p>callbacks: 안에 jwt() 함수 아래에 session() 함수를 추가한다.</p>
+<pre><code class="language-ts">// app/api/auth/signin/page.tsx
+
+, async session({ session, token }) 
+{
+  console.log("\n\n");
+  console.log("------------------- [session] -------------------");
+  console.log("[session] session = ", session);
+  console.log("[session] token = ", token);
+  
+  return session;
+}
+</code></pre>
+<p>이렇게 추가하고 로그인을 해도 session() 함수 콜백은 일어나지 않는다. (로그에 아무것도 안나온다) 아무데서도 세션을 이용하지 않고 있으니까.</p>
+<p>이제 nextauth에서 제공하는 세션을 이용해 보자.</p>
+<h3 id="nextauth-session"><a class="header" href="#nextauth-session">nextauth session</a></h3>
+<p>app/login/sign_in_button_c.tsx 파일을 수정하자. session 값을 확인해서 로그인 된 상태면 로그아웃 버튼을 보여주고, 그렇지 않으면 로그인 버튼을 보여주도록 고치려 한다. 그리고 로그인 되어 있는 상태면 nickname도 보여주자.</p>
+<p>react의 useSession 훅을 사용해야 한다. 그러기 위해 client component여야 한다. 우리는 이 컴퍼넌트를 client 컴퍼넌트로 만들었었다.</p>
+<p>import 부분을 이렇게 바꾼다.</p>
+<pre><code class="language-ts">// app/login/sign_in_button_c.tsx
+
+import { signIn, signOut, useSession } from "next-auth/react";
+</code></pre>
+<p>app/login/sign_in_button_c.tsx 파일의 전체 코드는 다음과 같다.</p>
+<pre><code class="language-ts">// app/login/sign_in_button_c.tsx
+
+"use client";
+import React from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
+
+export default function SignInButton_C() {
+  const { data: session } = useSession();
+
+  if (session &amp;&amp; session.user)
+  {
+      return (
+          &lt;span onClick={() =&gt; signOut()}&gt;{session.user.nickname}님 로그아웃&lt;/span&gt;
+      );
+  }
+  else
+  {
+    return (
+          &lt;span onClick={() =&gt; signIn()}&gt;로그인&lt;/span&gt;
+    );
+  }    
+}
+</code></pre>
+<p>여기까지 수정하고 <code>/</code> 페이지로 가면(http://localhost:3000)</p>
+<p><img src="nextauth/img/20250509144332.png" alt="" /></p>
+<p>useSession 쓸 꺼면 &lt;SessionProvider&gt; 로 감싸야 한단다.</p>
+<p>그럼 Provider를 만들어 보자.</p>
+<p>app/login/providers.tsx 파일을 생성하자.</p>
+<pre><code class="language-ts">// app/login/providers.tsx
+
+"use client";
+
+import { SessionProvider } from "next-auth/react";
+import React, { ReactNode } from "react";
+
+interface Props 
+{
+  children: ReactNode;
+}
+
+export default function Providers({ children }: Props) 
+{
+  return (
+    &lt;SessionProvider&gt;{children}&lt;/SessionProvider&gt;
+  );
+}
+</code></pre>
+<p>그냥 {children}을 &lt;SessionProvider&gt;로 감싸기만 한다.</p>
+<p>이제 우리의 SingInButton_C 컴퍼넌트를 감싸기 위해 app/page.tsx 파일을 수정하자.</p>
+<pre><code class="language-ts">// app/page.tsx
+
+import Providers from "./login/providers";
+import SignInButton_C from "./login/sign_in_button_c";
+
+export default function Home() {
+  return (
+    &lt;div&gt;
+      nextauth
+      &lt;Providers&gt;
+        &lt;SignInButton_C /&gt;
+      &lt;/Providers&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>세션을 사용하는 모든 곳이 감싸지도록 해야 한다. 그래서 대부분 &lt;Providers&gt; 컴퍼넌트를 return 문의 맨 위와 아래에서 사용한다.</p>
+<p>만약 providers를 server component로 만들면(맨 위에 “use client”; 하지 않으면) 아래와 같은 에러를 보게 된다.</p>
+<p><img src="nextauth/img/20250509145043.png" alt="" /></p>
+<p>여기까지 진행하면,</p>
+<p><img src="nextauth/img/20250509145211.png" alt="" /></p>
+<p>이렇게 나온다.</p>
+<p><code>session.user.nickname</code> 부분에 값이 나오지 않다는 걸 알 수 있다.</p>
+<p>이제 다시 vscode 터미널의 로그 값을 확인해 보자.</p>
+<pre><code class="language-ps">------------------- [jwt callback] -------------------
+[jwt] token =  {
+  email: 'test@gmail.com',
+  sub: 'user01',
+  id: 'user01',
+  nickname: 'nickname01',
+  iat: 1746768710,
+  exp: 1749360710,
+  jti: '02e24704-ae76-4333-b8ee-163d5dbcde40'
+}
+
+[jwt] user =  undefined
+
+
+
+------------------- [session] -------------------
+[session] session =  {
+  user: { name: undefined, email: 'test@gmail.com', image: undefined },
+  expires: '2025-06-08T05:50:56.023Z'
+}
+[session] token =  {
+  email: 'test@gmail.com',
+  sub: 'user01',
+  id: 'user01',
+  nickname: 'nickname01',
+  iat: 1746768710,
+  exp: 1749360710,
+  jti: '02e24704-ae76-4333-b8ee-163d5dbcde40'
+}
+</code></pre>
+<p>로그인할 때마다 jwt() 함수가 콜백되어 로그에 나왔고, 로그인에 성공하면 <code>/</code>로 가도록 했는데 그럼 app/page.tsx를 호출한 거고, 거기서 useSession 훅을 사용하니 session() 함수가 콜백되었다. 그래서 세션 로그가 남은 것.</p>
+<p>이 로그를 자세히 보면 파라미터로 넘어온 token에는 jwt() 함수 콜백때 적은 값이 그대로 있고, session.user는 처음 로그인했을 때 봤던 것과 같은 상태라는 걸 알 수 있다.</p>
+<p>그리고 한 가지 더 알 수 있는 건 token에 jti(JWT ID)에 값이 들어가 있다는 거다. 이는 JWT를 구분하는데 사용된다. 만약 이상한 행동을 하는 사용자가 있으면 이 jti를 넘기는 사용자는(사용자 특정) 더 이상 아무 것도 하지 못하게 막을 수도 있다.</p>
+<p>누군가 session 값을 요구하면 화면에 보여줄 내용들만 session.user에 담아 주자. 보안을 위해.</p>
+<p>이제 app/login/sign_in_button_c.tsx 파일에서 <code>session.user.nickname</code> 값이 보이지 않았던 문제를 해결할 수 있을 거 같다.</p>
+<pre><code class="language-ts">, async session({ session, token }) 
+{
+  console.log("\n\n");
+  console.log("------------------- [session] -------------------");
+  console.log("[session] session = ", session);
+  console.log("[session] token = ", token);
+
+  session.user = {
+    id : token.id as string,
+    nickname: token.nickname as string,
+  };
+  
+  return session;
+}
+</code></pre>
+<p>이렇게 session.user 값을 재설정해주면 로그인한 사람의 nickname을 제대로 보여준다.</p>
+<p><img src="nextauth/img/20250509152900.png" alt="" /></p>
+<p>음.. 화면 보여지는 부분을 최소화하려니 이런 참사가.</p>
+<p>암튼 여기까지 세션값에 따라 로그인과 로그아웃 버튼이 나오는 걸 확인할 수 있다.</p>
+<h2 id="로그인한-사람만-볼-수-있는-페이지"><a class="header" href="#로그인한-사람만-볼-수-있는-페이지">로그인한 사람만 볼 수 있는 페이지</a></h2>
+<p>로그인한 사람만 볼 수 있는 페이지를 만들어 보겠다. 먼저 Restful API 서비스를 만들고 거기에 제한을 걸어보려 한다.</p>
+<h3 id="api-서비스-만들기"><a class="header" href="#api-서비스-만들기">API 서비스 만들기</a></h3>
+<p>data 테이블의 값을 읽어서 보여주는 서비스를 만들어 보자.</p>
+<p>먼저 DB에서 data 테이블의 값을 모두 가져오는 함수를 만들어야 한다. DBMan 클래스를 수정하자.</p>
+<pre><code class="language-ts">// app/lib/db.ts
+
+    // 데이터 가져오기
+    public async getData()
+    {
+        const sql = `
+            select * from data
+            `;
+        
+        const result = await this.client.query(sql);
+  
+        const data = result.rows;
+        console.log("[db.ts getData] result.rows = ", data);
+
+        return data;
+    }
+</code></pre>
+<p>위와 같이 DBMan 클래스에 함수를 추가한다.</p>
+<p>다음으로 app/api/data/route.ts 파일을 만들고 다음과 같이 작성하자.</p>
+<pre><code class="language-ts">// app/api/data/route.ts
+
+import { NextRequest, NextResponse } from 'next/server';
+import DBMan from '@/app/lib/db';
+
+export async function GET(req: NextRequest) 
+{  
+  const db = new DBMan();
+  const data = await db.getData();
+  db.disconnect();
+
+  return NextResponse.json(data);
+}
+</code></pre>
+<p>data 테이블의 모든 내용을 보여주는 restful 서비스다.</p>
+<p><img src="nextauth/img/20250509154304.png" alt="" /></p>
+<p>data 테이블의 모든 내용을 json 형태로 리턴해준다.</p>
+<pre><code class="language-json">[{"id":1,"title":"about next.js"},{"id":2,"title":"about react"}]
+</code></pre>
+<p>이 서비스의 문제는 로그인하지 않아도 아무나 이 사이트에 접속해 데이터를 볼 수 있다는 거다. 이제 여기에 로그인한 사람만 내용을 볼 수 있도록 수정해 보자.</p>
+<p>route.ts는 서버 컴퍼넌트니까 useSession이 아니라 getServerSession() 함수를 이용해야 한다.</p>
+<p>app/api/data/route.ts 파일을 수정해 보자.</p>
+<pre><code class="language-ts">import { NextRequest, NextResponse } from 'next/server';
+import DBMan from '@/app/lib/db';
+
+import { getServerSession } from 'next-auth';
+
+export async function GET(req: NextRequest) 
+{  
+    const session = await getServerSession();
+    console.log("\n\n[data/route.ts] session = ", session, "\n");
+
+    const db = new DBMan();
+    const data = await db.getData();
+    db.disconnect();
+
+    return NextResponse.json(data);
+}
+</code></pre>
+<p>이렇게 하고 로그인 한 다음</p>
+<p><code>http://localhost:3000/api/data</code> 에 접속하면 브라우저에서는 아무 문제가 없는 거 같은데 vscode 의 터미널에 나온 로그는 난리가 났다.</p>
+<pre><code class="language-ps">[next-auth][error][JWT_SESSION_ERROR] 
+https://next-auth.js.org/errors#jwt_session_error decryption operation failed {
+  message: 'decryption operation failed',
+  stack: 'JWEDecryptionFailed: decryption operation failed\n' +
+    '    at gcmDecrypt (D:\\test\\nextauth001\\src\\nextauth\\.next\\server\\chunks\\node_modules_jose_dist_node_cjs_b4a80197._.js:769:15)\n' 
+
+    ... 20줄 정도 나온 거 삭제함.
+    
+  name: 'JWEDecryptionFailed'
+}
+
+
+[data/route.ts] session =  null
+</code></pre>
+<p>우선 제일 처음 드는 생각은 아.. &lt;Proders&gt; 를 page.tsx가 아니라 layout.tsx에서 사용해야 겠구나. 였지만 일단 그 문제는 아닌거 같다.</p>
+<p>getServerSession() 함수는 중요한 인자를 하나 받는다. 여태 클라이언트 컴퍼넌트에서 useSession 훅을 사용할 때는 큰 문제없이 쓸 수 있을 줄 알았는데 서버 컴퍼넌트에서 사용하기 위해서는 nextauth를 좀 더 제대로 설정해야 한다. getServerSession() 함수에 authOptions 인자를 추가하면서 nextauth를 좀 더 제대로, 보안을 강화해 가며 사용해 보자.</p>
+<p>여태 우리는 app/api/auth/[…nextauth]/route.ts 파일에서 NextAuth() 함수에 복잡한 값을 파라미터로 던져줬다.</p>
+<p>getServerSession() 함수에서 필수인 파라미터인 authOptions: AuthOptions 의 값이 바로 NextAuth() 함수에 넘겨준 값이었다.</p>
+<p>그러니까 const authOptions = {} 과 같이 값이 설정해 주고,</p>
+<pre><code class="language-ts">const handler = NextAuth(authOptions) 
+</code></pre>
+<p>와 같이 넘겨주면 되는 거였다.</p>
+<p>이렇게 수정한 버전이 다음과 같다.</p>
+<pre><code class="language-ts">// app/api/auth/[...nextauth]/route.ts
+
+import NextAuth from 'next-auth/next'
+import CredentialsProvider from 'next-auth/providers/credentials'
+import DBMan, { SMember } from '@/app/lib/db';
+import { AuthOptions } from 'next-auth';
+
+export const authOptions: AuthOptions = {
+  providers: [
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        username: { label: '아이디', type: 'text', placeholder: '아이디 입력' },
+        password: { label: '비밀번호', type: 'password', placeholder: '비밀번호 입력' },
+      },
+
+      async authorize(credentials, req) {
+          const db = new DBMan();
+          // console.log("credentials?.username", credentials?.username || "");
+          // console.log("credentials?.password", credentials?.password || "");
+          const member: SMember = await db.login(credentials?.username || "", credentials?.password || "")
+          db.disconnect();
+  
+          console.log("[login] member: ", member);       
+          
+          if (member != null)
+          {
+            console.log("[login]로그인 성공. member: ", member);       
+            return member;    // 로그인 성공
+          }
+          else          
+          {
+            console.log("[login] 로그인 실패: ", credentials?.username);
+            return null;  // 로그인 실패
+          }
+      },
+    }),
+  ] 
+
+  , pages: 
+  {
+      signIn: '/auth/signin', // Displays signin buttons
+      // signOut: '/auth/signout', // Displays form with sign out button
+      // error: '/auth/error', // Error code passed in query string as ?error=
+      // verifyRequest: '/auth/verify-request', // (used for check email message)
+      // newUser: null, // Will disable the new account creation screen
+  }
+  
+  , callbacks: 
+  {
+      jwt({ token, user }) 
+      {
+          console.log("\n\n");
+          console.log("------------------- [jwt callback] -------------------");
+          console.log("[jwt] token = ", token, "\n");
+          console.log("[jwt] user = ", user);
+
+          if (user) 
+          {
+              token.id = user.id;
+              token.nickname = user.nickname;
+              token.email = user.email;
+          }
+          
+          return token;
+      }
+
+      , async session({ session, token }) 
+      {
+        console.log("\n\n");
+        console.log("------------------- [session] -------------------");
+        console.log("[session] session = ", session);
+        console.log("[session] token = ", token);
+
+        session.user = {
+          id : token.id as string,
+          nickname: token.nickname as string,
+        };
+        
+        return session;
+      }
+  }
+};
+
+const handler = NextAuth(authOptions)
+  
+export { handler as GET, handler as POST }
+</code></pre>
+<p>이것만으로는 아직 getServerSession() 함수가 정상동작하지 않는다. JWT가 서명하기 위해 필요한 키를 입력해 줘야 한다.</p>
+<p>프로젝트 루트 폴더(D:\test\nextauth001\src\nextauth)에 <code>.env</code> 파일을 하나 생성하고, 그 파일에 다음과 같이 적는다.</p>
+<pre><code class="language-ts">// 프로젝트 루트 폴더 / .env
+
+NEXTAUTH_SECRET=asdflkajweofjaweofawjawofj902384fawoeijfawoefjq2398fjsadffj0234jfalweka
+</code></pre>
+<p>이 <code>.env</code> 파일은 git에 올리지 않도록 .gitignore에 추가해 놔야 한다. 저 키는 JWT 서명할 때 사용하는 키라 외부로 나가면 안 된다.</p>
+<p>이제 이 키를 사용하도록 authOptions에 추가해야 한다.</p>
+<pre><code class="language-ts">, secret: process.env.NEXTAUTH_SECRET
+</code></pre>
+<p>를 추가한다.</p>
+<p>여기까지 한 전체 코드는 다음과 같다.</p>
+<pre><code class="language-ts">import NextAuth from 'next-auth/next'
+import CredentialsProvider from 'next-auth/providers/credentials'
+import DBMan, { SMember } from '@/app/lib/db';
+import { AuthOptions } from 'next-auth';
+
+export const authOptions: AuthOptions = {
+  providers: [
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        username: { label: '아이디', type: 'text', placeholder: '아이디 입력' },
+        password: { label: '비밀번호', type: 'password', placeholder: '비밀번호 입력' },
+      },
+
+      async authorize(credentials, req) {
+          const db = new DBMan();
+          // console.log("credentials?.username", credentials?.username || "");
+          // console.log("credentials?.password", credentials?.password || "");
+          const member: SMember = await db.login(credentials?.username || "", credentials?.password || "")
+          db.disconnect();
+  
+          console.log("[login] member: ", member);       
+          
+          if (member != null)
+          {
+            console.log("[login]로그인 성공. member: ", member);       
+            return member;    // 로그인 성공
+          }
+          else          
+          {
+            console.log("[login] 로그인 실패: ", credentials?.username);
+            return null;  // 로그인 실패
+          }
+      },
+    }),
+  ]
+  , secret: process.env.NEXTAUTH_SECRET
+
+  , pages: 
+  {
+      signIn: '/auth/signin', // Displays signin buttons
+      // signOut: '/auth/signout', // Displays form with sign out button
+      // error: '/auth/error', // Error code passed in query string as ?error=
+      // verifyRequest: '/auth/verify-request', // (used for check email message)
+      // newUser: null, // Will disable the new account creation screen
+  }
+  
+  , callbacks: 
+  {
+      jwt({ token, user }) 
+      {
+          console.log("\n\n");
+          console.log("------------------- [jwt callback] -------------------");
+          console.log("[jwt] token = ", token, "\n");
+          console.log("[jwt] user = ", user);
+
+          if (user) 
+          {
+              token.id = user.id;
+              token.nickname = user.nickname;
+              token.email = user.email;
+          }
+          
+          return token;
+      }
+
+      , async session({ session, token }) 
+      {
+        console.log("\n\n");
+        console.log("------------------- [session] -------------------");
+        console.log("[session] session = ", session);
+        console.log("[session] token = ", token);
+
+        session.user = {
+          id : token.id as string,
+          nickname: token.nickname as string,
+        };
+        
+        return session;
+      }
+  }
+};
+
+const handler = NextAuth(authOptions)
+  
+export { handler as GET, handler as POST }
+</code></pre>
+<p>이제 다시 app/api/data/route.ts 파일을 수정해 위에 수정한 authOptions를 getServerSession() 함수에 파라미터로 넘기도록 해보자.</p>
+<pre><code class="language-ts">import { NextRequest, NextResponse } from 'next/server';
+import DBMan from '@/app/lib/db';
+
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+
+export async function GET(req: NextRequest) 
+{  
+    console.log("authOptions: ", authOptions);
+    console.log("process.env.NEXTAUTH_SECRET: ", process.env.NEXTAUTH_SECRET);
+    
+    const session = await getServerSession(authOptions);
+    console.log("\n\n[data/route.ts] session = ", session, "\n");
+
+    const db = new DBMan();
+    const data = await db.getData();
+    db.disconnect();
+
+    return NextResponse.json(data);
+}
+</code></pre>
+<p>다시 로그인하자. 그리고 <code>http://localhost:3000/api/data</code>에 접속한다.</p>
+<p>이제 로그를 보면 다음과 같이 서버에서도 값을 제대로 가져오고 있다는 것을 알 수 있다.</p>
+<pre><code class="language-ps">authOptions:  {
+  providers: [
+    {
+      id: 'credentials',
+      name: 'Credentials',
+      type: 'credentials',
+      credentials: [Object],
+      authorize: [Function: authorize],
+      options: [Object]
+    }
+  ],
+  secret: 'asdflkajweofjaweofawjawofj902384fawoeijfawoefjq2398fjsadffj0234jfalweka',
+  pages: { signIn: '/auth/signin' },
+  callbacks: { jwt: [Function: jwt], session: [AsyncFunction: session] }
+}
+process.env.NEXTAUTH_SECRET:  asdflkajweofjaweofawjawofj902384fawoeijfawoefjq2398fjsadffj0234jfalweka
+
+
+
+------------------- [jwt callback] -------------------
+[jwt] token =  {
+  email: 'test@gmail.com',
+  sub: 'user01',
+  id: 'user01',
+  nickname: 'nickname01',
+  iat: 1746779367,
+  exp: 1749371367,
+  jti: 'b057cd20-d9e4-4df6-880a-cb4c3b619be7'
+}
+
+[jwt] user =  undefined
+
+
+
+------------------- [session] -------------------
+[session] session =  {
+  user: { name: undefined, email: 'test@gmail.com', image: undefined },
+  expires: '2025-06-08T08:29:32.449Z'
+}
+[session] token =  {
+  email: 'test@gmail.com',
+  sub: 'user01',
+  id: 'user01',
+  nickname: 'nickname01',
+  iat: 1746779367,
+  exp: 1749371367,
+  jti: 'b057cd20-d9e4-4df6-880a-cb4c3b619be7'
+}
+
+
+[data/route.ts] session =  { user: { id: 'user01', nickname: 'nickname01' } }
+
+connect 성공
+[db.ts getData] result.rows =  [ { id: 1, title: 'about next.js' }, { id: 2, title: 'about react' } ]
+</code></pre>
+<p>이제 session 값이 없으면 튕겨내면 된다.</p>
+<pre><code class="language-ts">import { NextRequest, NextResponse } from 'next/server';
+import DBMan from '@/app/lib/db';
+
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+
+export async function GET(req: NextRequest) 
+{      
+    const session = await getServerSession(authOptions);
+    console.log("\n\n[data/route.ts] session = ", session, "\n");
+
+    if (session)
+    {
+        const db = new DBMan();
+        const data = await db.getData();
+        db.disconnect();
+
+        return NextResponse.json(data);
+    }
+    else
+    {
+        return NextResponse.json("권한 없음");
+    }
+}
+</code></pre>
+<p>다시 로그인하자. 그리고 <code>http://localhost:3000/api/data</code>에 접속해 보자.</p>
+<pre><code class="language-ps">[data/route.ts] session =  { user: { id: 'user01', nickname: 'nickname01' } }
+</code></pre>
+<p>로그인하면 session에 값이 제대로 들어온다.</p>
+<p><img src="nextauth/img/20250509174300.png" alt="" /></p>
+<p>로그아웃하고 <code>http://localhost:3000/api/data</code>에 접속하면 위와 같은 메시지만 나오고 데이터는 보여주지 않는다.</p>
+<p>getServerSession() 함수를 이용하면 내부적으로 JWT의 서명부분을 자동으로 확인해준다. 암호화하고 복호화하기 위해 authOptions에 NEXTAUTH_SECRET 가 필요했던 것.</p>
+<h2 id="sessionuser의-데이터-구조-변경"><a class="header" href="#sessionuser의-데이터-구조-변경">Session.User의 데이터 구조 변경</a></h2>
+<p>app/api/auth/[…nextauth]/route.ts 파일에서 jwt() 콜백 함수 내에서 아래와 같이 나타나는 걸 볼 수 있다. typescript에서는 이 문제를 해결해야 한다.</p>
+<p><img src="nextauth/img/20250509141949.png" alt="" /></p>
+<p>Session.user는 {id, name, email}으로 구성되어 있다. 그래서 nickname이 없다고 저렇게 빨간색으로 나오는 거다.</p>
+<p>이 문제는 Session.user의 타입을 새로 정의해 주면 된다.</p>
+<p>app/types 폴더를 하나 만들자.</p>
+<p>그 안에 next-auth.d.ts 파일을 생성하자.</p>
+<pre><code class="language-ts">// app/types/next-auth.d.ts
+
+import NextAuth from "next-auth"
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+        id: string;
+        nickname: string;        
+        email: string | null;
+    }
+  }
+
+  interface User {
+    id: string;
+    nickname: string;    
+    email: string | null;
+  }
+
+}
+</code></pre>
+<p>이렇게 타입을 재정의해주면 된다.</p>
+<p><img src="nextauth/img/20250509202909.png" alt="" /></p>
+<p>이제 빨간 줄이 없어졌다.</p>
+<p><img src="nextauth/img/20250509203022.png" alt="" /></p>
+<p>새롭게 여기에 빨간 줄이 새로 생겼는데, 이건 Session.user에 email이 있는데 들어가지 않아서 생긴거다.</p>
+<p>이거마저 안나오게 하고 싶다면</p>
+<pre><code class="language-ts">email?: string | null;
+</code></pre>
+<p>이렇게 해주면 된다.</p>
+<pre><code class="language-ts">// app/types/next-auth.d.ts
+
+import NextAuth from "next-auth"
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+        id: string;
+        nickname: string;        
+        email?: string | null;
+    }
+  }
+
+  // jwt() 콜백 함수에 들어가는 user 파라미터 구조 변경
+  interface User {
+    id: string;
+    nickname: string;    
+    email?: string | null;
+  }
+}
+</code></pre>
+<p>이렇게 해주면 모든 문제가 해결된다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="settings"><a class="header" href="#settings">settings</a></h1>
 <h2 id="세팅파일-만드는-데-사용되는-파일-포맷들"><a class="header" href="#세팅파일-만드는-데-사용되는-파일-포맷들">세팅파일 만드는 데 사용되는 파일 포맷들</a></h2>
 <p>https://velog.io/@jk01019/TOML-VS-YAML</p>
