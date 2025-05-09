@@ -1552,3 +1552,34 @@ declare module "next-auth" {
 ```
 
 이렇게 해주면 모든 문제가 해결된다.
+
+
+## Providers 위치 다시 잡기
+현재 \<Providers> 는 app/page.tsx 파일 내에 있다. 이게 전역적으로 다 감싸지려면 app/layout.tsx 파일 내에 있어야 한다. 
+
+app/page.tsx 파일 내에서 `<Providers>` 컴퍼넌트를 없앤다.
+
+```ts
+// app/page.tsx
+
+import SignInButton_C from "./login/sign_in_button_c";
+
+export default function Home() {
+  return (
+    <div>
+      nextauth
+      <SignInButton_C />      
+    </div>
+  );
+}
+```
+
+```ts
+// app/layout.tsx
+
+<Providers>
+{children}
+</Providers>
+```
+
+이렇게 수정해 주자.
