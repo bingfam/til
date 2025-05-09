@@ -2750,6 +2750,7 @@ declare module "next-auth" {
     }
   }
 
+  // jwt() 콜백 함수에 들어가는 user 파라미터 구조 변경
   interface User {
     id: string;
     nickname: string;    
@@ -2805,13 +2806,13 @@ export default function Home() {
   );
 }
 </code></pre>
+<p>그리고 app/layout.tsx 파일 내에서 <code>&lt;Providers&gt;</code> 컴퍼넌트로 {Children}을 감싼다.</p>
 <pre><code class="language-ts">// app/layout.tsx
 
 &lt;Providers&gt;
 {children}
 &lt;/Providers&gt;
 </code></pre>
-<p>이렇게 수정해 주자.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="settings"><a class="header" href="#settings">settings</a></h1>
 <h2 id="세팅파일-만드는-데-사용되는-파일-포맷들"><a class="header" href="#세팅파일-만드는-데-사용되는-파일-포맷들">세팅파일 만드는 데 사용되는 파일 포맷들</a></h2>
 <p>https://velog.io/@jk01019/TOML-VS-YAML</p>

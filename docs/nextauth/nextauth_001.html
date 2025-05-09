@@ -1365,6 +1365,7 @@ declare module "next-auth" {
     }
   }
 
+  // jwt() 콜백 함수에 들어가는 user 파라미터 구조 변경
   interface User {
     id: string;
     nickname: string;    
@@ -1420,13 +1421,13 @@ export default function Home() {
   );
 }
 </code></pre>
+<p>그리고 app/layout.tsx 파일 내에서 <code>&lt;Providers&gt;</code> 컴퍼넌트로 {Children}을 감싼다.</p>
 <pre><code class="language-ts">// app/layout.tsx
 
 &lt;Providers&gt;
 {children}
 &lt;/Providers&gt;
 </code></pre>
-<p>이렇게 수정해 주자.</p>
 
                     </main>
 
