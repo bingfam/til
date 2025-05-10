@@ -1236,6 +1236,10 @@ export { handler as GET, handler as POST }
 
 이것만으로는 아직 getServerSession() 함수가 정상동작하지 않는다. JWT가 서명하기 위해 필요한 키를 입력해 줘야 한다. 
 
+원리를 알기 위해 아래와 같이 수동으로 할 수도 있지만 [자동으로 하는 걸](./nextauth_001.md#자동으로-envlocal-파일-만들기추천) 추천한다.
+
+#### 수동으로 .env 파일 만들기(비추)
+
 프로젝트 루트 폴더(D:\test\nextauth001\src\nextauth)에 `.env` 파일을 하나 생성하고, 그 파일에 다음과 같이 적는다. 
 
 ```ts
@@ -1244,11 +1248,58 @@ export { handler as GET, handler as POST }
 NEXTAUTH_SECRET=asdflkajweofjaweofawjawofj902384fawoeijfawoefjq2398fjsadffj0234jfalweka
 ```
 
-이 `.env` 파일은 git에 올리지 않도록 .gitignore에 추가해 놔야 한다. 저 키는 JWT 서명할 때 사용하는 키라 외부로 나가면 안 된다.
 
-이제 이 키를 사용하도록 authOptions에 추가해야 한다.
+
+#### 자동으로 .env.local 파일 만들기(추천)
+
+출처: [https://authjs.dev/getting-started/installation](https://authjs.dev/getting-started/installation#setupenvirontment)
+
+위에 수동으로 만드는 거랑 (자동으로 만들어진) 파일명이 다른 데도 같은 코드로 사용이 가능하다.
+
+프로젝트 루트에서 다음을 실행한다.
+
+```ps
+npx auth secret
+```
+
+실제 실행결과는 다음과 같다.
+
+```ps
+PS E:\test\nextauth001\src\nextauth> npx auth secret
+Need to install the following packages:
+auth@1.2.3
+Ok to proceed? (y) y
+
+📝 Created E:\test\nextauth001\src\nextauth\.env.local with `AUTH_SECRET`.
+PS E:\github-stuousk\nextauth001\src\nextauth>
+```
+
+만들어진 `.env.local` 파일의 내용은 다음과 같다.
+
+```
+AUTH_SECRET="KFcZVCNUH3bAJBRXRVhJLx9Gp0qTb2eZheErE6Exy8A=" # Added by `npx auth`. Read more: https://cli.authjs.dev
+```
+
+next.js를 처음 만들면 .gitignore에 `.env*`이 포함되어 있다. 그래서 git에 올라가지 않는게 기본이다.
+
+```txt
+# env files (can opt-in for committing if needed)
+.env*
+```
+
+그래도 `git status` 등을 통해 이게 혹시 git 서버로 올라가지는 않는지 확인해야 한다.
+저 키는 JWT 서명할 때 사용하는 키라 외부로 나가면 안 된다.
+
+
+
+#### 만들어진 키 사용하기
+
+자동으로 만들었건 수동으로 만들었건 이 키를 사용하도록 app/api/auth/[...nextauth]/route.ts 파일의 authOptions에 추가해야 한다.
+
 
 ```ts
+// app/api/auth/[...nextauth]/route.ts
+
 , secret: process.env.NEXTAUTH_SECRET
 ```
 
@@ -1257,6 +1308,8 @@ NEXTAUTH_SECRET=asdflkajweofjaweofawjawofj902384fawoeijfawoefjq2398fjsadffj0234j
 여기까지 한 전체 코드는 다음과 같다.
 
 ```ts
+// app/api/auth/[...nextauth]/route.ts
+
 import NextAuth from 'next-auth/next'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import DBMan, { SMember } from '@/app/lib/db';
@@ -1293,6 +1346,7 @@ export const authOptions: AuthOptions = {
       },
     }),
   ]
+  
   , secret: process.env.NEXTAUTH_SECRET
 
   , pages: 

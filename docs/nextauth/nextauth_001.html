@@ -1132,18 +1132,48 @@ const handler = NextAuth(authOptions)
 export { handler as GET, handler as POST }
 </code></pre>
 <p>이것만으로는 아직 getServerSession() 함수가 정상동작하지 않는다. JWT가 서명하기 위해 필요한 키를 입력해 줘야 한다.</p>
+<p>원리를 알기 위해 아래와 같이 수동으로 할 수도 있지만 <a href="./nextauth_001.html#%EC%9E%90%EB%8F%99%EC%9C%BC%EB%A1%9C-envlocal-%ED%8C%8C%EC%9D%BC-%EB%A7%8C%EB%93%A4%EA%B8%B0%EC%B6%94%EC%B2%9C">자동으로 하는 걸</a> 추천한다.</p>
+<h4 id="수동으로-env-파일-만들기비추"><a class="header" href="#수동으로-env-파일-만들기비추">수동으로 .env 파일 만들기(비추)</a></h4>
 <p>프로젝트 루트 폴더(D:\test\nextauth001\src\nextauth)에 <code>.env</code> 파일을 하나 생성하고, 그 파일에 다음과 같이 적는다.</p>
 <pre><code class="language-ts">// 프로젝트 루트 폴더 / .env
 
 NEXTAUTH_SECRET=asdflkajweofjaweofawjawofj902384fawoeijfawoefjq2398fjsadffj0234jfalweka
 </code></pre>
-<p>이 <code>.env</code> 파일은 git에 올리지 않도록 .gitignore에 추가해 놔야 한다. 저 키는 JWT 서명할 때 사용하는 키라 외부로 나가면 안 된다.</p>
-<p>이제 이 키를 사용하도록 authOptions에 추가해야 한다.</p>
-<pre><code class="language-ts">, secret: process.env.NEXTAUTH_SECRET
+<h4 id="자동으로-envlocal-파일-만들기추천"><a class="header" href="#자동으로-envlocal-파일-만들기추천">자동으로 .env.local 파일 만들기(추천)</a></h4>
+<p>출처: <a href="https://authjs.dev/getting-started/installation#setupenvirontment" title="" target="_blank">https://authjs.dev/getting-started/installation</a></p>
+<p>위에 수동으로 만드는 거랑 (자동으로 만들어진) 파일명이 다른 데도 같은 코드로 사용이 가능하다.</p>
+<p>프로젝트 루트에서 다음을 실행한다.</p>
+<pre><code class="language-ps">npx auth secret
+</code></pre>
+<p>실제 실행결과는 다음과 같다.</p>
+<pre><code class="language-ps">PS E:\test\nextauth001\src\nextauth&gt; npx auth secret
+Need to install the following packages:
+auth@1.2.3
+Ok to proceed? (y) y
+
+📝 Created E:\test\nextauth001\src\nextauth\.env.local with `AUTH_SECRET`.
+PS E:\github-stuousk\nextauth001\src\nextauth&gt;
+</code></pre>
+<p>만들어진 <code>.env.local</code> 파일의 내용은 다음과 같다.</p>
+<pre><code>AUTH_SECRET="KFcZVCNUH3bAJBRXRVhJLx9Gp0qTb2eZheErE6Exy8A=" # Added by `npx auth`. Read more: https://cli.authjs.dev
+</code></pre>
+<p>next.js를 처음 만들면 .gitignore에 <code>.env*</code>이 포함되어 있다. 그래서 git에 올라가지 않는게 기본이다.</p>
+<pre><code class="language-txt"># env files (can opt-in for committing if needed)
+.env*
+</code></pre>
+<p>그래도 <code>git status</code> 등을 통해 이게 혹시 git 서버로 올라가지는 않는지 확인해야 한다.
+저 키는 JWT 서명할 때 사용하는 키라 외부로 나가면 안 된다.</p>
+<h4 id="만들어진-키-사용하기"><a class="header" href="#만들어진-키-사용하기">만들어진 키 사용하기</a></h4>
+<p>자동으로 만들었건 수동으로 만들었건 이 키를 사용하도록 app/api/auth/[…nextauth]/route.ts 파일의 authOptions에 추가해야 한다.</p>
+<pre><code class="language-ts">// app/api/auth/[...nextauth]/route.ts
+
+, secret: process.env.NEXTAUTH_SECRET
 </code></pre>
 <p>를 추가한다.</p>
 <p>여기까지 한 전체 코드는 다음과 같다.</p>
-<pre><code class="language-ts">import NextAuth from 'next-auth/next'
+<pre><code class="language-ts">// app/api/auth/[...nextauth]/route.ts
+
+import NextAuth from 'next-auth/next'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import DBMan, { SMember } from '@/app/lib/db';
 import { AuthOptions } from 'next-auth';
@@ -1179,6 +1209,7 @@ export const authOptions: AuthOptions = {
       },
     }),
   ]
+  
   , secret: process.env.NEXTAUTH_SECRET
 
   , pages: 
