@@ -76,6 +76,8 @@
     - [nextauth](./nextauth/nextauth.md)
       - [nextauth tutorial](./nextauth/nextauth_001.md)
 
+    - [editor.js](./editorjs/editorjs.md)
+
   - [settings](./dev/settings/settings.md)
 
   - [mac](./dev/mac/mac.md)
