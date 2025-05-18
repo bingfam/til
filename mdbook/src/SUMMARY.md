@@ -72,6 +72,7 @@
   - [웹](./web/web.md)
     
     - [next.js](./next.js/next.js.md)
+      - [sqlite3](./sqlite3/nextjs.md)
   
     - [nextauth](./nextauth/nextauth.md)
       - [nextauth tutorial](./nextauth/nextauth_001.md)
