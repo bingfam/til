@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>sqlite3 - TIL</title>
+        <title>pwa - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -153,116 +153,13 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="sqlite3-in-nextjs"><a class="header" href="#sqlite3-in-nextjs">SQLite3 in Next.js</a></h1>
-<h2 id="프로젝트-생성"><a class="header" href="#프로젝트-생성">프로젝트 생성</a></h2>
-<pre><code class="language-ps">npx create-next-app
-</code></pre>
-<h2 id="sqlite3-설치"><a class="header" href="#sqlite3-설치">sqlite3 설치</a></h2>
-<pre><code class="language-ps">npm install sqlite3
-npm install -D @types/sqlite3
-</code></pre>
-<h2 id="db-연결"><a class="header" href="#db-연결">DB 연결</a></h2>
-<pre><code class="language-tsx">// app/page.tsx
-
-import sqlite3 from 'sqlite3';
-
-export default function Home() {
-  // 데이터베이스 연결
-  const db = new sqlite3.Database('./sqlite3_001.sqlite');
-  return (
-    &lt;div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<p>이 코드를 실행하는 순간 프로젝트 루트에 <code>sqlite3_001.sqlite</code> 파일이 생성된다.</p>
-<h2 id="db-연결-끊기"><a class="header" href="#db-연결-끊기">DB 연결 끊기</a></h2>
-<pre><code class="language-tsx">// 데이터베이스 닫기
-db.close();
-</code></pre>
-<h2 id="dbeaver에서-테이블-생성"><a class="header" href="#dbeaver에서-테이블-생성">DBeaver에서 테이블 생성</a></h2>
-<p><img src="img/20250518231140.png" alt="" /></p>
-<h2 id="쿼리-실행"><a class="header" href="#쿼리-실행">쿼리 실행</a></h2>
-<pre><code class="language-tsx">import sqlite3 from 'sqlite3';
-
-export default function Home() {
-  // 데이터베이스 연결
-  const db = new sqlite3.Database('./sqlite3_001.sqlite');
-
-  // insert
-  db.exec("insert into member (name) values ('steve')");
-
-  // 데이터베이스 닫기
-  db.close();
-
-  return (
-    &lt;div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<h2 id="여러-개의-row가-나올-것으로-예상되는-쿼리비동기-리턴이-먼저-된다"><a class="header" href="#여러-개의-row가-나올-것으로-예상되는-쿼리비동기-리턴이-먼저-된다">여러 개의 row가 나올 것으로 예상되는 쿼리(비동기. 리턴이 먼저 된다.)</a></h2>
-<pre><code class="language-tsx">import sqlite3 from 'sqlite3';
-
-interface SMember
-{
-  id: number;
-  name: string;
-}
-
-export default function Home() {
-  // 데이터베이스 연결
-  const db = new sqlite3.Database('./sqlite3_001.sqlite');
-
-  // insert
-  //db.exec("insert into member (name) values ('steve')");
-
-  // 여러 개의 row가 나올 것으로 예상되는 쿼리
-  db.all("select * from member", [], (err, rows: Array&lt;SMember&gt;) =&gt;
-  {
-    if (err)
-    {
-      console.error(err.message);
-      return;
-    }
-
-    rows.forEach((row) =&gt; {
-      console.log(`id: ${row.id}, 이름: ${row.name}`);
-    })
-
-  });
-
-  // 데이터베이스 닫기
-  db.close();
-
-  return (
-    &lt;div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<h2 id="데이터가-하나인-경우-쿼리비동기-return이-먼저-된다"><a class="header" href="#데이터가-하나인-경우-쿼리비동기-return이-먼저-된다">데이터가 하나인 경우 쿼리(비동기. return이 먼저 된다.)</a></h2>
-<pre><code class="language-tsx">// 한 개의 row가 나올 것으로 예상되는 쿼리
-  db.get("select * from member where id = ?", [3], (err, row: SMember) =&gt;
-  {
-    if (err)
-    {
-      console.error(err.message);
-      return;
-    }
-
-    if (row)
-    {
-      console.log(`id: ${row.id}, 이름: ${row.name}`);
-    }
-  });
-</code></pre>
+                        <h1 id="pwa"><a class="header" href="#pwa">pwa</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../next.js/next.js.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../editorjs/editorjs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -276,7 +173,7 @@ export default function Home() {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../next.js/next.js.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../editorjs/editorjs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 

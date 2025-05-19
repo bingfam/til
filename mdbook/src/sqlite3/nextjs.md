@@ -62,7 +62,7 @@ export default function Home() {
 ```
 
 
-## 여러 개의 row가 나올 것으로 예상되는 쿼리
+## 여러 개의 row가 나올 것으로 예상되는 쿼리(비동기. 리턴이 먼저 된다.)
 ```tsx
 import sqlite3 from 'sqlite3';
 
@@ -104,7 +104,7 @@ export default function Home() {
 }
 ```
 
-## 데이터가 하나인 경우 쿼리
+## 데이터가 하나인 경우 쿼리(비동기. return이 먼저 된다.)
 
 ```tsx
 // 한 개의 row가 나올 것으로 예상되는 쿼리
