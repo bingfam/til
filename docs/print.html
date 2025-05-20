@@ -25,18 +25,19 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="custom.css">
 
 
-        <!-- Provide site root to javascript -->
+        <!-- Provide site root and default themes to javascript -->
         <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
@@ -46,8 +47,8 @@
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -61,7 +62,8 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -74,8 +76,8 @@
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var sidebar = null;
-            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -111,6 +113,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
@@ -563,8 +566,8 @@ pub trait Math
 <p><img src="dev/rust/img/20241201152819.png" alt="" /></p>
 <h2 id="휴먼편지체"><a class="header" href="#휴먼편지체">휴먼편지체</a></h2>
 <p><img src="dev/rust/img/20241201152827.png" alt="" /></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">main.rs 전문
-</span>
+<pre><pre class="playground"><code class="language-rust">#main.rs 전문
+
 use iced::{Element, Sandbox, Settings};
 use iced::{Font};
 use iced::widget::text;
@@ -1582,186 +1585,6 @@ export default function Home() {
     }
   });
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="nextjs를-pwa로"><a class="header" href="#nextjs를-pwa로">next.js를 pwa로</a></h1>
-<p><a href="https://nextjs.org/docs/app/guides/progressive-web-apps" title="" target="_blank">next.js에서 pwa 공식 문서</a></p>
-<p><strong>아래 그림처럼 주소창에 <code>앱 설치</code> 버튼을 나타내는 방법</strong></p>
-<p><img src="pwa/img/20250520014158.png" alt="" /></p>
-<h2 id="프로젝트-생성-3"><a class="header" href="#프로젝트-생성-3">프로젝트 생성</a></h2>
-<pre><code class="language-ps">S E:\test\nextjstest&gt; npx create-next-app
-√ What is your project named? ... pwa004
-√ Would you like to use TypeScript? ... No / Yes
-√ Would you like to use ESLint? ... No / Yes
-√ Would you like to use Tailwind CSS? ... No / Yes
-√ Would you like your code inside a `src/` directory? ... No / Yes
-√ Would you like to use App Router? (recommended) ... No / Yes
-√ Would you like to use Turbopack for `next dev`? ... No / Yes
-√ Would you like to customize the import alias (`@/*` by default)? ... No / Yes
-Creating a new Next.js app in E:\test\nextjstest\pwa004.
-
-Using npm.
-
-Initializing project with template: app-tw
-
-
-Installing dependencies:
-- react
-- react-dom
-- next
-
-Installing devDependencies:
-- typescript
-- @types/node
-- @types/react
-- @types/react-dom
-- @tailwindcss/postcss
-- tailwindcss
-- eslint
-- eslint-config-next
-- @eslint/eslintrc
-
-
-added 397 packages, and audited 398 packages in 39s
-
-161 packages are looking for funding
-  run `npm fund` for details
-
-found 0 vulnerabilities
-Success! Created pwa004 at E:\test\nextjstest\pwa004
-
-PS E:\test\nextjstest&gt;
-</code></pre>
-<h2 id="프로젝트-빌드"><a class="header" href="#프로젝트-빌드">프로젝트 빌드</a></h2>
-<pre><code class="language-ps">npm run build
-npm run start
-</code></pre>
-<p><img src="pwa/img/20250520004438.png" alt="" /></p>
-<p>이렇게 주소창 옆에 <code>앱 설치 버튼</code>이 안 나온다.</p>
-<h2 id="패키지-설치"><a class="header" href="#패키지-설치">패키지 설치</a></h2>
-<p><a href="https://github.com/shadowwalker/next-pwa#readme" title="" target="_blank">next-pwa</a> 설치</p>
-<pre><code class="language-ps">npm install next-pwa
-npm install --save-dev @types/next-pwa
-</code></pre>
-<h2 id="nextconfigts-파일-수정"><a class="header" href="#nextconfigts-파일-수정">next.config.ts 파일 수정</a></h2>
-<pre><code class="language-ts">import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
-};
-
-export default nextConfig;
-</code></pre>
-<p>파일을 아래처럼 수정한다.</p>
-<pre><code class="language-ts">import type { NextConfig } from "next";
-import withPWA from "next-pwa";
-
-const nextConfig: NextConfig = {
-  /* config options here */
-};
-
-const pwaConfig = withPWA({
-  ...nextConfig,
-  dest: 'public'
-});
-
-export default pwaConfig;
-
-</code></pre>
-<p>음.. 그런데 이거 build할 때 warning 난다. 그래도 되기는 한다. 그래도 찝찝하다.</p>
-<pre><code>PS E:\test\nextjstest\pwa004&gt; npm run build
-
-&gt; pwa004@0.1.0 build
-&gt; next build
-
- ⚠ Invalid next.config.ts options detected: 
- ⚠     Unrecognized key(s) in object: '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21'
- ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
-   ▲ Next.js 15.3.2
-</code></pre>
-<p>해결한 방법은 다음과 같다. 언젠가는 위 방법의 문제를 찾아내겠다.</p>
-<pre><code class="language-js">const withPWA = require('next-pwa')({
-  dest: 'public',
-});
-
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  // 기존 Next.js 설정
-};
-
-module.exports = withPWA(nextConfig);
-</code></pre>
-<h2 id="manifestjson-파일-생성"><a class="header" href="#manifestjson-파일-생성">manifest.json 파일 생성</a></h2>
-<p><code>public</code> 폴더 안에 manifest.json 파일을 만들고 다음 내용을 넣는다.</p>
-<pre><code class="language-json">{
-  "name": "pwa004_name",
-  "short_name": "pwa004_short_name",
-  "description": "pwa004_descript",
-  "theme_color": "#ffc211",
-  "background_color": "#ffffff",
-  "display": "standalone",
-  "scope": "/",
-  "start_url": "/",
-  "icons": [
-    {
-      "src": "/icons/images/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/icons/images/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
-}
-</code></pre>
-<h2 id="layouttsx-파일-수정"><a class="header" href="#layouttsx-파일-수정">layout.tsx 파일 수정</a></h2>
-<p>metadata에 다음 한 줄 추가</p>
-<pre><code class="language-tsx">manifest: '/manifest.json'
-</code></pre>
-<p>전체 layout.tsx 파일은 다음과 같다.</p>
-<pre><code class="language-tsx">import type { Metadata } from "next";
-import "./globals.css";
-
-
-
-export const metadata: Metadata = {
-  title: "Create Next App",
-  description: "Generated by create next app",
-  manifest: '/manifest.json'
-};
-
-export default function RootLayout({
-  children,
-}: Readonly&lt;{
-  children: React.ReactNode;
-}&gt;) {
-  return (
-    &lt;html lang="en"&gt;
-      &lt;body&gt;
-        {children}
-      &lt;/body&gt;
-    &lt;/html&gt;
-  );
-}
-
-</code></pre>
-<h2 id="이미지-파일-복사"><a class="header" href="#이미지-파일-복사">이미지 파일 복사</a></h2>
-<p>public 폴더 밑에</p>
-<pre><code class="language-ps">/icons/images/icon-192.png
-/icons/images/icon-512.png
-</code></pre>
-<p>파일을 복사해 넣는다.</p>
-<h2 id="빌드하고-테스트"><a class="header" href="#빌드하고-테스트">빌드하고 테스트</a></h2>
-<pre><code class="language-ps">PS E:\test\nextjstest\pwa004&gt; npm run build
-PS E:\test\nextjstest\pwa004&gt; npm run start
-</code></pre>
-<p><img src="pwa/img/20250520014158.png" alt="" /></p>
-<p><img src="pwa/img/20250520014225.png" alt="" /></p>
-<p><img src="pwa/img/20250520014320.png" alt="" /></p>
-<p><img src="pwa/img/20250520014400.png" alt="" /></p>
-<p>윈도우 키를 누르면 나오는 시작메뉴 맨 위에 <code>최근에 추가한 앱</code>에 표시된다.</p>
-<p><img src="pwa/img/20250520015552.png" alt="" /></p>
-<p>브라우저의 저 이미지를 바꾸고 싶으면 <code>favicon.ico</code> 파일을 바꾼다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="next-auth"><a class="header" href="#next-auth">next-auth</a></h1>
 <p>좋은 자료: <a href="https://mycodings.fly.dev/blog/2023-05-31-nextjs-nextauth-tutorial-1-setup" title="" target="_blank">https://mycodings.fly.dev/blog/2023-05-31-nextjs-nextauth-tutorial-1-setup</a></p>
 <p>지금은 auth.js로 이름을 바꾸었다.</p>
@@ -1949,7 +1772,7 @@ nextauth=&gt; insert into data (id, title) values (2, 'about react');
 INSERT 0 1
 </code></pre>
 <h2 id="nextjs-프로젝트-생성"><a class="header" href="#nextjs-프로젝트-생성">next.js 프로젝트 생성</a></h2>
-<h3 id="프로젝트-생성-4"><a class="header" href="#프로젝트-생성-4">프로젝트 생성</a></h3>
+<h3 id="프로젝트-생성-3"><a class="header" href="#프로젝트-생성-3">프로젝트 생성</a></h3>
 <pre><code class="language-ps">npx create-next-app
 √ What is your project named? ... nextauth
 √ Would you like to use TypeScript? ... No / Yes
@@ -3768,11 +3591,11 @@ Next.js build worker exited with code: 1 and signal: null
 declare module "@editorjs/simple-image";
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pwa"><a class="header" href="#pwa">pwa</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="nextjs를-pwa로-1"><a class="header" href="#nextjs를-pwa로-1">next.js를 pwa로</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="nextjs를-pwa로"><a class="header" href="#nextjs를-pwa로">next.js를 pwa로</a></h1>
 <p><a href="https://nextjs.org/docs/app/guides/progressive-web-apps" title="" target="_blank">next.js에서 pwa 공식 문서</a></p>
 <p><strong>아래 그림처럼 주소창에 <code>앱 설치</code> 버튼을 나타내는 방법</strong></p>
 <p><img src="pwa/img/20250520014158.png" alt="" /></p>
-<h2 id="프로젝트-생성-5"><a class="header" href="#프로젝트-생성-5">프로젝트 생성</a></h2>
+<h2 id="프로젝트-생성-4"><a class="header" href="#프로젝트-생성-4">프로젝트 생성</a></h2>
 <pre><code class="language-ps">S E:\test\nextjstest&gt; npx create-next-app
 √ What is your project named? ... pwa004
 √ Would you like to use TypeScript? ... No / Yes
@@ -3816,18 +3639,18 @@ Success! Created pwa004 at E:\test\nextjstest\pwa004
 
 PS E:\test\nextjstest&gt;
 </code></pre>
-<h2 id="프로젝트-빌드-1"><a class="header" href="#프로젝트-빌드-1">프로젝트 빌드</a></h2>
+<h2 id="프로젝트-빌드"><a class="header" href="#프로젝트-빌드">프로젝트 빌드</a></h2>
 <pre><code class="language-ps">npm run build
 npm run start
 </code></pre>
 <p><img src="pwa/img/20250520004438.png" alt="" /></p>
 <p>이렇게 주소창 옆에 <code>앱 설치 버튼</code>이 안 나온다.</p>
-<h2 id="패키지-설치-1"><a class="header" href="#패키지-설치-1">패키지 설치</a></h2>
+<h2 id="패키지-설치"><a class="header" href="#패키지-설치">패키지 설치</a></h2>
 <p><a href="https://github.com/shadowwalker/next-pwa#readme" title="" target="_blank">next-pwa</a> 설치</p>
 <pre><code class="language-ps">npm install next-pwa
 npm install --save-dev @types/next-pwa
 </code></pre>
-<h2 id="nextconfigts-파일-수정-1"><a class="header" href="#nextconfigts-파일-수정-1">next.config.ts 파일 수정</a></h2>
+<h2 id="nextconfigts-파일-수정"><a class="header" href="#nextconfigts-파일-수정">next.config.ts 파일 수정</a></h2>
 <pre><code class="language-ts">import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -3875,7 +3698,7 @@ const nextConfig = {
 
 module.exports = withPWA(nextConfig);
 </code></pre>
-<h2 id="manifestjson-파일-생성-1"><a class="header" href="#manifestjson-파일-생성-1">manifest.json 파일 생성</a></h2>
+<h2 id="manifestjson-파일-생성"><a class="header" href="#manifestjson-파일-생성">manifest.json 파일 생성</a></h2>
 <p><code>public</code> 폴더 안에 manifest.json 파일을 만들고 다음 내용을 넣는다.</p>
 <pre><code class="language-json">{
   "name": "pwa004_name",
@@ -3900,7 +3723,7 @@ module.exports = withPWA(nextConfig);
   ]
 }
 </code></pre>
-<h2 id="layouttsx-파일-수정-1"><a class="header" href="#layouttsx-파일-수정-1">layout.tsx 파일 수정</a></h2>
+<h2 id="layouttsx-파일-수정"><a class="header" href="#layouttsx-파일-수정">layout.tsx 파일 수정</a></h2>
 <p>metadata에 다음 한 줄 추가</p>
 <pre><code class="language-tsx">manifest: '/manifest.json'
 </code></pre>
@@ -3931,13 +3754,13 @@ export default function RootLayout({
 }
 
 </code></pre>
-<h2 id="이미지-파일-복사-1"><a class="header" href="#이미지-파일-복사-1">이미지 파일 복사</a></h2>
+<h2 id="이미지-파일-복사"><a class="header" href="#이미지-파일-복사">이미지 파일 복사</a></h2>
 <p>public 폴더 밑에</p>
 <pre><code class="language-ps">/icons/images/icon-192.png
 /icons/images/icon-512.png
 </code></pre>
 <p>파일을 복사해 넣는다.</p>
-<h2 id="빌드하고-테스트-1"><a class="header" href="#빌드하고-테스트-1">빌드하고 테스트</a></h2>
+<h2 id="빌드하고-테스트"><a class="header" href="#빌드하고-테스트">빌드하고 테스트</a></h2>
 <pre><code class="language-ps">PS E:\test\nextjstest\pwa004&gt; npm run build
 PS E:\test\nextjstest\pwa004&gt; npm run start
 </code></pre>
@@ -4355,6 +4178,11 @@ where
 <p>sqlite3 홈페이지(<a href="https://www.sqlite.org/download.html" title="" target="_blank">https://www.sqlite.org/download.html</a>)에 들어가서 툴을 다운로드 받는다.</p>
 <p><img src="db/sqlite3/img/20250426193620.png" alt="" /></p>
 <p>압축을 풀고 그 폴더를 path에 걸어준다.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="indexed-db"><a class="header" href="#indexed-db">indexed db</a></h1>
+<p>next.js에서 사용할 때 client component에서만 사용해야 한다.</p>
+<h2 id="패키지-설치-1"><a class="header" href="#패키지-설치-1">패키지 설치</a></h2>
+<p>indexed db는 브라우저에서 자체적으로 제공하는 기능을 이용하기 때문에 따로 패키지를 설치하지 않는다.</p>
+<p>사용 편의성을 높이기 위해 <code>idb</code> 패키지를 설치해 사용하기도 한다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="유틸리티"><a class="header" href="#유틸리티">유틸리티</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="joplin"><a class="header" href="#joplin">joplin</a></h1>
 <h2 id="joplin에서-mdbook으로-넘어온-이유"><a class="header" href="#joplin에서-mdbook으로-넘어온-이유">joplin에서 mdbook으로 넘어온 이유</a></h2>
@@ -4487,7 +4315,7 @@ Microsoft는 타사 패키지에 대한 책임을 지지 않고 라이선스를 
 <li>공식: https://rust-lang.github.io/mdBook/guide/installation.html</li>
 <li>블로그: https://piatoss3612.tistory.com/105</li>
 </ul>
-<h3 id="프로젝트-생성-6"><a class="header" href="#프로젝트-생성-6">프로젝트 생성</a></h3>
+<h3 id="프로젝트-생성-5"><a class="header" href="#프로젝트-생성-5">프로젝트 생성</a></h3>
 <pre><code>mdbook init &lt;프로젝트명&gt;
 </code></pre>
 <h3 id="프로젝트-실시간-보기"><a class="header" href="#프로젝트-실시간-보기">프로젝트 실시간 보기</a></h3>

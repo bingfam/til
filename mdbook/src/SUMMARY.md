@@ -73,8 +73,7 @@
     
     - [next.js](./next.js/next.js.md)
       - [sqlite3](./sqlite3/nextjs.md)
-      - [pwa](./pwa/pwa_nextjs.md)
-  
+      
     - [nextauth](./nextauth/nextauth.md)
       - [nextauth tutorial](./nextauth/nextauth_001.md)
 
@@ -106,7 +105,10 @@
 - [데이터베이스](./db/db.md)
   - [postgresql](./db/postgresql/postgresql.md)
     - [보안](./db/postgresql/crypt.md)
+  
   - [sqlite3](./db/sqlite3/sqlite3.md)
+
+  - [indexed db](./db/indexeddb/indexeddb.md)
 
 - [유틸리티](./utility/utility.md)
   - [joplin](./utility/joplin.md)
