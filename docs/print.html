@@ -1585,6 +1585,22 @@ export default function Home() {
     }
   });
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="정적호스팅"><a class="header" href="#정적호스팅">정적호스팅</a></h1>
+<p><img src="next.js/../images/perplexity25.png" alt="" />
+<a href="https://www.perplexity.ai/search/typescript-next-jsro-aebeul-ma-fIcoQTKeSOKCMLtKldOdwQ" title="" target="_blank">https://www.perplexity.ai/search/typescript-next-jsro-aebeul-ma-fIcoQTKeSOKCMLtKldOdwQ</a></p>
+<h2 id="githubio-같은-정적호스팅-서버에-올리기-위한-주의점"><a class="header" href="#githubio-같은-정적호스팅-서버에-올리기-위한-주의점">github.io 같은 정적호스팅 서버에 올리기 위한 주의점</a></h2>
+<h3 id="nextjs의-다음-기능들-사용-불가"><a class="header" href="#nextjs의-다음-기능들-사용-불가">next.js의 다음 기능들 사용 불가</a></h3>
+<ul>
+<li>SSR</li>
+<li>API Route</li>
+<li>동적 서버</li>
+<li>Server Component</li>
+</ul>
+<h3 id="nextconfigts-파일-수정"><a class="header" href="#nextconfigts-파일-수정">next.config.ts 파일 수정</a></h3>
+<p>nextConfig에,</p>
+<pre><code>output: 'export'
+</code></pre>
+<p>추가. 이렇게 하면 <code>npm run build</code> 시 <code>out</code> 폴더가 생긴다. 이걸 github.io에 올리면 됨.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="next-auth"><a class="header" href="#next-auth">next-auth</a></h1>
 <p>좋은 자료: <a href="https://mycodings.fly.dev/blog/2023-05-31-nextjs-nextauth-tutorial-1-setup" title="" target="_blank">https://mycodings.fly.dev/blog/2023-05-31-nextjs-nextauth-tutorial-1-setup</a></p>
 <p>지금은 auth.js로 이름을 바꾸었다.</p>
@@ -3650,7 +3666,7 @@ npm run start
 <pre><code class="language-ps">npm install next-pwa
 npm install --save-dev @types/next-pwa
 </code></pre>
-<h2 id="nextconfigts-파일-수정"><a class="header" href="#nextconfigts-파일-수정">next.config.ts 파일 수정</a></h2>
+<h2 id="nextconfigts-파일-수정-1"><a class="header" href="#nextconfigts-파일-수정-1">next.config.ts 파일 수정</a></h2>
 <pre><code class="language-ts">import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
