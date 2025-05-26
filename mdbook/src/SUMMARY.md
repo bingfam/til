@@ -83,6 +83,9 @@
     - [pwa](./pwa/pwa.md)
       - [next.js를 pwa로](./pwa/pwa_nextjs.md)
 
+    - [vite](./vite/vite.md)
+      - [vite에 tailwind 적용하기](./vite/tailwind.md)
+
   - [settings](./dev/settings/settings.md)
 
   - [mac](./dev/mac/mac.md)
