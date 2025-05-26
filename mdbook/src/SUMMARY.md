@@ -72,8 +72,7 @@
   - [웹](./web/web.md)
     
     - [next.js](./next.js/next.js.md)
-      - [sqlite3](./sqlite3/nextjs.md)
-      - [pwa](./pwa/pwa_nextjs.md)
+      - [sqlite3](./sqlite3/nextjs.md)      
       - [정적호스팅](./next.js/hosting.md)
       - [github.io에서 호스팅](./next.js/to_github.io.md)
 
