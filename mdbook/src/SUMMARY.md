@@ -87,6 +87,8 @@
     - [vite](./vite/vite.md)
       - [vite에 tailwind 적용하기](./vite/tailwind.md)
 
+    - [media](./web/media.md)
+
   - [settings](./dev/settings/settings.md)
 
   - [mac](./dev/mac/mac.md)
