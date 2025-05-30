@@ -86,6 +86,7 @@
 
     - [vite](./vite/vite.md)
       - [vite에 tailwind 적용하기](./vite/tailwind.md)
+      - [build한 결과물엔 log 안 찍히게 하기](./vite/no_console_log.md)
 
     - [media](./web/media.md)
 
