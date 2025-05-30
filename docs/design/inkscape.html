@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>vite - TIL</title>
+        <title>inkscape - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -156,109 +156,20 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="vite"><a class="header" href="#vite">vite</a></h1>
-<p>vue 만든 사람이 만듦.</p>
-<p>CRA의 대안</p>
-<p>react 개발용 엔진으로, 개발할 때만 node.js가 필요하고 build 결과는 static 으로 나옴.</p>
-<h2 id="프로젝트-생성"><a class="header" href="#프로젝트-생성">프로젝트 생성</a></h2>
-<pre><code class="language-ps">npm create vite@latest
-</code></pre>
-<pre><code class="language-ps">PS D:\test\vite&gt; npm create vite@latest
-
-&gt; npx
-&gt; create-vite
-
-│
-◇  Project name:
-│  vite001
-│
-</code></pre>
-<p>다양한 프레임워크를 지원한다.</p>
-<pre><code class="language-ps">◆  Select a framework:
-│  ● Vanilla
-│  ○ Vue
-│  ○ React
-│  ○ Preact
-│  ○ Lit
-│  ○ Svelte
-│  ○ Solid
-│  ○ Qwik
-│  ○ Angular
-│  ○ Marko
-│  ○ Others
-</code></pre>
-<pre><code class="language-ps">Select a variant:
-│  ● TypeScript
-│  ○ TypeScript + SWC
-│  ○ JavaScript
-│  ○ JavaScript + SWC
-│  ○ React Router v7 ↗
-│  ○ TanStack Router ↗
-│  ○ RedwoodSDK ↗
-└
-</code></pre>
-<p>전체</p>
-<pre><code class="language-ps">PS D:\test\vite&gt; npm create vite@latest
-
-&gt; npx
-&gt; create-vite
-
-│
-◇  Project name:
-│  vite001
-│
-◇  Select a framework:
-│  React
-│
-◇  Select a variant:
-│  TypeScript
-│
-◇  Scaffolding project in D:\test\vite\vite001...
-│
-└  Done. Now run:
-
-  cd vite001
-  npm install
-  npm run dev
-
-PS D:\test\vite&gt;
-</code></pre>
-<h2 id="githubio에-올리기"><a class="header" href="#githubio에-올리기">github.io에 올리기</a></h2>
-<p><code>vite.config.ts</code> 파일에 <code>base</code> 항목을 넣어야 한다. 프로젝트명을 넣어줘야 문제없이 동작한다.</p>
-<p>예를 들어,</p>
-<p><code>username.github.io/PROJECTNAME</code> 과 같은 식이라면</p>
-<pre><code class="language-ts">export default defineConfig({
-  base: '/PROJECTNAME/',
-  plugins: [
-    react()
-    , tailwindcss() // Tailwind CSS 플러그인 추가
-  ],
-})
-</code></pre>
-<p>와 같이 넣어준다.</p>
-<p>이게 실제 웹서버에서 어떻게 보일지 보려면,</p>
-<pre><code class="language-ps">npm run preview
-</code></pre>
-<p>하면</p>
-<pre><code class="language-ps">
-&gt; vite001@0.0.0 preview
-&gt; vite preview
-
-  ➜  Local:   http://localhost:4173/PROJECTNAME/
-  ➜  Network: use --host to expose
-  ➜  press h + enter to show help
-</code></pre>
-<p>과 같이 서브폴더까지 맞춰서 실행해준다. 그래서 웹서버에서 어떻게 보일지 최대한 가늠해 볼 수 있다.</p>
+                        <h1 id="inkscape"><a class="header" href="#inkscape">inkscape</a></h1>
+<h2 id="export-하면-dpi가-이상하게-설정되는-거-없애기"><a class="header" href="#export-하면-dpi가-이상하게-설정되는-거-없애기">export 하면 dpi가 이상하게 설정되는 거 없애기</a></h2>
+<p><img src="img/20250530134150.png" alt="" /></p>
+<p>이렇게 하면 dpi 상관없이 파워포인트에 이미지 크기대로 이미지가 삽입된다.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../pwa/pwa_vite_react.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../design/blender/toon.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../vite/tailwind.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../words/words.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -268,11 +179,11 @@ PS D:\test\vite&gt;
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../pwa/pwa_vite_react.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../design/blender/toon.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../vite/tailwind.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../words/words.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

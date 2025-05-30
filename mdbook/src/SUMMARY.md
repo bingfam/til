@@ -83,6 +83,7 @@
 
     - [pwa](./pwa/pwa.md)
       - [next.js를 pwa로](./pwa/pwa_nextjs.md)
+      - [vite react를 pwa로](./pwa/pwa_vite_react.md)
 
     - [vite](./vite/vite.md)
       - [vite에 tailwind 적용하기](./vite/tailwind.md)
@@ -187,6 +188,8 @@
   - [Assets](./design/assets.md)
   - [blender](./design/blender/blender.md)
     - [toon shader](./design/blender/toon.md)
+
+  - [inkscape](./design/inkscape.md)
 
 - [어휘](./words/words.md)
   - [여기서 장사하면 안된다 vs 안 된다](./words/words-00001.md)

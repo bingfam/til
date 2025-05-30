@@ -3929,6 +3929,93 @@ PS E:\test\nextjstest\pwa004&gt; npm run start
 <p>윈도우 키를 누르면 나오는 시작메뉴 맨 위에 <code>최근에 추가한 앱</code>에 표시된다.</p>
 <p><img src="pwa/img/20250520015552.png" alt="" /></p>
 <p>브라우저의 저 이미지를 바꾸고 싶으면 <code>favicon.ico</code> 파일을 바꾼다.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="vite-react를-pwa로"><a class="header" href="#vite-react를-pwa로">vite react를 pwa로</a></h1>
+<p>출처: https://www.perplexity.ai/search/vite-pwa-zErU3jUtTyOFdxUfpvEOHA#1</p>
+<h2 id="1-pwa-플러그인-설치"><a class="header" href="#1-pwa-플러그인-설치">1. pwa 플러그인 설치</a></h2>
+<p>홈페이지: <a href="https://vite-pwa-org.netlify.app/" title="" target="_blank">https://vite-pwa-org.netlify.app/</a></p>
+<pre><code class="language-ps">npm install -D vite-plugin-pwa
+</code></pre>
+<pre><code class="language-ps">PS D:\github_profkim2000\dididothat\src\dididothat&gt; npm install -D vite-plugin-pwa
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.       
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported  
+npm warn deprecated sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+
+added 384 packages in 22s
+
+96 packages are looking for funding
+  run `npm fund` for details
+PS D:\github_profkim2000\dididothat&gt; 
+</code></pre>
+<p>deprecated가 많이 보인다. -.-;</p>
+<h2 id="2-viteconfigts-설정"><a class="header" href="#2-viteconfigts-설정">2. vite.config.ts 설정</a></h2>
+<p>플러그인 import</p>
+<pre><code class="language-ts">import { VitePWA } from 'vite-plugin-pwa';
+</code></pre>
+<p>plugins 항목에 추가</p>
+<pre><code class="language-ts">plugins: [
+    react(),
+    VitePWA({
+      registerType: 'autoUpdate', // 서비스 워커 자동 업데이트 설정
+      devOptions: {
+        enabled: true, // 개발 모드에서 PWA 활성화 (선택 사항)
+      },
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}'], // 캐싱할 파일 패턴
+      },
+      manifest: {
+        name: '출퇴근 기록기',
+        short_name: 'DidIDoThat?',
+        description: '내가 그걸 했던가 기록하는 앱',
+        theme_color: '#ffffff',
+        icons: [
+          {
+            src: 'icon_192.png',
+            sizes: '192x192',
+            type: 'image/png',
+          },
+          {
+            src: 'icon_256.png',
+            sizes: '256X256',
+            type: 'image/png',
+          },
+          {
+            src: 'icon_512.png',
+            sizes: '512x512',
+            type: 'image/png',
+          },
+          {
+            src: 'icon_512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any maskable',
+          },
+        ],
+      },
+    }),
+  ],
+</code></pre>
+<h2 id="3-아이콘-추가"><a class="header" href="#3-아이콘-추가">3. 아이콘 추가</a></h2>
+<p><code>favicon.ico</code> 파일과 위 vite.config.ts 파일 <code>icons</code> 항목에 넣은 파일들을 <code>public</code> 폴더에 넣는다. <code>public\image</code> 폴더 등 밑에 넣어도 되지만 public 폴더에 별 다른게 없으니 그냥 바로 public 폴더 바로 밑에 넣자.</p>
+<p><img src="pwa/img/20250530110822.png" alt="" /></p>
+<h2 id="4-indexhtml-수정"><a class="header" href="#4-indexhtml-수정">4. index.html 수정</a></h2>
+<p>head 태그에 다음 link 추가</p>
+<pre><code class="language-html">&lt;link rel="icon" href="/icon_192.png" sizes="192x192" /&gt;
+&lt;!--&lt;link rel="apple-touch-icon" href="/apple-touch-icon.png" /&gt; 애플에서 쓰는 건가봄.--&gt;
+&lt;link rel="manifest" href="/manifest.webmanifest" /&gt;
+</code></pre>
+<p>만약 github.io에 올리는 등 서브 디렉토리 밑에 붙는 거라면, link 태그가 붙은 모든 링크 앞에 전부 다 그 서비 디렉토리를 반영해야 한다.</p>
+<p>만약 USERNAME.github.io/PROJECTNAME 에 올리는 거라면 아래와 같이 되어야 한다.</p>
+<pre><code class="language-html">&lt;link rel="icon" href="/PROJECTNAME/icon_192.png" sizes="192x192" /&gt;
+&lt;!--&lt;link rel="apple-touch-icon" href="/PROJECTNAME/apple-touch-icon.png" /&gt; 애플에서 쓰는 건가봄.--&gt;
+&lt;link rel="manifest" href="/PROJECTNAME/manifest.webmanifest" /&gt;
+</code></pre>
+<p>생성되는 파일은 <code>manifest.webmanifest</code> 인데 대부분의 자료는 <code>manifest.json</code>으로 표시되어 있다. 확인하자.</p>
+<p>기본 생성되어 있는</p>
+<pre><code class="language-html">&lt;link rel="icon" type="image/svg+xml" href="/vite.svg" /&gt;
+</code></pre>
+<p>이 부분은 자동으로 PROJECTNAME 처리가 되니 건드리지 말자.</p>
+<h2 id="5-build"><a class="header" href="#5-build">5. build</a></h2>
+<p>dist 폴더에 <code>manifest.webmanifest</code> 파일도 자동 생성되었는지 확인한다. <code>manifest.webmanifest</code> 파일이 없으면 pwa가 제대로 안된다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="vite"><a class="header" href="#vite">vite</a></h1>
 <p>vue 만든 사람이 만듦.</p>
 <p>CRA의 대안</p>
@@ -5225,6 +5312,9 @@ https://store.serif.com/en-us/account/downloads</p>
 <p>직접 사용해 보니 .ai로는 export 할 수 없었음.<br />
 지금 블랙프라이데이 50% 할인 기간이지만 사용하지 않겠음.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="assets"><a class="header" href="#assets">Assets</a></h1>
+<h2 id="아이콘"><a class="header" href="#아이콘">아이콘</a></h2>
+<p>아이콘 몬스터 <a href="https://iconmonstr.com/" title="" target="_blank">https://iconmonstr.com</a>
+excalidraw : 프로그램 내에서 제공해 주는 아이콘 많음</p>
 <h2 id="3d"><a class="header" href="#3d">3D</a></h2>
 <h3 id="models"><a class="header" href="#models">models</a></h3>
 <ul>
@@ -5270,6 +5360,10 @@ https://store.serif.com/en-us/account/downloads</p>
 <li>오른쪽 오브젝트인 sphere를 보면 선이 삐뚤빼뚤 그려졌는데 실제로는 카메라로 보면 이 선은 그려지지 않는다. 하지만 만약 다른 오브제트에서 이렇게 선이 그려지는 문제를 해결하려면 <code>subdivision surface</code> modifier를 추가해준다.</li>
 </ol>
 <p>특이하게도 edit 모드에 있는 오브젝트는 render 했을 때 선이 그려지지 않는다.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="inkscape"><a class="header" href="#inkscape">inkscape</a></h1>
+<h2 id="export-하면-dpi가-이상하게-설정되는-거-없애기"><a class="header" href="#export-하면-dpi가-이상하게-설정되는-거-없애기">export 하면 dpi가 이상하게 설정되는 거 없애기</a></h2>
+<p><img src="design/img/20250530134150.png" alt="" /></p>
+<p>이렇게 하면 dpi 상관없이 파워포인트에 이미지 크기대로 이미지가 삽입된다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="어휘"><a class="header" href="#어휘">어휘</a></h1>
 <p>나는 어휘력이, 문해력이 높은 편일까?</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="여기서-장사하면-안된다-여기서-장사하면-안-된다-의-차이"><a class="header" href="#여기서-장사하면-안된다-여기서-장사하면-안-된다-의-차이">여기서 장사하면 안된다 여기서 장사하면 안 된다 의 차이</a></h1>
