@@ -25,18 +25,19 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="custom.css">
 
 
-        <!-- Provide site root to javascript -->
+        <!-- Provide site root and default themes to javascript -->
         <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
@@ -46,8 +47,8 @@
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -61,7 +62,8 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -74,8 +76,8 @@
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var sidebar = null;
-            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -111,6 +113,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
@@ -563,8 +566,8 @@ pub trait Math
 <p><img src="dev/rust/img/20241201152819.png" alt="" /></p>
 <h2 id="휴먼편지체"><a class="header" href="#휴먼편지체">휴먼편지체</a></h2>
 <p><img src="dev/rust/img/20241201152827.png" alt="" /></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">main.rs 전문
-</span>
+<pre><pre class="playground"><code class="language-rust">#main.rs 전문
+
 use iced::{Element, Sandbox, Settings};
 use iced::{Font};
 use iced::widget::text;
@@ -4022,6 +4025,21 @@ PS D:\test\vite&gt;
 <div style="break-before: page; page-break-before: always;"></div><h1 id="vite에-tailwind-적용하기"><a class="header" href="#vite에-tailwind-적용하기">vite에 tailwind 적용하기</a></h1>
 <p><a href="https://tailwindcss.com/docs/installation/using-vite" title="" target="_blank">https://tailwindcss.com/docs/installation/using-vite</a></p>
 <p>아주 간단하게 적용할 수 있음.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="build한-앱은-consolelog-안-찍히게"><a class="header" href="#build한-앱은-consolelog-안-찍히게">build한 앱은 console.log 안 찍히게</a></h1>
+<h2 id="vite-plugin-remove-console-플러그인-사용"><a class="header" href="#vite-plugin-remove-console-플러그인-사용"><a href="https://www.npmjs.com/package/vite-plugin-remove-console" title="" target="_blank">vite-plugin-remove-console</a> 플러그인 사용</a></h2>
+<p><strong>설치</strong></p>
+<pre><code>npm install vite-plugin-remove-console -D
+</code></pre>
+<p><strong>vite.config.ts 파일 수정</strong></p>
+<pre><code class="language-ts">import removeConsole from "vite-plugin-remove-console";
+
+export default defineConfig({
+  plugins: [
+    removeConsole(),
+  ],
+})
+</code></pre>
+<p>이렇게 하면 로그가 남지 않음</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="media-player"><a class="header" href="#media-player">media player</a></h1>
 <pre><code>Uncaught (in promise) AbortError: The play() request was interrupted by a new load request. https://goo.gl/LdLk22
 setProp @ react-dom_client.js?v=b2930d9f:12334
