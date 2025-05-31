@@ -1383,10 +1383,10 @@ h6 {
 <p><img src="dev/vscode/img/20250601002611.png" alt="" /></p>
 <p><img src="dev/vscode/img/20250601004504.png" alt="" /></p>
 <p>이것도 해제해야 쓸데없는 간섭을 받지 않는다.</p>
-<p>그리고  pdf.css 파일같은 css 파일을 설정한다.</p>
-<pre><code>body
+<p>그리고  pdf.css 파일같은 css 파일을 생성한다.</p>
+<pre><code class="language-css">body
 {
-    width: 900px;
+    width: 1280px;
     margin: 0 auto;
     border: 0px solid;
 }
@@ -1455,7 +1455,20 @@ h5 {
   /* 기울임꼴 */
   font-style: italic;
 }
+
+code{
+    background-color: lightgray;
+    border-radius: 7px;
+    color: #020202;
+    padding: 4px 6px;
+    font-weight: 600;
+}
 </code></pre>
+<p>이제 변환된 html 파일을 열어 다음 2가지를 해준다.</p>
+<ol>
+<li>title을 고친다.</li>
+<li>pdf 파일 경로를 환경에 맞게 고친다.</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="비동기화"><a class="header" href="#비동기화">비동기화</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="자바스크립트-비동기화"><a class="header" href="#자바스크립트-비동기화">자바스크립트 비동기화</a></h1>
 <p>자바스크립트 비동기화는 Promise 클래스와 async/await로 대표된다.</p>
