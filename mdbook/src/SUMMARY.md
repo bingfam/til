@@ -66,6 +66,8 @@
     - [visual studio code 에서 terminal에서 한글이 안될 때](./dev/vscode/00002.md)
     - [markdown custom css](./dev/vscode/00003.md)
 
+    - [markdown 파일을 html로 변환할 때 css 적용](./dev/vscode/00005.md)
+
   - [비동기화](./asynchronous/asynchronous.md)
     - [javascript 비동기화](./asynchronous/javascript_async.md)
 
