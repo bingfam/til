@@ -1376,74 +1376,86 @@ h6 {
 <p>pdf 파일은</p>
 <p>C:\Users\_USERID_.vscode\extensions\yzane.markdown-pdf-1.5.0\styles\markdown-pdf.css</p>
 <p>파일을 수정하면 된다.</p>
-<div style="break-before: page; page-break-before: always;"></div><p>body
+<div style="break-before: page; page-break-before: always;"></div><h1 id="markdown-파일을-html로-변환할-때-css-적용"><a class="header" href="#markdown-파일을-html로-변환할-때-css-적용">markdown 파일을 html로 변환할 때 css 적용</a></h1>
+<p>index.md 파일을 html 파일로 변경하려 한다.</p>
+<p><img src="dev/vscode/img/20250601002430.png" alt="" /></p>
+<p>markdown pdf를 설치한 다음 html로 export할 때 css를 적용하려면, 아래와 같이 css 파일명을 적어준다.</p>
+<p><img src="dev/vscode/img/20250601002611.png" alt="" /></p>
+<p><img src="dev/vscode/img/20250601004504.png" alt="" /></p>
+<p>이것도 해제해야 쓸데없는 간섭을 받지 않는다.</p>
+<p>그리고  pdf.css 파일같은 css 파일을 설정한다.</p>
+<pre><code>body
 {
-width: 1280px;
-margin: 0 auto;
-border: 0px solid;
-}</p>
-<p>p
+    width: 900px;
+    margin: 0 auto;
+    border: 0px solid;
+}
+
+p
 {
-font-size: 1.3em;
-}</p>
-<p>h1 {
-/* 글꼴 크기: 매우 크게 설정하여 페이지의 주요 제목임을 강조 <em>/
-font-size: 3.5em; /</em> 1em은 부모 요소의 font-size와 동일 <em>/
-/</em> 글꼴 두께: 굵게 <em>/
-font-weight: 800;
-/</em> 글꼴 색상: 진한 색상으로 설정 <em>/
-color: #2c3e50;
-/</em> 아래쪽 여백: 다른 요소와의 간격 확보 */
-margin-bottom: 30px;</p>
-<p>}</p>
-<p>h2 {
-/* 글꼴 크기: h1보다 작지만 여전히 큼 <em>/
-font-size: 2.5em;
-/</em> 글꼴 두께: 보통보다 약간 굵게 <em>/
-font-weight: 700;
-/</em> 글꼴 색상: h1과 비슷하지만 조금 더 밝게 <em>/
-color: #34495e;
-/</em> 아래쪽 여백: 적절한 간격 */
-margin-bottom: 30px;
-}</p>
-<p>h3 {
-/* 글꼴 크기: 적당한 크기 <em>/
-font-size: 2.0em;
-/</em> 글꼴 두께: 보통 <em>/
-font-weight: 600;
-/</em> 글꼴 색상: 일반 텍스트보다 진하게 <em>/
-color: #2c3e50;
-/</em> 아래쪽 여백: 다른 요소와의 간격 */
-margin-bottom: 20px;<br />
-}</p>
-<p>h4 {
-/* 글꼴 크기: 일반 텍스트보다 약간 크게 <em>/
-font-size: 1.5em;
-/</em> 글꼴 두께: 보통 <em>/
-font-weight: 500;
-/</em> 글꼴 색상: 어둡지만 너무 강하지 않게 <em>/
-color: black;
-/</em> 아래쪽 여백: 작은 간격 */
-margin-bottom: 15px;</p>
-<p>}</p>
-<p>h5 {
-/* 글꼴 크기: 일반 텍스트와 비슷하거나 약간 크게 <em>/
-font-size: 1.1em;
-/</em> 글꼴 두께: 보통 <em>/
-font-weight: 400;
-/</em> 글꼴 색상: 일반 텍스트 색상 <em>/
-color: #7f8c8d;
-/</em> 아래쪽 여백 <em>/
-margin-bottom: 10px;
-/</em> 기울임꼴 */
-font-style: italic;
-}</p>
-<p>code{
-background-color: lightgray;
-border-radius: 10px;
-color: #020202;
-padding: 4px 8px;
-}</p>
+    font-size: 1.3em;
+}
+
+h1 {
+  /* 글꼴 크기: 매우 크게 설정하여 페이지의 주요 제목임을 강조 */
+  font-size: 3.5em; /* 1em은 부모 요소의 font-size와 동일 */
+  /* 글꼴 두께: 굵게 */
+  font-weight: 800;
+  /* 글꼴 색상: 진한 색상으로 설정 */
+  color: #2c3e50;
+  /* 아래쪽 여백: 다른 요소와의 간격 확보 */
+  margin-bottom: 30px;
+  
+}
+
+h2 {
+  /* 글꼴 크기: h1보다 작지만 여전히 큼 */
+  font-size: 2.5em;
+  /* 글꼴 두께: 보통보다 약간 굵게 */
+  font-weight: 700;
+  /* 글꼴 색상: h1과 비슷하지만 조금 더 밝게 */
+  color: #34495e;
+  /* 아래쪽 여백: 적절한 간격 */
+  margin-bottom: 30px;
+}  
+
+h3 {
+  /* 글꼴 크기: 적당한 크기 */
+  font-size: 2.0em;
+  /* 글꼴 두께: 보통 */
+  font-weight: 600;
+  /* 글꼴 색상: 일반 텍스트보다 진하게 */
+  color: #2c3e50;
+  /* 아래쪽 여백: 다른 요소와의 간격 */
+  margin-bottom: 20px;  
+}
+
+h4 {
+  /* 글꼴 크기: 일반 텍스트보다 약간 크게 */
+  font-size: 1.5em;
+  /* 글꼴 두께: 보통 */
+  font-weight: 500;
+  /* 글꼴 색상: 어둡지만 너무 강하지 않게 */
+  color: black;
+  /* 아래쪽 여백: 작은 간격 */
+  margin-bottom: 15px;
+  
+  
+}
+
+h5 {
+  /* 글꼴 크기: 일반 텍스트와 비슷하거나 약간 크게 */
+  font-size: 1.1em;
+  /* 글꼴 두께: 보통 */
+  font-weight: 400;
+  /* 글꼴 색상: 일반 텍스트 색상 */
+  color: #7f8c8d;
+  /* 아래쪽 여백 */
+  margin-bottom: 10px;
+  /* 기울임꼴 */
+  font-style: italic;
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="비동기화"><a class="header" href="#비동기화">비동기화</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="자바스크립트-비동기화"><a class="header" href="#자바스크립트-비동기화">자바스크립트 비동기화</a></h1>
 <p>자바스크립트 비동기화는 Promise 클래스와 async/await로 대표된다.</p>
