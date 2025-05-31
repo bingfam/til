@@ -72,7 +72,10 @@
   - [웹](./web/web.md)
     
     - [next.js](./next.js/next.js.md)
-  
+      - [sqlite3](./sqlite3/nextjs.md)      
+      - [정적호스팅](./next.js/hosting.md)
+      - [github.io에서 호스팅](./next.js/to_github.io.md)
+
     - [nextauth](./nextauth/nextauth.md)
       - [nextauth tutorial](./nextauth/nextauth_001.md)
 
@@ -99,12 +102,15 @@
   - [QGIS](./gis/qgis/qgis.md)
     - [plugin 개발](./gis/qgis/plugin_dev.md)
   - [cesium](.gis/cesium/cesium.md)
-    - [cesium과 google earth 차이점](.gis/cesium/cesium_google_earth.md)    
+    - [cesium과 google earth 차이점](.gis/cesium/cesium_google_earth.md)
 
 - [데이터베이스](./db/db.md)
   - [postgresql](./db/postgresql/postgresql.md)
     - [보안](./db/postgresql/crypt.md)
+  
   - [sqlite3](./db/sqlite3/sqlite3.md)
+
+  - [indexed db](./db/indexeddb/indexeddb.md)
 
 - [유틸리티](./utility/utility.md)
   - [joplin](./utility/joplin.md)
@@ -175,6 +181,8 @@
   - [Assets](./design/assets.md)
   - [blender](./design/blender/blender.md)
     - [toon shader](./design/blender/toon.md)
+
+  - [inkscape](./design/inkscape.md)
 
 - [어휘](./words/words.md)
   - [여기서 장사하면 안된다 vs 안 된다](./words/words-00001.md)
