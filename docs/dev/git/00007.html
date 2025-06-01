@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>visual studio - TIL</title>
+        <title>특정 시점 이전으로 돌아가기 - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -153,17 +153,26 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="visual-studio"><a class="header" href="#visual-studio">visual studio</a></h1>
+                        <h1 id="특정-시점-이전으로-돌아가기"><a class="header" href="#특정-시점-이전으로-돌아가기">특정 시점 이전으로 돌아가기</a></h1>
+<p>참조: https://g.co/gemini/share/bd7d5a73ee6d</p>
+<p>특정 시점(fedcba9) 으로 돌아가려면,</p>
+<pre><code class="language-ps">git reset --hard fedcba9
+</code></pre>
+<p>그리고 github에 push하는데 그냥은 안되고 –force를 해야 한다.</p>
+<pre><code class="language-ps">git push origin --force --all
+</code></pre>
+<p>어떤 파일이 처음 등장한 시점으로 돌아가려면 그 시점을 알아야 한다. <a href="./00006.html">참조</a></p>
+<p>어떤 파일이 처음 등장한 시점 이전으로 돌아가려면 <code>git log</code>로 순서상에서 찾아내야 한다.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../dev/git/00007.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../dev/git/00006.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../dev/visualstudio/00001.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../dev/visualstudio/visualstudo.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -173,11 +182,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../dev/git/00007.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../dev/git/00006.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../dev/visualstudio/00001.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../dev/visualstudio/visualstudo.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

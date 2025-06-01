@@ -1268,6 +1268,41 @@ error: could not lock config file C:/Program Files/Git/etc/gitconfig: Permission
 <pre><code>git push origin v1.0.0
 </code></pre>
 <p>참조: https://minsone.github.io/git/git-addtion-and-modified-delete-tag</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="특정파일이-등장한-시점-알아내기"><a class="header" href="#특정파일이-등장한-시점-알아내기">특정파일이 등장한 시점 알아내기</a></h1>
+<h2 id="특정파일-관련-로그-모두-찾아내기"><a class="header" href="#특정파일-관련-로그-모두-찾아내기">특정파일 관련 로그 모두 찾아내기</a></h2>
+<pre><code class="language-ps">PS E:\test\allflix&gt; git log -- "gra\Screenshot_20250531_183027_One UI Home.jpg"
+commit 32c39xx
+Author: sobi &lt;sobi@xxx.com&gt;
+Date:   Sat May 31 23:21:19 2025 +0900
+
+    update
+PS E:\test\allflix&gt;
+</code></pre>
+<p>repository 루트에서 <code>git log &lt;파일경로&gt;</code> 실행
+혹은 해당 파일이 있는 곳에서 <code>git log &lt;파일명&gt;</code> 실행</p>
+<p>그 파일 관련 로그를 날짜순으로 볼 수 있다. 최신 파일이 맨 위에, 맨 밑이 그 파일이 등장한 시점.</p>
+<h2 id="특정파일이-등장하는-최초-로그-빨리-찾아내기"><a class="header" href="#특정파일이-등장하는-최초-로그-빨리-찾아내기">특정파일이 등장하는 최초 로그 빨리 찾아내기</a></h2>
+<pre><code class="language-ps">PS E:\test\allflix&gt; git log --reverse "gra\Screenshot_20250531_183027_One UI Home.jpg"
+commit 32c39xx
+Author: sobi &lt;sobi@xxx.com&gt;
+Date:   Sat May 31 23:21:19 2025 +0900
+
+    update
+PS E:\test\allflix&gt;
+</code></pre>
+<p>repository 루트에서 <code>git log --reverse &lt;파일경로&gt;</code> 실행</p>
+<p>혹은 해당 파일이 있는 곳에서 <code>git log --reverse &lt;파일명&gt;</code> 실행</p>
+<p>그 파일 관련 로그를 날짜순으로 볼 수 있다. 맨 위가 해당 파일이 등장한 시점, 맨 아래가 가장 최신 commit이다.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="특정-시점-이전으로-돌아가기"><a class="header" href="#특정-시점-이전으로-돌아가기">특정 시점 이전으로 돌아가기</a></h1>
+<p>참조: https://g.co/gemini/share/bd7d5a73ee6d</p>
+<p>특정 시점(fedcba9) 으로 돌아가려면,</p>
+<pre><code class="language-ps">git reset --hard fedcba9
+</code></pre>
+<p>그리고 github에 push하는데 그냥은 안되고 –force를 해야 한다.</p>
+<pre><code class="language-ps">git push origin --force --all
+</code></pre>
+<p>어떤 파일이 처음 등장한 시점으로 돌아가려면 그 시점을 알아야 한다. <a href="dev/git/./00006.html">참조</a></p>
+<p>어떤 파일이 처음 등장한 시점 이전으로 돌아가려면 <code>git log</code>로 순서상에서 찾아내야 한다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="visual-studio"><a class="header" href="#visual-studio">visual studio</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="컴파일-오류-목록-중-하나를-더블클릭하면-문제-세부-정보-창이-나올-때-없애는-방법"><a class="header" href="#컴파일-오류-목록-중-하나를-더블클릭하면-문제-세부-정보-창이-나올-때-없애는-방법">컴파일 오류 목록 중 하나를 더블클릭하면 문제 세부 정보 창이 나올 때 없애는 방법</a></h1>
 <p><img src="dev/visualstudio/img/20241201153112.png" alt="" /></p>

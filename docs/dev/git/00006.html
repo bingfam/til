@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>visual studio - TIL</title>
+        <title>특정파일이 등장한 시점 알아내기 - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -153,17 +153,41 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="visual-studio"><a class="header" href="#visual-studio">visual studio</a></h1>
+                        <h1 id="특정파일이-등장한-시점-알아내기"><a class="header" href="#특정파일이-등장한-시점-알아내기">특정파일이 등장한 시점 알아내기</a></h1>
+<h2 id="특정파일-관련-로그-모두-찾아내기"><a class="header" href="#특정파일-관련-로그-모두-찾아내기">특정파일 관련 로그 모두 찾아내기</a></h2>
+<pre><code class="language-ps">PS E:\test\allflix&gt; git log -- "gra\Screenshot_20250531_183027_One UI Home.jpg"
+commit 32c39xx
+Author: sobi &lt;sobi@xxx.com&gt;
+Date:   Sat May 31 23:21:19 2025 +0900
+
+    update
+PS E:\test\allflix&gt;
+</code></pre>
+<p>repository 루트에서 <code>git log &lt;파일경로&gt;</code> 실행
+혹은 해당 파일이 있는 곳에서 <code>git log &lt;파일명&gt;</code> 실행</p>
+<p>그 파일 관련 로그를 날짜순으로 볼 수 있다. 최신 파일이 맨 위에, 맨 밑이 그 파일이 등장한 시점.</p>
+<h2 id="특정파일이-등장하는-최초-로그-빨리-찾아내기"><a class="header" href="#특정파일이-등장하는-최초-로그-빨리-찾아내기">특정파일이 등장하는 최초 로그 빨리 찾아내기</a></h2>
+<pre><code class="language-ps">PS E:\test\allflix&gt; git log --reverse "gra\Screenshot_20250531_183027_One UI Home.jpg"
+commit 32c39xx
+Author: sobi &lt;sobi@xxx.com&gt;
+Date:   Sat May 31 23:21:19 2025 +0900
+
+    update
+PS E:\test\allflix&gt;
+</code></pre>
+<p>repository 루트에서 <code>git log --reverse &lt;파일경로&gt;</code> 실행</p>
+<p>혹은 해당 파일이 있는 곳에서 <code>git log --reverse &lt;파일명&gt;</code> 실행</p>
+<p>그 파일 관련 로그를 날짜순으로 볼 수 있다. 맨 위가 해당 파일이 등장한 시점, 맨 아래가 가장 최신 commit이다.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../dev/git/00007.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../dev/git/00005.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../dev/visualstudio/00001.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../dev/git/00007.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -173,11 +197,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../dev/git/00007.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../dev/git/00005.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../dev/visualstudio/00001.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../dev/git/00007.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

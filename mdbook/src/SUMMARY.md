@@ -51,6 +51,8 @@
     - [.gitconfig 파일의 내용을 전부 다 지워도 git config --list 하면 뭔가 정보가 남아있다](./dev/git/00003.md)
     - [git 한글 파일명이 숫자처럼 보이는 경우 해결](./dev/git/00004.md)
     - [tag](./dev/git/00005.md)
+    - [특정파일이 등장한 시점 알아내기](./dev/git/00006.md)
+    - [특정 시점 이전으로 돌아가기](./dev/git/00007.md)
 
   - [visual studio](./dev/visualstudio/visualstudo.md)
     - [컴파일 오류 목록 중 하나를 더블클릭하면 문제 세부 정보 창이 나올 때 없애는 방법](./dev/visualstudio/00001.md)

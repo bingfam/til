@@ -38,9 +38,9 @@ processRootScheduleInMicrotask @ react-dom_client.js?v=b2930d9f:11556
 
 여기에 해결책이 있다.
 
-## react player 라이브러리
+## react audio player 라이브러리
 
-### [react-player](https://www.npmjs.com/package/react-player)
+### [react-audio-player](https://www.npmjs.com/package/react-audio-player)
 ```
-npm install react-player
+npm install react-audio-player
 ```
