@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>visual studio - TIL</title>
+        <title>git update 후 특정 아이디로 고정됨 - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -153,17 +153,32 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="visual-studio"><a class="header" href="#visual-studio">visual studio</a></h1>
+                        <h1 id="git-update-후-특정-아이디로-고정됨"><a class="header" href="#git-update-후-특정-아이디로-고정됨">git update 후 특정 아이디로 고정됨</a></h1>
+<p>여러 개의 git 아이디를 사용하는 상황.</p>
+<p>.gitconfig나 다른 파일들이 모두 아무런 문제 없는데, 폴더마다 특정 아이디를 사용하게끔 한 설정이 안되고 있다. 모두 하나의 특정 아이디로 고정되어 버렸다.</p>
+<pre><code class="language-ps">$ git config user.name
+bingxxx
+</code></pre>
+<p>이건 잘 되는데.</p>
+<p>생각해 보니 좀전에 choco로 모든 파일을 업데이트한 게 걸렸다.</p>
+<p><code>C:/Program Files/Git/etc/gitconfig</code> 파일을 보니 좀전에 업데이트되었다고 나왔다. 파일 자체가 새로 생성되었다. 백업이라도 해 놓을 걸.</p>
+<pre><code>[credential]
+    helper = C:/Program\\ Files\\ \\(x86\\)/Git\\ Credential\\ Manager/git-credential-manager.exe
+</code></pre>
+<p><code>C:/Program Files/Git/etc/gitconfig</code> 파일에 위 내용을 추가해 놓았더니 다시 예전처럼</p>
+<p><img src="img/20250602031340.png" alt="" /></p>
+<p>이 창이 나온다.</p>
+<p>아 뭔가 문제인가 싶어서 기존 로그인 정보 죄다 지웠는데.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../dev/git/00008.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../dev/git/00007.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../dev/visualstudio/00001.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../dev/visualstudio/visualstudo.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -173,11 +188,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../dev/git/00008.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../dev/git/00007.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../dev/visualstudio/00001.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../dev/visualstudio/visualstudo.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
