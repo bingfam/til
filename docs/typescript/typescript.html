@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>react - TIL</title>
+        <title>typescript - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -156,25 +156,34 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="react"><a class="header" href="#react">react</a></h1>
-<h3 id="프로젝트-생성typescript로"><a class="header" href="#프로젝트-생성typescript로">프로젝트 생성(typescript로)</a></h3>
-<pre><code>npx create-react-app url_mp3_player --template typescript
+                        <h1 id="typescript"><a class="header" href="#typescript">typescript</a></h1>
+<h2 id="mdeditor의-change-이벤트-처리"><a class="header" href="#mdeditor의-change-이벤트-처리">MDEditor의 change 이벤트 처리</a></h2>
+<p><img src="img/20250606190557.png" alt="" /></p>
+<p>이렇게 onChange에 빨간줄이 나온다.
+이게 setState에 걸려 있는데 아무리 해도 해결이 안된다.</p>
+<p>이럴 때는 vscode에서 저 <code>onChange</code> 부분을 ctrl + 클릭하면 설명이 나온다.</p>
+<p><img src="img/20250606190814.png" alt="" /></p>
+<p>저 부분을 참조해서 함수를 새로 만들고 그 함수 안에서 setState 함수를 호출하도록 한다.</p>
+<pre><code class="language-tsx">//위 이미지 부분을 이렇게 수정하고,
+&lt;MDEditor value={memo} onChange={OnMemoChanged} style={{minWidth:"100%", minHeight:"400px"}} /&gt;    
+
+// 처리하는 함수의 모양은 아래와 같이.
+const OnMemoChanged = (value?: string, event?: React.ChangeEvent&lt;HTMLTextAreaElement&gt;, state?: ContextStore) =&gt;
+{
+    if (value)
+        setDescript(value);
+}
 </code></pre>
-<h3 id="프로젝트의-모듈-업그레이드"><a class="header" href="#프로젝트의-모듈-업그레이드">프로젝트의 모듈 업그레이드</a></h3>
-<pre><code>npm update
-</code></pre>
-<p>이래도 안되면
-<code>package-lock.json</code>을 지우고 다시 <code>npm update</code> 한다.()</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../editorjs/editorjs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../react/react.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../typescript/typescript.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../dev/settings/settings.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -184,11 +193,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../editorjs/editorjs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../react/react.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../typescript/typescript.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../dev/settings/settings.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

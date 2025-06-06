@@ -3927,6 +3927,24 @@ declare module "@editorjs/simple-image";
 </code></pre>
 <p>이래도 안되면
 <code>package-lock.json</code>을 지우고 다시 <code>npm update</code> 한다.()</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="typescript"><a class="header" href="#typescript">typescript</a></h1>
+<h2 id="mdeditor의-change-이벤트-처리"><a class="header" href="#mdeditor의-change-이벤트-처리">MDEditor의 change 이벤트 처리</a></h2>
+<p><img src="typescript/img/20250606190557.png" alt="" /></p>
+<p>이렇게 onChange에 빨간줄이 나온다.
+이게 setState에 걸려 있는데 아무리 해도 해결이 안된다.</p>
+<p>이럴 때는 vscode에서 저 <code>onChange</code> 부분을 ctrl + 클릭하면 설명이 나온다.</p>
+<p><img src="typescript/img/20250606190814.png" alt="" /></p>
+<p>저 부분을 참조해서 함수를 새로 만들고 그 함수 안에서 setState 함수를 호출하도록 한다.</p>
+<pre><code class="language-tsx">//위 이미지 부분을 이렇게 수정하고,
+&lt;MDEditor value={memo} onChange={OnMemoChanged} style={{minWidth:"100%", minHeight:"400px"}} /&gt;    
+
+// 처리하는 함수의 모양은 아래와 같이.
+const OnMemoChanged = (value?: string, event?: React.ChangeEvent&lt;HTMLTextAreaElement&gt;, state?: ContextStore) =&gt;
+{
+    if (value)
+        setDescript(value);
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="settings"><a class="header" href="#settings">settings</a></h1>
 <h2 id="세팅파일-만드는-데-사용되는-파일-포맷들"><a class="header" href="#세팅파일-만드는-데-사용되는-파일-포맷들">세팅파일 만드는 데 사용되는 파일 포맷들</a></h2>
 <p>https://velog.io/@jk01019/TOML-VS-YAML</p>
