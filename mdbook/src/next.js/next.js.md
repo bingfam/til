@@ -30,3 +30,20 @@ npm install
 ```
 
 을 하면, `package.json` 파일에서 `dependencies`와 `devDependencies` 섹션에서 모든 패키지를 찾아 node_modules 폴더를 생성하고 설치한다.
+
+
+## https로 테스트
+powershell을 관리자 모드로 실행하고, 프로젝트 루트에서 다음 실행.
+
+```ps
+npx next dev --experimental-https
+```
+
+## 포트번호 바꾸기
+package.json 파일 수정
+
+```json
+"scripts": {
+  "start": "next start -p 80"
+}
+```
