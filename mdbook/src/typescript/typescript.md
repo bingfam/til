@@ -24,3 +24,11 @@ const OnMemoChanged = (value?: string, event?: React.ChangeEvent<HTMLTextAreaEle
         setDescript(value);
 }
 ```
+
+최종적으로는 아래의 모양이 될 거다. event 랑 state 등은 안 써서 eslint에 걸리니까.
+```tsx
+const OnMemoChanged = (value?: string) =>
+{
+    if (value)
+        setDescript(value);
+}

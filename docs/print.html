@@ -3945,6 +3945,13 @@ const OnMemoChanged = (value?: string, event?: React.ChangeEvent&lt;HTMLTextArea
         setDescript(value);
 }
 </code></pre>
+<p>최종적으로는 아래의 모양이 될 거다. event 랑 state 등은 안 써서 eslint에 걸리니까.</p>
+<pre><code class="language-tsx">const OnMemoChanged = (value?: string) =&gt;
+{
+    if (value)
+        setDescript(value);
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="settings"><a class="header" href="#settings">settings</a></h1>
 <h2 id="세팅파일-만드는-데-사용되는-파일-포맷들"><a class="header" href="#세팅파일-만드는-데-사용되는-파일-포맷들">세팅파일 만드는 데 사용되는 파일 포맷들</a></h2>
 <p>https://velog.io/@jk01019/TOML-VS-YAML</p>
