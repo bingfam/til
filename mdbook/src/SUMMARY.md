@@ -88,6 +88,8 @@
 
     - [react](./react/react.md)
       -[react project 생성 시 안내](./react/react_001.md)
+    
+    - [typescript](./typescript/typescript.md)
 
   - [settings](./dev/settings/settings.md)
 
