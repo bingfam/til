@@ -1651,6 +1651,16 @@ function LongTask_async()
 <pre><code class="language-ps">npm install
 </code></pre>
 <p>을 하면, <code>package.json</code> 파일에서 <code>dependencies</code>와 <code>devDependencies</code> 섹션에서 모든 패키지를 찾아 node_modules 폴더를 생성하고 설치한다.</p>
+<h2 id="https로-테스트"><a class="header" href="#https로-테스트">https로 테스트</a></h2>
+<p>powershell을 관리자 모드로 실행하고, 프로젝트 루트에서 다음 실행.</p>
+<pre><code class="language-ps">npx next dev --experimental-https
+</code></pre>
+<h2 id="포트번호-바꾸기"><a class="header" href="#포트번호-바꾸기">포트번호 바꾸기</a></h2>
+<p>package.json 파일 수정</p>
+<pre><code class="language-json">"scripts": {
+  "start": "next start -p 80"
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="sqlite3-in-nextjs"><a class="header" href="#sqlite3-in-nextjs">SQLite3 in Next.js</a></h1>
 <h2 id="프로젝트-생성-2"><a class="header" href="#프로젝트-생성-2">프로젝트 생성</a></h2>
 <pre><code class="language-ps">npx create-next-app
