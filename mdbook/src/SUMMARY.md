@@ -20,6 +20,7 @@
 
   - [linux](./linux/linux.md)
     - [fedora](./linux/fedora.md)
+    - [rockylinux](./linux/rocky.md)
 
 
 - [개발](./dev/dev.md)
