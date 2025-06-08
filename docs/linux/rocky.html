@@ -160,12 +160,20 @@
 <h2 id="podman에서-설치"><a class="header" href="#podman에서-설치">podman에서 설치</a></h2>
 <p>이미지는 rockylinux 9로 검색해서 설치</p>
 <p>docker.io/almalinux/9-base 를 사용</p>
+<h3 id="포트설정"><a class="header" href="#포트설정">포트설정</a></h3>
+<ul>
+<li>23000:3000</li>
+<li>20080:80</li>
+<li>20443:443</li>
+<li>25432:5432</li>
+<li>20022:22</li>
+</ul>
 <h2 id="nodejs-설치"><a class="header" href="#nodejs-설치">node.js 설치</a></h2>
 <p>podman에 이미지 설치해 사용한 후의 기록</p>
-<p>일단 업데이트한다.</p>
+<h3 id="일단-업데이트한다"><a class="header" href="#일단-업데이트한다">일단 업데이트한다.</a></h3>
 <pre><code class="language-bash">dnf update -y
 </code></pre>
-<p>제공되는 node.js 목록을 본다</p>
+<h3 id="제공되는-nodejs-목록을-본다"><a class="header" href="#제공되는-nodejs-목록을-본다">제공되는 node.js 목록을 본다</a></h3>
 <pre><code class="language-bash">[root@d8d8565ea203 /]# dnf module list nodejs
 Last metadata expiration check: 0:01:55 ago on Sun Jun  8 11:24:17 2025.
 AlmaLinux 9 - AppStream
@@ -177,7 +185,7 @@ nodejs                           22                               common [d], de
 Hint: [d]efault, [e]nabled, [x]disabled, [i]nstalled
 [root@d8d8565ea203 /]# 
 </code></pre>
-<p>22 버전을 사용하겠다고 표시한다.</p>
+<h3 id="22-버전을-사용하겠다고-표시한다"><a class="header" href="#22-버전을-사용하겠다고-표시한다">22 버전을 사용하겠다고 표시한다.</a></h3>
 <pre><code class="language-bash">[root@d8d8565ea203 /]# dnf module -y enable nodejs:22
 Last metadata expiration check: 0:03:01 ago on Sun Jun  8 11:24:17 2025.
 Dependencies resolved.
@@ -193,7 +201,7 @@ Transaction Summary
 Complete!
 [root@d8d8565ea203 /]# 
 </code></pre>
-<p>22를 설치하겠다고 설정되었는지 확인한다.</p>
+<h3 id="22를-설치하겠다고-설정되었는지-확인한다"><a class="header" href="#22를-설치하겠다고-설정되었는지-확인한다">22를 설치하겠다고 설정되었는지 확인한다.</a></h3>
 <pre><code class="language-bash">[root@d8d8565ea203 /]# dnf module list nodejs
 Last metadata expiration check: 0:03:58 ago on Sun Jun  8 11:24:17 2025.
 AlmaLinux 9 - AppStream
@@ -206,7 +214,7 @@ Hint: [d]efault, [e]nabled, [x]disabled, [i]nstalled
 [root@d8d8565ea203 /]# 
 </code></pre>
 <p>22 버전 옆에 [e]라고 표시된 것을 볼 수 있다.</p>
-<p>이제 실제로 설치하자.</p>
+<h3 id="이제-실제로-설치하자"><a class="header" href="#이제-실제로-설치하자">이제 실제로 설치하자.</a></h3>
 <pre><code class="language-bash">[root@d8d8565ea203 /]# dnf -y install nodejs
 Last metadata expiration check: 0:04:58 ago on Sun Jun  8 11:24:17 2025.
 Dependencies resolved.
@@ -262,14 +270,14 @@ Installed:
 Complete!
 [root@d8d8565ea203 /]# 
 </code></pre>
-<p>설치한 다음에 버전 확인</p>
+<h3 id="설치한-다음에-버전-확인"><a class="header" href="#설치한-다음에-버전-확인">설치한 다음에 버전 확인</a></h3>
 <pre><code class="language-bash">[root@d8d8565ea203 /]# node --version
 v22.16.0
 [root@d8d8565ea203 /]# npm -v
 bash: npm: command not found
 </code></pre>
 <p>node.js는 잘 설치되었는데 npm이 설치가 안되어있다. ?</p>
-<p>npm도 설치하자.</p>
+<h3 id="npm도-설치하자"><a class="header" href="#npm도-설치하자">npm도 설치하자.</a></h3>
 <pre><code class="language-bash">[root@d8d8565ea203 /]# yum install -y npm
 Last metadata expiration check: 0:06:55 ago on Sun Jun  8 11:24:17 2025.
 Dependencies resolved.
@@ -305,7 +313,7 @@ Installed:
 Complete!
 [root@d8d8565ea203 /]# 
 </code></pre>
-<p>npm 버전도 확인</p>
+<h3 id="npm-버전도-확인"><a class="header" href="#npm-버전도-확인">npm 버전도 확인</a></h3>
 <pre><code class="language-bash">[root@d8d8565ea203 /]# npm -v
 10.9.2
 </code></pre>

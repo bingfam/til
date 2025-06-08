@@ -5,16 +5,23 @@
 
 docker.io/almalinux/9-base 를 사용
 
+### 포트설정
+ - 23000:3000 
+ - 20080:80
+ - 20443:443 
+ - 25432:5432
+ - 20022:22
+
 
 ## node.js 설치
 podman에 이미지 설치해 사용한 후의 기록
 
-일단 업데이트한다.
+### 일단 업데이트한다.
 ```bash
 dnf update -y
 ```
 
-제공되는 node.js 목록을 본다
+### 제공되는 node.js 목록을 본다
 ```bash
 [root@d8d8565ea203 /]# dnf module list nodejs
 Last metadata expiration check: 0:01:55 ago on Sun Jun  8 11:24:17 2025.
@@ -28,7 +35,7 @@ Hint: [d]efault, [e]nabled, [x]disabled, [i]nstalled
 [root@d8d8565ea203 /]# 
 ```
 
-22 버전을 사용하겠다고 표시한다.
+### 22 버전을 사용하겠다고 표시한다.
 ```bash
 [root@d8d8565ea203 /]# dnf module -y enable nodejs:22
 Last metadata expiration check: 0:03:01 ago on Sun Jun  8 11:24:17 2025.
@@ -47,7 +54,7 @@ Complete!
 ```
 
 
-22를 설치하겠다고 설정되었는지 확인한다.
+### 22를 설치하겠다고 설정되었는지 확인한다.
 ```bash
 [root@d8d8565ea203 /]# dnf module list nodejs
 Last metadata expiration check: 0:03:58 ago on Sun Jun  8 11:24:17 2025.
@@ -63,7 +70,7 @@ Hint: [d]efault, [e]nabled, [x]disabled, [i]nstalled
 
 22 버전 옆에 [e]라고 표시된 것을 볼 수 있다.
 
-이제 실제로 설치하자.
+### 이제 실제로 설치하자.
 
 ```bash
 [root@d8d8565ea203 /]# dnf -y install nodejs
@@ -123,7 +130,7 @@ Complete!
 ```
 
 
-설치한 다음에 버전 확인
+### 설치한 다음에 버전 확인
 ```bash
 [root@d8d8565ea203 /]# node --version
 v22.16.0
@@ -133,7 +140,7 @@ bash: npm: command not found
 
 node.js는 잘 설치되었는데 npm이 설치가 안되어있다. ?
 
-npm도 설치하자.
+### npm도 설치하자.
 
 ```bash
 [root@d8d8565ea203 /]# yum install -y npm
@@ -172,7 +179,7 @@ Complete!
 [root@d8d8565ea203 /]# 
 ```
 
-npm 버전도 확인
+### npm 버전도 확인
 ```bash
 [root@d8d8565ea203 /]# npm -v
 10.9.2
