@@ -1,9 +1,28 @@
 # rockylinux
 
 ## podman에서 설치
-이미지는 rockylinux 9로 검색해서 설치
+### 이미지는 rockylinux:9로 검색해서 설치
 
-docker.io/almalinux/9-base 를 사용
+```ps
+PS C:\Users\test> podman search rockylinux:9
+NAME                                   DESCRIPTION
+docker.io/rockylinux/rockylinux
+docker.io/library/rockylinux           The official build of Rocky Linux.
+docker.io/rockylinux/rocky-toolbox     Toolbox image for Rocky Linux - https://gith...
+```
+
+### pull 이미지 
+
+```ps
+PS C:\Users\test> podman pull rockylinux:9
+Trying to pull docker.io/library/rockylinux:9...
+Getting image source signatures
+Copying blob sha256:446f83f14b236772583d069e6f46a75e7e5456add656d1415a452618189fb825
+Copying config sha256:9cc24f05f309508aa852967ab1e3b582b302afc92605c24ce27715c683acd805
+Writing manifest to image destination
+9cc24f05f309508aa852967ab1e3b582b302afc92605c24ce27715c683acd805
+```
+
 
 ### 포트설정
  - 23000:3000 
@@ -184,3 +203,4 @@ Complete!
 [root@d8d8565ea203 /]# npm -v
 10.9.2
 ```
+
