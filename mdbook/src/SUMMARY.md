@@ -15,12 +15,15 @@
   - [podman](./podman/podman.md)
     - [docker 이미지를 podman에서 사용](./podman/podman_001.md)
     - [podman 컨테이너 등 삭제 안될 때](./podman/podman_002.md)
+    - [postgresql 올린 컨테이너를 다른 컨테이너에서 사용](./podman/podman_003.md)
 
   - [wsl](./wsl/wsl.md)
 
   - [linux](./linux/linux.md)
     - [fedora](./linux/fedora.md)
-    - [rockylinux](./linux/rocky.md)
+    - [rockylinux](./linux/rockylinux9/rocky.md)
+      - [설치](./linux/rockylinux9/rocky_001.md)
+      - [podman 컨테이너에서 ssh 사용](./linux/rockylinux9/rocky_002.md)
 
 
 - [개발](./dev/dev.md)

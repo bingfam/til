@@ -373,6 +373,13 @@ CONTAINER ID  IMAGE       COMMAND     CREATED     STATUS      PORTS       NAMES
 [user@DESKTOP-89UD3IQ ~]$
 </code></pre>
 <p>깨끗해졌다. 이젠 wsl 들어가서 podman 명령 내리지 말아야지.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="postgresql-올린-컨테이너를-다른-컨테이너에서-사용"><a class="header" href="#postgresql-올린-컨테이너를-다른-컨테이너에서-사용">postgresql 올린 컨테이너를 다른 컨테이너에서 사용</a></h1>
+<p>docker.io/library/rockylinux:9</p>
+<p>docker.io/library/postgres:latest  (17 버전임)</p>
+<p>이미지를 사용한 2개의 컨테이너가 돌고 있다.</p>
+<p>두 컨테이너 사이에 일부러 네트워크 설정을 하거나 하지 않았다.</p>
+<p>rockylinux 컨테이너에서 postgres 컨테이너의 ip로 5432번 포트로 접속하겠다 하면 접속이 된다.</p>
+<p>이 postgresql 서버에 별 설정한 게 없다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="wsl"><a class="header" href="#wsl">WSL</a></h1>
 <h2 id="wsl-vm에서-인터넷이-안-된다"><a class="header" href="#wsl-vm에서-인터넷이-안-된다">WSL vm에서 인터넷이 안 된다.</a></h2>
 <p><img src="wsl/img/20250508111049.png" alt="" /></p>
@@ -420,6 +427,7 @@ $ dnf check-update
 $ dnf upgrade
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rockylinux"><a class="header" href="#rockylinux">rockylinux</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="rockylinux-1"><a class="header" href="#rockylinux-1">rockylinux</a></h1>
 <h2 id="podman에서-설치"><a class="header" href="#podman에서-설치">podman에서 설치</a></h2>
 <h3 id="이미지는-rockylinux9로-검색해서-설치"><a class="header" href="#이미지는-rockylinux9로-검색해서-설치">이미지는 rockylinux:9로 검색해서 설치</a></h3>
 <pre><code class="language-ps">PS C:\Users\test&gt; podman search rockylinux:9
@@ -670,6 +678,62 @@ systemctl enable postgresql-17
 systemctl start postgresql-17
 </code></pre>
 <p>여기서 <code>/usr/pgsql-17/bin/postgresql-17-setup initdb</code>과 <code>systemctl start postgresql-17</code>는 실패한다. 자기는 systemd 로 부팅한게 아니라나. 흠.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="podman-컨테이너에서-ssh-사용"><a class="header" href="#podman-컨테이너에서-ssh-사용">podman 컨테이너에서 ssh 사용</a></h1>
+<p>사용 이미지: docker.io/library/rockylinux:9</p>
+<p>이 이미지는 wsl에서 사용하는 특성상 systemd가 안된다. 그래서 약간 특별한 방식을 사용한다.</p>
+<h2 id="설치"><a class="header" href="#설치">설치</a></h2>
+<pre><code class="language-bash">[root@ab5b7b7ab2df /]# dnf install -y openssh-server
+Last metadata expiration check: 0:18:57 ago on Mon Jun  9 14:26:13 2025.
+Dependencies resolved.
+=============================================================================================================================================================================
+ Package                                       Architecture                          Version                                     Repository                             Size
+=============================================================================================================================================================================
+Installing:
+ openssh-server                                x86_64                                8.7p1-45.el9                                baseos                                457 k
+
+Transaction Summary
+=============================================================================================================================================================================
+Install  1 Package
+
+Total download size: 457 k
+Installed size: 1.0 M
+Downloading Packages:
+openssh-server-8.7p1-45.el9.x86_64.rpm                                                                                                       2.9 MB/s | 457 kB     00:00    
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                                        647 kB/s | 457 kB     00:00     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                                                                                     1/1 
+  Running scriptlet: openssh-server-8.7p1-45.el9.x86_64                                                                                                                  1/1 
+  Installing       : openssh-server-8.7p1-45.el9.x86_64                                                                                                                  1/1 
+  Running scriptlet: openssh-server-8.7p1-45.el9.x86_64                                                                                                                  1/1 
+Created symlink /etc/systemd/system/multi-user.target.wants/sshd.service → /usr/lib/systemd/system/sshd.service.
+
+  Verifying        : openssh-server-8.7p1-45.el9.x86_64                                                                                                                  1/1 
+
+Installed:
+  openssh-server-8.7p1-45.el9.x86_64                                                                                                                                         
+
+Complete!
+</code></pre>
+<h2 id="상태확인"><a class="header" href="#상태확인">상태확인</a></h2>
+<pre><code class="language-bash">[root@ab5b7b7ab2df /]# systemctl status sshd
+System has not been booted with systemd as init system (PID 1). Can't operate.
+Failed to connect to bus: Host is down
+</code></pre>
+<p>실패한다. wsl의 systemd 관련 문제다.</p>
+<h2 id="어쩄든-실행"><a class="header" href="#어쩄든-실행">어쩄든 실행</a></h2>
+<p>먼저 키를 만들어주자.</p>
+<pre><code class="language-bash">[root@ab5b7b7ab2df ~]# ssh-keygen -A
+ssh-keygen: generating new host keys: RSA DSA ECDSA ED25519 
+</code></pre>
+<p>그리고 실행.</p>
+<pre><code class="language-bash">[root@ab5b7b7ab2df ~]# /usr/sbin/sshd 
+</code></pre>
+<p>이제 22번 포트로 연결한 포트로 putty를 이용해 접속하면 된다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="개발"><a class="header" href="#개발">개발</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="언어"><a class="header" href="#언어">언어</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rust"><a class="header" href="#rust">rust</a></h1>
@@ -1949,7 +2013,7 @@ function LongTask_async()
 <p>await는 비동기화 함수 앞에서만 쓸 수 있는데 그걸 동기화되도록 쓰는 거. 죄다 쓰면 도대체 왜 비동기화 하는 거냐.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="웹"><a class="header" href="#웹">웹</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="nextjs"><a class="header" href="#nextjs">next.js</a></h1>
-<h2 id="설치"><a class="header" href="#설치">설치</a></h2>
+<h2 id="설치-1"><a class="header" href="#설치-1">설치</a></h2>
 <ul>
 <li>node.js를 설치한다.</li>
 <li>next.js는 따로 설치하지 않고 그냥 프로젝트를 설치하면 된다.
@@ -3852,7 +3916,7 @@ export default nextConfig;
 <li>작성일: 2025. 5. 11.</li>
 <li>최종수정일: 2025. 5. 11.</li>
 </ul>
-<h2 id="설치-1"><a class="header" href="#설치-1">설치</a></h2>
+<h2 id="설치-2"><a class="header" href="#설치-2">설치</a></h2>
 <p>editor.js는 다양한 플러그인을 제공한다. 우선 본체만 설치.</p>
 <pre><code class="language-ps">npm install @editorjs/editorjs
 </code></pre>
@@ -4683,7 +4747,7 @@ where
 즉, salt를 별도의 컬럼에 저장하지 않고, 해시 문자열 자체에 포함시키는 방식이 표준입니다.
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="sqlite3"><a class="header" href="#sqlite3">sqlite3</a></h1>
-<h2 id="설치-2"><a class="header" href="#설치-2">설치</a></h2>
+<h2 id="설치-3"><a class="header" href="#설치-3">설치</a></h2>
 <h3 id="윈도우즈"><a class="header" href="#윈도우즈">윈도우즈</a></h3>
 <p>sqlite3 홈페이지(<a href="https://www.sqlite.org/download.html" title="" target="_blank">https://www.sqlite.org/download.html</a>)에 들어가서 툴을 다운로드 받는다.</p>
 <p><img src="db/sqlite3/img/20250426193620.png" alt="" /></p>
