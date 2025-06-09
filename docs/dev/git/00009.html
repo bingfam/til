@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>git update 후 특정 아이디로 고정됨 - TIL</title>
+        <title>linux에서 접속(token) - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -156,56 +156,56 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="git-update-후-특정-아이디로-고정됨"><a class="header" href="#git-update-후-특정-아이디로-고정됨">git update 후 특정 아이디로 고정됨</a></h1>
-<p>여러 개의 git 아이디를 사용하는 상황.</p>
-<p>.gitconfig나 다른 파일들이 모두 아무런 문제 없는데, 폴더마다 특정 아이디를 사용하게끔 한 설정이 안되고 있다. 모두 하나의 특정 아이디로 고정되어 버렸다.</p>
-<pre><code class="language-ps">$ git config user.name
-bingxxx
+                        <h1 id="linux에서-접속token"><a class="header" href="#linux에서-접속token">linux에서 접속(token)</a></h1>
+<p>github에 만든 코드를 linux server cli에서 접속하려면 ssh 등의 방법도 있지만 token을 사용하는 방법도 있다.</p>
+<p>참고: <a href="https://docs.github.com/ko/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" title="" target="_blank">https://docs.github.com/ko/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens</a></p>
+<h2 id="토큰만들기"><a class="header" href="#토큰만들기">토큰만들기</a></h2>
+<ol>
+<li>
+<p>github에서 오른쪽 맨 위 사용자 아이디 프사를 클릭한다.</p>
+</li>
+<li>
+<p>settings를 클릭한다.</p>
+</li>
+<li>
+<p>맨 아래 &lt;&gt; Developer settings를 클릭한다.
+<img src="img/20250609020339.png" alt="" /></p>
+</li>
+<li>
+<p>Personal access tokens / Fine-grained tokens를 선택한다.</p>
+</li>
+<li>
+<p>위 그림에서 [Generate new token] 버튼을 눌러 새 토크을 만든다.</p>
+</li>
+<li>
+<p>토큰을 만드는 화면에서 repository access를 설정할 수 있는데, 보안을 위해 Only Select repositories를 선택하거나 그 위 All repositories를 선택한다.
+<img src="img/20250609020855.png" alt="" /></p>
+</li>
+<li>
+<p>그 아래 permissions에서 아래와 같이 contents에 access 권한을 줘야 일단 접속이 되고 clone 등을 할 수 있다.
+<img src="img/20250609021018.png" alt="" /></p>
+</li>
+</ol>
+<p>이렇게 만들어진 토큰은 만들 때 딱 한 번 보여주고 그 다음부터는 보여주지 않으니 어디에 잘 복사해 놔야 한다.</p>
+<h2 id="토큰-사용하기"><a class="header" href="#토큰-사용하기">토큰 사용하기</a></h2>
+<p>clone 하기</p>
+<pre><code class="language-ps">git clone https://github.com/&lt;USERID&gt;/&lt;PROJECT&gt;.git
+
+username 을 물어보면 username을 답하고,  
+password 를 물어보면 토큰 값을 붙여넣기 하면 된다.
 </code></pre>
-<p>이건 잘 되는데.</p>
-<p>생각해 보니 좀전에 choco로 모든 파일을 업데이트한 게 걸렸다.</p>
-<p><code>C:/Program Files/Git/etc/gitconfig</code> 파일을 보니 좀전에 업데이트되었다고 나왔다. 파일 자체가 새로 생성되었다. 백업이라도 해 놓을 걸.</p>
-<pre><code>[credential]
-    helper = C:/Program\\ Files\\ \\(x86\\)/Git\\ Credential\\ Manager/git-credential-manager.exe
-</code></pre>
-<p><code>C:/Program Files/Git/etc/gitconfig</code> 파일에 위 내용을 추가해 놓았더니 다시 예전처럼</p>
-<p><img src="img/20250602031340.png" alt="" /></p>
-<p>이 창이 나온다.</p>
-<p>저렇게 설정한 이유는 나는 git credential을 별도로 설치했었기 때문이다.</p>
-<p>이 부분은 기본적으로 git 설치할 때 같이 설치되는 git credential을 사용해도 된다.</p>
-<pre><code>[credential]
-	helper = manager
-</code></pre>
-<p>라고 하면 git 설치할 때 기본 설치되는 파일을 이용한다. 이 파일의 위치는</p>
-<p><code>C:\Program Files\Git\mingw64\bin\git-credential-manager.exe</code></p>
-<p>이다.</p>
-<p>기존 아이디가 전부 지워졌는데, 뭔가 문제인가 싶어서 기존 로그인 정보 죄다 지웠기 때문이다. -.-;</p>
-<p>그런데 browser를 이용해 새로 로그인 해도 이번에는 계정이 이렇게 로그인한 계정 A 하나로만 고정된다. 다른 아이디 폴더로 들어가도 계정 A로 인식하는거다. 저 github sign in 창이 안나오고.</p>
-<p>이 문제 해결 방법은 다음과 같다.</p>
-<p>제어판 자격증명에 github 관련 자격증명이</p>
-<p>git:https://github.com</p>
-<p>하나만 있을거다.  [일반 자격 증명 추가] 버튼을 눌러 하나를 더 추가한다.</p>
-<ul>
-<li>인터넷 또는 네트워크 주소 : git:https://ID@github.com</li>
-<li>사용자 이름: 아무거나</li>
-<li>암호: 아무거나</li>
-</ul>
-<p>일단 저렇게 인터넷 또는 네트워크 주소 를 넣어 놓은다. ID는 저렇게 그냥 ID라고만 하면 된다.</p>
-<p>git:https://github.com
-외에 또 다른 일반 자격 증명이 있기만 하면 된다.</p>
-<p>그리고 다시 안 되던 private repository에 가서 git pull 해 보면</p>
-<p><img src="img/20241201144801.png" alt="" /></p>
-<p>이 창이 나올텐데, 이 때 [Add a new account] 를 선택해서 새로운 git ID를 추가하면 된다.</p>
+<p>이렇게 password에 넣는 값은 console에 남지 않기 때문에 안전하게 사용할 수 있다.</p>
+<p>이렇게 리포지토리에 토큰이 걸려 있어도 이전처럼 윈도우에서 브라우저를 이용한 접속(git-credential-manager.exe 를 이용한)은 계속 사용할 수 있다.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../dev/git/00007.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../dev/git/00008.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../dev/git/00009.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../dev/git/00010.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -215,11 +215,11 @@ bingxxx
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../dev/git/00007.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../dev/git/00008.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../dev/git/00009.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../dev/git/00010.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

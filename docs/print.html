@@ -410,8 +410,22 @@ $ dnf upgrade
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rockylinux"><a class="header" href="#rockylinux">rockylinux</a></h1>
 <h2 id="podman에서-설치"><a class="header" href="#podman에서-설치">podman에서 설치</a></h2>
-<p>이미지는 rockylinux 9로 검색해서 설치</p>
-<p>docker.io/almalinux/9-base 를 사용</p>
+<h3 id="이미지는-rockylinux9로-검색해서-설치"><a class="header" href="#이미지는-rockylinux9로-검색해서-설치">이미지는 rockylinux:9로 검색해서 설치</a></h3>
+<pre><code class="language-ps">PS C:\Users\test&gt; podman search rockylinux:9
+NAME                                   DESCRIPTION
+docker.io/rockylinux/rockylinux
+docker.io/library/rockylinux           The official build of Rocky Linux.
+docker.io/rockylinux/rocky-toolbox     Toolbox image for Rocky Linux - https://gith...
+</code></pre>
+<h3 id="pull-이미지"><a class="header" href="#pull-이미지">pull 이미지</a></h3>
+<pre><code class="language-ps">PS C:\Users\test&gt; podman pull rockylinux:9
+Trying to pull docker.io/library/rockylinux:9...
+Getting image source signatures
+Copying blob sha256:446f83f14b236772583d069e6f46a75e7e5456add656d1415a452618189fb825
+Copying config sha256:9cc24f05f309508aa852967ab1e3b582b302afc92605c24ce27715c683acd805
+Writing manifest to image destination
+9cc24f05f309508aa852967ab1e3b582b302afc92605c24ce27715c683acd805
+</code></pre>
 <h3 id="포트설정"><a class="header" href="#포트설정">포트설정</a></h3>
 <ul>
 <li>23000:3000</li>
@@ -569,6 +583,82 @@ Complete!
 <pre><code class="language-bash">[root@d8d8565ea203 /]# npm -v
 10.9.2
 </code></pre>
+<h3 id="zip-unzip-설치"><a class="header" href="#zip-unzip-설치">zip unzip 설치</a></h3>
+<pre><code class="language-bash">[root@8a9e08205a4d openclass]# dnf -y install zip unzip
+Last metadata expiration check: 0:09:54 ago on Sun Jun  8 11:39:33 2025.
+Dependencies resolved.
+=============================================================================================================================================================================
+ Package                                Architecture                            Version                                        Repository                               Size
+=============================================================================================================================================================================
+Installing:
+ unzip                                  x86_64                                  6.0-58.el9_5                                   baseos                                  180 k
+ zip                                    x86_64                                  3.0-35.el9                                     baseos                                  263 k
+
+Transaction Summary
+=============================================================================================================================================================================
+Install  2 Packages
+
+Total download size: 443 k
+Installed size: 1.1 M
+Downloading Packages:
+(1/2): zip-3.0-35.el9.x86_64.rpm                                                                                                             2.5 MB/s | 263 kB     00:00    
+(2/2): unzip-6.0-58.el9_5.x86_64.rpm                                                                                                         1.7 MB/s | 180 kB     00:00    
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                                        519 kB/s | 443 kB     00:00     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                                                                                     1/1 
+  Installing       : unzip-6.0-58.el9_5.x86_64                                                                                                                           1/2 
+  Installing       : zip-3.0-35.el9.x86_64                                                                                                                               2/2 
+  Running scriptlet: zip-3.0-35.el9.x86_64                                                                                                                               2/2 
+  Verifying        : unzip-6.0-58.el9_5.x86_64                                                                                                                           1/2 
+  Verifying        : zip-3.0-35.el9.x86_64                                                                                                                               2/2 
+
+Installed:
+  unzip-6.0-58.el9_5.x86_64                                                               zip-3.0-35.el9.x86_64                                                              
+
+Complete!
+[root@8a9e08205a4d openclass]# 
+</code></pre>
+<h2 id="윈도우에서-파일-전송"><a class="header" href="#윈도우에서-파일-전송">윈도우에서 파일 전송</a></h2>
+<p>podman cp 사용</p>
+<p>먼저 linux에 디렉토리를 생성한다.</p>
+<pre><code class="language-bash">[root@8a9e08205a4d ~]# mkdir dev
+[root@8a9e08205a4d ~]# cd dev
+[root@8a9e08205a4d dev]# mkdir openclass
+[root@8a9e08205a4d dev]# cd openclass
+[root@8a9e08205a4d openclass]# pwd
+/root/dev/openclass
+</code></pre>
+<h3 id="윈도우에서-podman-컨테이너로-파일-보내기"><a class="header" href="#윈도우에서-podman-컨테이너로-파일-보내기">윈도우에서 podman 컨테이너로 파일 보내기</a></h3>
+<pre><code class="language-ps">podman cp ./openclass-main.zip angry_cannon:/root/dev/openclass/
+</code></pre>
+<h3 id="압축풀기"><a class="header" href="#압축풀기">압축풀기</a></h3>
+<pre><code class="language-bash">[root@8a9e08205a4d openclass]# unzip openclass-main.zip
+</code></pre>
+<h3 id="podman-컨테이너의-폴더를-윈도우로-보내기"><a class="header" href="#podman-컨테이너의-폴더를-윈도우로-보내기">podman 컨테이너의 폴더를 윈도우로 보내기</a></h3>
+<pre><code class="language-ps">podman cp angry_cannon:/root/dev/openclass/ ./
+</code></pre>
+<h2 id="postgresql-17-설치"><a class="header" href="#postgresql-17-설치">postgresql 17 설치</a></h2>
+<p>출처: https://www.postgresql.org/download/linux/redhat/</p>
+<pre><code class="language-bash"># Install the repository RPM:
+dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+
+# Disable the built-in PostgreSQL module:
+dnf -qy module disable postgresql
+
+# Install PostgreSQL:
+dnf install -y postgresql17-server
+
+# Optionally initialize the database and enable automatic start:
+/usr/pgsql-17/bin/postgresql-17-setup initdb
+systemctl enable postgresql-17
+systemctl start postgresql-17
+</code></pre>
+<p>여기서 <code>/usr/pgsql-17/bin/postgresql-17-setup initdb</code>과 <code>systemctl start postgresql-17</code>는 실패한다. 자기는 systemd 로 부팅한게 아니라나. 흠.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="개발"><a class="header" href="#개발">개발</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="언어"><a class="header" href="#언어">언어</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rust"><a class="header" href="#rust">rust</a></h1>
@@ -1509,6 +1599,61 @@ bingxxx
 <p>그리고 다시 안 되던 private repository에 가서 git pull 해 보면</p>
 <p><img src="dev/git/img/20241201144801.png" alt="" /></p>
 <p>이 창이 나올텐데, 이 때 [Add a new account] 를 선택해서 새로운 git ID를 추가하면 된다.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="linux에서-접속token"><a class="header" href="#linux에서-접속token">linux에서 접속(token)</a></h1>
+<p>github에 만든 코드를 linux server cli에서 접속하려면 ssh 등의 방법도 있지만 token을 사용하는 방법도 있다.</p>
+<p>참고: <a href="https://docs.github.com/ko/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" title="" target="_blank">https://docs.github.com/ko/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens</a></p>
+<h2 id="토큰만들기"><a class="header" href="#토큰만들기">토큰만들기</a></h2>
+<ol>
+<li>
+<p>github에서 오른쪽 맨 위 사용자 아이디 프사를 클릭한다.</p>
+</li>
+<li>
+<p>settings를 클릭한다.</p>
+</li>
+<li>
+<p>맨 아래 &lt;&gt; Developer settings를 클릭한다.
+<img src="dev/git/img/20250609020339.png" alt="" /></p>
+</li>
+<li>
+<p>Personal access tokens / Fine-grained tokens를 선택한다.</p>
+</li>
+<li>
+<p>위 그림에서 [Generate new token] 버튼을 눌러 새 토크을 만든다.</p>
+</li>
+<li>
+<p>토큰을 만드는 화면에서 repository access를 설정할 수 있는데, 보안을 위해 Only Select repositories를 선택하거나 그 위 All repositories를 선택한다.
+<img src="dev/git/img/20250609020855.png" alt="" /></p>
+</li>
+<li>
+<p>그 아래 permissions에서 아래와 같이 contents에 access 권한을 줘야 일단 접속이 되고 clone 등을 할 수 있다.
+<img src="dev/git/img/20250609021018.png" alt="" /></p>
+</li>
+</ol>
+<p>이렇게 만들어진 토큰은 만들 때 딱 한 번 보여주고 그 다음부터는 보여주지 않으니 어디에 잘 복사해 놔야 한다.</p>
+<h2 id="토큰-사용하기"><a class="header" href="#토큰-사용하기">토큰 사용하기</a></h2>
+<p>clone 하기</p>
+<pre><code class="language-ps">git clone https://github.com/&lt;USERID&gt;/&lt;PROJECT&gt;.git
+
+username 을 물어보면 username을 답하고,  
+password 를 물어보면 토큰 값을 붙여넣기 하면 된다.
+</code></pre>
+<p>이렇게 password에 넣는 값은 console에 남지 않기 때문에 안전하게 사용할 수 있다.</p>
+<p>이렇게 리포지토리에 토큰이 걸려 있어도 이전처럼 윈도우에서 브라우저를 이용한 접속(git-credential-manager.exe 를 이용한)은 계속 사용할 수 있다.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="local에-git-서버-운영"><a class="header" href="#local에-git-서버-운영">local에 git 서버 운영</a></h1>
+<p>참고자료: 정리된 자료 / git init –bare</p>
+<p>local에 git 서버를 운영하는 방법</p>
+<h2 id="중앙-저장소-만들기"><a class="header" href="#중앙-저장소-만들기">중앙 저장소 만들기</a></h2>
+<p>중앙 저장소의 위치는 r:\git-repo 이다.</p>
+<p>이 폴더 안에 openclass 라는 중앙 저장소를 만들려 한다.</p>
+<pre><code class="language-ps">git init --bare openclasss.git
+</code></pre>
+<p>관례적으로 중앙 저장소 이름에는 .git을 붙인다. 그래서 github 에서 clone 하려고 보면 그 위치가 ~.git 인거.</p>
+<p>–bare를 하면 소스코드의 변경된 정보만 저장되는 <code>.git</code> 폴더의 내용만 저장되는 저장소가 만들어진다.</p>
+<p>이렇게 만들어진 중앙 저장소의 path는 r:\git-repo\openclass.git 이다.</p>
+<h2 id="중앙-저장소-사용"><a class="header" href="#중앙-저장소-사용">중앙 저장소 사용</a></h2>
+<pre><code class="language-ps">git clone r:/git-repo/openclass.git
+</code></pre>
+<p>을 하면 저장소가 복제되어 사용할 수 있는 상태가 된다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="visual-studio"><a class="header" href="#visual-studio">visual studio</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="컴파일-오류-목록-중-하나를-더블클릭하면-문제-세부-정보-창이-나올-때-없애는-방법"><a class="header" href="#컴파일-오류-목록-중-하나를-더블클릭하면-문제-세부-정보-창이-나올-때-없애는-방법">컴파일 오류 목록 중 하나를 더블클릭하면 문제 세부 정보 창이 나올 때 없애는 방법</a></h1>
 <p><img src="dev/visualstudio/img/20241201153112.png" alt="" /></p>

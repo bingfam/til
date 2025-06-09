@@ -158,8 +158,22 @@
                     <main>
                         <h1 id="rockylinux"><a class="header" href="#rockylinux">rockylinux</a></h1>
 <h2 id="podman에서-설치"><a class="header" href="#podman에서-설치">podman에서 설치</a></h2>
-<p>이미지는 rockylinux 9로 검색해서 설치</p>
-<p>docker.io/almalinux/9-base 를 사용</p>
+<h3 id="이미지는-rockylinux9로-검색해서-설치"><a class="header" href="#이미지는-rockylinux9로-검색해서-설치">이미지는 rockylinux:9로 검색해서 설치</a></h3>
+<pre><code class="language-ps">PS C:\Users\test&gt; podman search rockylinux:9
+NAME                                   DESCRIPTION
+docker.io/rockylinux/rockylinux
+docker.io/library/rockylinux           The official build of Rocky Linux.
+docker.io/rockylinux/rocky-toolbox     Toolbox image for Rocky Linux - https://gith...
+</code></pre>
+<h3 id="pull-이미지"><a class="header" href="#pull-이미지">pull 이미지</a></h3>
+<pre><code class="language-ps">PS C:\Users\test&gt; podman pull rockylinux:9
+Trying to pull docker.io/library/rockylinux:9...
+Getting image source signatures
+Copying blob sha256:446f83f14b236772583d069e6f46a75e7e5456add656d1415a452618189fb825
+Copying config sha256:9cc24f05f309508aa852967ab1e3b582b302afc92605c24ce27715c683acd805
+Writing manifest to image destination
+9cc24f05f309508aa852967ab1e3b582b302afc92605c24ce27715c683acd805
+</code></pre>
 <h3 id="포트설정"><a class="header" href="#포트설정">포트설정</a></h3>
 <ul>
 <li>23000:3000</li>
@@ -317,6 +331,82 @@ Complete!
 <pre><code class="language-bash">[root@d8d8565ea203 /]# npm -v
 10.9.2
 </code></pre>
+<h3 id="zip-unzip-설치"><a class="header" href="#zip-unzip-설치">zip unzip 설치</a></h3>
+<pre><code class="language-bash">[root@8a9e08205a4d openclass]# dnf -y install zip unzip
+Last metadata expiration check: 0:09:54 ago on Sun Jun  8 11:39:33 2025.
+Dependencies resolved.
+=============================================================================================================================================================================
+ Package                                Architecture                            Version                                        Repository                               Size
+=============================================================================================================================================================================
+Installing:
+ unzip                                  x86_64                                  6.0-58.el9_5                                   baseos                                  180 k
+ zip                                    x86_64                                  3.0-35.el9                                     baseos                                  263 k
+
+Transaction Summary
+=============================================================================================================================================================================
+Install  2 Packages
+
+Total download size: 443 k
+Installed size: 1.1 M
+Downloading Packages:
+(1/2): zip-3.0-35.el9.x86_64.rpm                                                                                                             2.5 MB/s | 263 kB     00:00    
+(2/2): unzip-6.0-58.el9_5.x86_64.rpm                                                                                                         1.7 MB/s | 180 kB     00:00    
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                                        519 kB/s | 443 kB     00:00     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                                                                                     1/1 
+  Installing       : unzip-6.0-58.el9_5.x86_64                                                                                                                           1/2 
+  Installing       : zip-3.0-35.el9.x86_64                                                                                                                               2/2 
+  Running scriptlet: zip-3.0-35.el9.x86_64                                                                                                                               2/2 
+  Verifying        : unzip-6.0-58.el9_5.x86_64                                                                                                                           1/2 
+  Verifying        : zip-3.0-35.el9.x86_64                                                                                                                               2/2 
+
+Installed:
+  unzip-6.0-58.el9_5.x86_64                                                               zip-3.0-35.el9.x86_64                                                              
+
+Complete!
+[root@8a9e08205a4d openclass]# 
+</code></pre>
+<h2 id="윈도우에서-파일-전송"><a class="header" href="#윈도우에서-파일-전송">윈도우에서 파일 전송</a></h2>
+<p>podman cp 사용</p>
+<p>먼저 linux에 디렉토리를 생성한다.</p>
+<pre><code class="language-bash">[root@8a9e08205a4d ~]# mkdir dev
+[root@8a9e08205a4d ~]# cd dev
+[root@8a9e08205a4d dev]# mkdir openclass
+[root@8a9e08205a4d dev]# cd openclass
+[root@8a9e08205a4d openclass]# pwd
+/root/dev/openclass
+</code></pre>
+<h3 id="윈도우에서-podman-컨테이너로-파일-보내기"><a class="header" href="#윈도우에서-podman-컨테이너로-파일-보내기">윈도우에서 podman 컨테이너로 파일 보내기</a></h3>
+<pre><code class="language-ps">podman cp ./openclass-main.zip angry_cannon:/root/dev/openclass/
+</code></pre>
+<h3 id="압축풀기"><a class="header" href="#압축풀기">압축풀기</a></h3>
+<pre><code class="language-bash">[root@8a9e08205a4d openclass]# unzip openclass-main.zip
+</code></pre>
+<h3 id="podman-컨테이너의-폴더를-윈도우로-보내기"><a class="header" href="#podman-컨테이너의-폴더를-윈도우로-보내기">podman 컨테이너의 폴더를 윈도우로 보내기</a></h3>
+<pre><code class="language-ps">podman cp angry_cannon:/root/dev/openclass/ ./
+</code></pre>
+<h2 id="postgresql-17-설치"><a class="header" href="#postgresql-17-설치">postgresql 17 설치</a></h2>
+<p>출처: https://www.postgresql.org/download/linux/redhat/</p>
+<pre><code class="language-bash"># Install the repository RPM:
+dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+
+# Disable the built-in PostgreSQL module:
+dnf -qy module disable postgresql
+
+# Install PostgreSQL:
+dnf install -y postgresql17-server
+
+# Optionally initialize the database and enable automatic start:
+/usr/pgsql-17/bin/postgresql-17-setup initdb
+systemctl enable postgresql-17
+systemctl start postgresql-17
+</code></pre>
+<p>여기서 <code>/usr/pgsql-17/bin/postgresql-17-setup initdb</code>과 <code>systemctl start postgresql-17</code>는 실패한다. 자기는 systemd 로 부팅한게 아니라나. 흠.</p>
 
                     </main>
 
