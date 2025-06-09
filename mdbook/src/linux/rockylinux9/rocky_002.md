@@ -56,7 +56,7 @@ Failed to connect to bus: Host is down
 실패한다. wsl의 systemd 관련 문제다. 
 
 
-## 어쩄든 실행
+## 어쨋든 실행
 
 먼저 키를 만들어주자.
 
