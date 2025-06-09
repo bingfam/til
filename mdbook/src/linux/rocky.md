@@ -184,3 +184,98 @@ Complete!
 [root@d8d8565ea203 /]# npm -v
 10.9.2
 ```
+
+### zip unzip 설치
+```bash
+[root@8a9e08205a4d openclass]# dnf -y install zip unzip
+Last metadata expiration check: 0:09:54 ago on Sun Jun  8 11:39:33 2025.
+Dependencies resolved.
+=============================================================================================================================================================================
+ Package                                Architecture                            Version                                        Repository                               Size
+=============================================================================================================================================================================
+Installing:
+ unzip                                  x86_64                                  6.0-58.el9_5                                   baseos                                  180 k
+ zip                                    x86_64                                  3.0-35.el9                                     baseos                                  263 k
+
+Transaction Summary
+=============================================================================================================================================================================
+Install  2 Packages
+
+Total download size: 443 k
+Installed size: 1.1 M
+Downloading Packages:
+(1/2): zip-3.0-35.el9.x86_64.rpm                                                                                                             2.5 MB/s | 263 kB     00:00    
+(2/2): unzip-6.0-58.el9_5.x86_64.rpm                                                                                                         1.7 MB/s | 180 kB     00:00    
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                                        519 kB/s | 443 kB     00:00     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                                                                                     1/1 
+  Installing       : unzip-6.0-58.el9_5.x86_64                                                                                                                           1/2 
+  Installing       : zip-3.0-35.el9.x86_64                                                                                                                               2/2 
+  Running scriptlet: zip-3.0-35.el9.x86_64                                                                                                                               2/2 
+  Verifying        : unzip-6.0-58.el9_5.x86_64                                                                                                                           1/2 
+  Verifying        : zip-3.0-35.el9.x86_64                                                                                                                               2/2 
+
+Installed:
+  unzip-6.0-58.el9_5.x86_64                                                               zip-3.0-35.el9.x86_64                                                              
+
+Complete!
+[root@8a9e08205a4d openclass]# 
+```
+
+
+## 윈도우에서 파일 전송
+podman cp 사용
+
+먼저 linux에 디렉토리를 생성한다.
+```bash
+[root@8a9e08205a4d ~]# mkdir dev
+[root@8a9e08205a4d ~]# cd dev
+[root@8a9e08205a4d dev]# mkdir openclass
+[root@8a9e08205a4d dev]# cd openclass
+[root@8a9e08205a4d openclass]# pwd
+/root/dev/openclass
+```
+
+### 윈도우에서 podman 컨테이너로 파일 보내기
+```ps
+podman cp ./openclass-main.zip angry_cannon:/root/dev/openclass/
+```
+
+### 압축풀기
+```bash
+[root@8a9e08205a4d openclass]# unzip openclass-main.zip
+```
+
+### podman 컨테이너의 폴더를 윈도우로 보내기
+```ps
+podman cp angry_cannon:/root/dev/openclass/ ./
+```
+
+
+## postgresql 17 설치
+
+출처: https://www.postgresql.org/download/linux/redhat/
+
+```bash
+# Install the repository RPM:
+dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+
+# Disable the built-in PostgreSQL module:
+dnf -qy module disable postgresql
+
+# Install PostgreSQL:
+dnf install -y postgresql17-server
+
+# Optionally initialize the database and enable automatic start:
+/usr/pgsql-17/bin/postgresql-17-setup initdb
+systemctl enable postgresql-17
+systemctl start postgresql-17
+```
+
+여기서 `/usr/pgsql-17/bin/postgresql-17-setup initdb`과 `systemctl start postgresql-17`는 실패한다. 자기는 systemd 로 부팅한게 아니라나. 흠.
+
