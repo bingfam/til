@@ -1,7 +1,6 @@
 [book]
 authors = ["bingfam"]
-language = "en"
-multilingual = false
+language = "ko"
 src = "src"
 title = "TIL"
 
@@ -13,6 +12,5 @@ level = 1         # the depth to start folding
 no-section-label = false             # 숫자 섹션 레이블(false면 숫자 나타나고 true면 숫자 안 나타남)
 additional-css = ["custom.css"]
 
-[preprocessor.external-links]
-
+[preprocessor.external-links]   # 링크를 새탭으로. https://crates.io/crates/mdbook-external-links
 [preprocessor.backlinks]    # 이거 동작 안됨. 하나 만들던가 해야지.
