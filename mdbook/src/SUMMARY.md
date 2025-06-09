@@ -55,7 +55,8 @@
     - [특정파일이 등장한 시점 알아내기](./dev/git/00006.md)
     - [특정 시점 이전으로 돌아가기](./dev/git/00007.md)
     - [git update 후 특정 아이디로 고정됨](./dev/git/00008.md)
-    - [local에 git 서버 운영](./dev/git/00009.md)
+    - [linux에서 접속(token)](./dev/git/00009.md)
+    - [local에 git 서버 운영](./dev/git/00010.md)
 
   - [visual studio](./dev/visualstudio/visualstudo.md)
     - [컴파일 오류 목록 중 하나를 더블클릭하면 문제 세부 정보 창이 나올 때 없애는 방법](./dev/visualstudio/00001.md)
