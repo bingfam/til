@@ -171,6 +171,8 @@
 <pre><code class="language-ps">git clone r:/git-repo/openclass.git
 </code></pre>
 <p>을 하면 저장소가 복제되어 사용할 수 있는 상태가 된다.</p>
+<h2 id="push-후-용량"><a class="header" href="#push-후-용량">push 후 용량</a></h2>
+<p>이렇게 만들어진 중앙 저장소 r:\git-repo\openclass.git에 6메가를 push 해도 용량은 2메가 정도만 늘어난 걸 볼 수 있다. 내부적으로 gzip 압축을 하기 때문이다. 이후부터는 델타 압축을 하는데, 차이만 압축해서 저장하는 거다. 리누스 토발즈는 천재다.</p>
 
                     </main>
 
