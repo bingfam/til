@@ -98,6 +98,8 @@
     
     - [typescript](./typescript/typescript.md)
 
+    - [html](./html/html.md)
+
   - [settings](./dev/settings/settings.md)
 
   - [mac](./dev/mac/mac.md)
