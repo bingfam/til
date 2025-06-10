@@ -4855,6 +4855,11 @@ Microsoft는 타사 패키지에 대한 책임을 지지 않고 라이선스를 
 설치 성공
 </code></pre>
 <p>이렇게 설치하면 기존 파란 화면의 powerShell이 남아있고 검은 화면의 PowerShell 7이 생겨남. PowerShell 7이 지금 새로 설치한 것임.</p>
+<h2 id="utf-8-사용"><a class="header" href="#utf-8-사용">utf-8 사용</a></h2>
+<p>utf-8을 사용하려면 아래를 ps에 복붙하면 된다.</p>
+<pre><code class="language-ps">$env:LC_ALL='C.UTF-8'
+[System.Console]::InputEncoding = [System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="노트"><a class="header" href="#노트">노트</a></h1>
 <p>노트 혹은 메모하는 방법 정리.</p>
 <h2 id="노트를-위한-폴더-만드는-법"><a class="header" href="#노트를-위한-폴더-만드는-법">노트를 위한 폴더 만드는 법</a></h2>

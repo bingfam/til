@@ -45,3 +45,13 @@ Microsoft는 타사 패키지에 대한 책임을 지지 않고 라이선스를 
 ```
 
 이렇게 설치하면 기존 파란 화면의 powerShell이 남아있고 검은 화면의 PowerShell 7이 생겨남. PowerShell 7이 지금 새로 설치한 것임.
+
+
+## utf-8 사용
+
+utf-8을 사용하려면 아래를 ps에 복붙하면 된다.
+
+```ps
+$env:LC_ALL='C.UTF-8'
+[System.Console]::InputEncoding = [System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+```
