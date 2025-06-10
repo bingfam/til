@@ -1733,6 +1733,7 @@ password 를 물어보면 토큰 값을 붙여넣기 하면 된다.
 <p>이렇게 만들어진 중앙 저장소 r:\git-repo\openclass.git에 6메가를 push 해도 용량은 2메가 정도만 늘어난 걸 볼 수 있다. 내부적으로 gzip 압축을 하기 때문이다. 이후부터는 델타 압축을 하는데, 차이만 압축해서 저장하는 거다. 리누스 토발즈는 천재다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="바뀐-점만-다른-곳에-적용"><a class="header" href="#바뀐-점만-다른-곳에-적용">바뀐 점만 다른 곳에 적용</a></h1>
 <p>참조: <a href="https://www.perplexity.ai/search/giteseo-diff-han-gabseul-dareu-ZJFNoHcjQbiJU8j6Q9o29A" title="" target="_blank">https://www.perplexity.ai/search/giteseo-diff-han-gabseul-dareu-ZJFNoHcjQbiJU8j6Q9o29A</a></p>
+<p>참조: <a href="https://extbrain.tistory.com/150" title="" target="_blank">https://extbrain.tistory.com/150</a></p>
 <p>개발하다보면 인터넷이 안되는 곳에서 개발해야 하는 경우가 있다. 특히 내부망에 있는 배포서버 같은 경우가 그렇다.</p>
 <p>이럴 때 인터넷이 되는 곳 C에서 개발하고 그 코드를 인터넷이 안되는 곳 D에 복사해 넣어야 하는데, 그냥 코드를 통째로 복사해 넣으면 뭔가 문제가 생길 거 같다.</p>
 <p>그럴 때 C에서 바뀐 점만 찾아내서 D에 그 바뀐 점만 적용하면 된다.</p>
@@ -1744,6 +1745,17 @@ password 를 물어보면 토큰 값을 붙여넣기 하면 된다.
 </code></pre>
 <p>이렇게 하면 diff 파일이 생성된다.</p>
 <p>이 파일이 commit 할 때 반영되지 않도록 하자.</p>
+<p>여기서의 차이점은 직전 커밋 ~ 아직 커밋하지 않은 내용까지이다.</p>
+<p>만약 커밋 간의 차이점을 알고 싶으면</p>
+<pre><code class="language-bash">git diff 커밋1 커밋2
+</code></pre>
+<p>를 하면 된다.</p>
+<p>그리고 이미지같은 binary 파일의 차이점은 커밋 간의 차이점을 볼 때만 나타난다.</p>
+<p>그러니 제대로 보려면 커밋하고 커밋간의 차이점을 보자</p>
+<p>현재 커밋과 그 직전 커밋을 비교하는 가장 쉬운 방법은</p>
+<pre><code class="language-bash">git diff HEAD~1 HEAD
+</code></pre>
+<p>이다.</p>
 <h2 id="patch-하기"><a class="header" href="#patch-하기">patch 하기</a></h2>
 <p>꼭 같은 repository를 사용할 필요는 없다.</p>
 <p>D 장소에서 아래와 같이 한다.</p>
@@ -1761,6 +1773,8 @@ Reversed (or previously applied) patch detected!  Assume -R? [n]
 <pre><code class="language-bash">patch -R -p1 &lt; diff.patch
 </code></pre>
 <p>를 하면 patch 할 때와 출력 메시지에는 큰 변화가 없는데 되돌려져 있다.</p>
+<h2 id="바이너리-파일의-변화"><a class="header" href="#바이너리-파일의-변화">바이너리 파일의 변화</a></h2>
+<p>C에서 이미지를 새로 추가하면,</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="visual-studio"><a class="header" href="#visual-studio">visual studio</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="컴파일-오류-목록-중-하나를-더블클릭하면-문제-세부-정보-창이-나올-때-없애는-방법"><a class="header" href="#컴파일-오류-목록-중-하나를-더블클릭하면-문제-세부-정보-창이-나올-때-없애는-방법">컴파일 오류 목록 중 하나를 더블클릭하면 문제 세부 정보 창이 나올 때 없애는 방법</a></h1>
 <p><img src="dev/visualstudio/img/20241201153112.png" alt="" /></p>
