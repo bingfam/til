@@ -87,6 +87,7 @@
       - [sqlite3](./sqlite3/nextjs.md)      
       - [정적호스팅](./next.js/hosting.md)
       - [github.io에서 호스팅](./next.js/to_github.io.md)
+      - [build 버전에서는 console.log 안 보이게](./next.js/nolog.md)
 
     - [nextauth](./nextauth/nextauth.md)
       - [nextauth tutorial](./nextauth/nextauth_001.md)
