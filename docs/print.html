@@ -25,30 +25,41 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="custom.css">
-        <link rel="stylesheet" href="theme/pagetoc.css">
 
 
-        <!-- Provide site root to javascript -->
+        <!-- Provide site root and default themes to javascript -->
         <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
     </head>
     <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
     <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -62,7 +73,8 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -75,8 +87,8 @@
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var sidebar = null;
-            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -112,13 +124,14 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -155,11 +168,10 @@
 
                 <div id="content" class="content">
                     <main>
-                        <div class="content-wrap">
-                            <h1 id="about"><a class="header" href="#about">About</a></h1>
+                        <h1 id="about"><a class="header" href="#about">About</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="it"><a class="header" href="#it">IT</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="backlink01"><a class="header" href="#backlink01">backlink01</a></h1>
-<p>하하하 반가워요
+<p><code>하하하</code> 반가워요
 <a href="it/./backlink02.html">링크</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="backlink02"><a class="header" href="#backlink02">backlink02</a></h1>
 <p>ㅋㅋㅋ <a href="it/./backlink01.html">백링크</a> 걸기</p>
@@ -2342,6 +2354,16 @@ export default nextConfig;
 &lt;/Head&gt;
 </code></pre>
 <p>이제 다 좋아졌다.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="build-버전에서는-consolelog-안-보이게"><a class="header" href="#build-버전에서는-consolelog-안-보이게">build 버전에서는 console.log 안 보이게</a></h1>
+<p>next.config.ts 파일을 다음과 같이 수정한다.</p>
+<pre><code class="language-ts">const nextConfig: NextConfig = {
+  /* config options here */
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  }
+};
+</code></pre>
+<p>이렇게 하면 <code>npm run dev</code> 할 때는 브라우저에서 console.log 의 내용이 보이고, <code>npm run start</code> 하면 보이지 않게 된다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="next-auth"><a class="header" href="#next-auth">next-auth</a></h1>
 <p>좋은 자료: <a href="https://mycodings.fly.dev/blog/2023-05-31-nextjs-nextauth-tutorial-1-setup" title="" target="_blank">https://mycodings.fly.dev/blog/2023-05-31-nextjs-nextauth-tutorial-1-setup</a></p>
 <p>지금은 auth.js로 이름을 바꾸었다.</p>
@@ -5625,10 +5647,6 @@ excalidraw : 프로그램 내에서 제공해 주는 아이콘 많음</p>
 <h3 id="명륜진사갈비-공주-신관점"><a class="header" href="#명륜진사갈비-공주-신관점">명륜진사갈비 공주 신관점</a></h3>
 <p>1인가능. 단 2인분 요금 내야 함.</p>
 
-                        </div>
-                        <div id="sidetoc">
-                            <nav id="pagetoc"></nav>
-                        </div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -5663,7 +5681,6 @@ excalidraw : 프로그램 내에서 제공해 주는 아이콘 많음</p>
         <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="theme/pagetoc.js"></script>
 
         <script>
         window.addEventListener('load', function() {
