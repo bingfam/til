@@ -198,6 +198,8 @@
   - [Assets](./design/assets.md)
   - [blender](./design/blender/blender.md)
     - [toon shader](./design/blender/toon.md)
+  
+  - [davinci resolve](./davinciresolve/davinciresolve.md)
 
   - [inkscape](./design/inkscape.md)
 

@@ -5616,6 +5616,20 @@ excalidraw : 프로그램 내에서 제공해 주는 아이콘 많음</p>
 <li>오른쪽 오브젝트인 sphere를 보면 선이 삐뚤빼뚤 그려졌는데 실제로는 카메라로 보면 이 선은 그려지지 않는다. 하지만 만약 다른 오브제트에서 이렇게 선이 그려지는 문제를 해결하려면 <code>subdivision surface</code> modifier를 추가해준다.</li>
 </ol>
 <p>특이하게도 edit 모드에 있는 오브젝트는 render 했을 때 선이 그려지지 않는다.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="davinci-resolve"><a class="header" href="#davinci-resolve">davinci resolve</a></h1>
+<p>다빈치리졸브가  프로젝트 관리자까지만 오면 멈춰버린다.</p>
+<p><img src="davinciresolve/img/20250623232229.png" alt="" /></p>
+<p>이렇게 응답없음이 된다.</p>
+<p>찾아보니 가상데스크톱이 있으면 이렇게 된다고 한다. 그래서 가상데스크톱 하나를 지웠는데 문제가 계속 되었다.</p>
+<p>원인은 파이썬 버전때문이었다.</p>
+<p>다빈치리졸브 20은 파이썬 3.12까지 지원한다.</p>
+<p>최근에 파이썬 3.13을 설치한 게 문제였던 거 .</p>
+<p>파이썬을 지우거나 할 필요없이</p>
+<p><img src="davinciresolve/img/20250623232558.png" alt="" /></p>
+<p>시스템 환경변수에 <code>PYTHONHOME</code>을 새로 추가하고 파이썬 3.12 의 위치로 설정해주면 바로 해결된다. 이런게 문제였다니.</p>
+<p><img src="davinciresolve/img/20250623232453.png" alt="" /></p>
+<p>이 문제는 `PYTHONHOME의 값을 다시 파이썬 3.13버전의 위치로 설정해주면 바로 다시 나타난다.</p>
+<p>파이썬 버전만 맞춰놓으면 가상데스크톱을 켜 놓아도 잘 된다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="inkscape"><a class="header" href="#inkscape">inkscape</a></h1>
 <h2 id="export-하면-dpi가-이상하게-설정되는-거-없애기"><a class="header" href="#export-하면-dpi가-이상하게-설정되는-거-없애기">export 하면 dpi가 이상하게 설정되는 거 없애기</a></h2>
 <p><img src="design/img/20250530134150.png" alt="" /></p>
