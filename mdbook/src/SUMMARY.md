@@ -134,6 +134,7 @@
   - [podcast](./utility/podcast.md)
   - [powertoys](./utility/powertoys/powertoys.md)
   - [powerShell](./utility/powershell/powershell.md)
+  - [libre office](./libreoffice/libreoffice.md)
 
 - [노트](./note/note.md)
   - [mdbook](./note/mdbook/mdbook.md)  
@@ -202,6 +203,8 @@
   - [davinci resolve](./davinciresolve/davinciresolve.md)
 
   - [inkscape](./design/inkscape.md)
+  - [inDesign](./indesign/indesign.md)
+  
 
 - [어휘](./words/words.md)
   - [여기서 장사하면 안된다 vs 안 된다](./words/words-00001.md)
