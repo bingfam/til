@@ -55,3 +55,30 @@ Database ready to use. Enjoy! ;)
 ## 접속정보
 - sid: XE
 - 로그인: system / oracle
+
+
+## 미리 생성되어 있는 계정 중 HR 사용하기 
+
+podman의 컨테이너 터미널에서 다음 실행
+
+```sql
+root@f422033b47fe:/# sqlplus system/oracle
+
+SQL*Plus: Release 11.2.0.2.0 Production on Thu Jun 26 12:58:53 2025
+
+Copyright (c) 1982, 2011, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> ALTER USER HR ACCOUNT UNLOCK;
+
+User altered.
+
+SQL> alter user hr identified by tiger;
+
+User altered.
+
+SQL> 
+```
