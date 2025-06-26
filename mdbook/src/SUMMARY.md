@@ -88,6 +88,7 @@
       - [정적호스팅](./next.js/hosting.md)
       - [github.io에서 호스팅](./next.js/to_github.io.md)
       - [build 버전에서는 console.log 안 보이게](./next.js/nolog.md)
+      
 
     - [nextauth](./nextauth/nextauth.md)
       - [nextauth tutorial](./nextauth/nextauth_001.md)
@@ -128,6 +129,8 @@
   - [sqlite3](./db/sqlite3/sqlite3.md)
 
   - [indexed db](./db/indexeddb/indexeddb.md)
+
+  - [oracle](./db/oracle/oracle.md)
 
 - [유틸리티](./utility/utility.md)
   - [joplin](./utility/joplin.md)
