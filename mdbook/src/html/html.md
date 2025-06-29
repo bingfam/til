@@ -24,3 +24,10 @@
 
 대소문자를 가린다.
 
+
+## 쓸만한 거
+
+- &block; : `&block;`
+- &marker;: `&marker;`
+- &FilledSmallSquare; : `&FilledSmallSquare;`
+- &FilledVerySmallSquare;: `&FilledVerySmallSquare;`
