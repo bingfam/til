@@ -25,41 +25,29 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="custom.css">
 
 
-        <!-- Provide site root and default themes to javascript -->
+        <!-- Provide site root to javascript -->
         <script>
-            const path_to_root = "";
-            const default_light_theme = "light";
-            const default_dark_theme = "navy";
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
     </head>
     <body>
-    <div id="mdbook-help-container">
-        <div id="mdbook-help-popup">
-            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
-            <div>
-                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
-                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
-                <p>Press <kbd>?</kbd> to show this help</p>
-                <p>Press <kbd>Esc</kbd> to hide this help</p>
-            </div>
-        </div>
-    </div>
     <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                let theme = localStorage.getItem('mdbook-theme');
-                let sidebar = localStorage.getItem('mdbook-sidebar');
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -73,8 +61,7 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
-            let theme;
+            var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -87,8 +74,8 @@
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            let sidebar = null;
-            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -124,14 +111,13 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -892,8 +878,8 @@ pub trait Math
 <p><img src="dev/rust/img/20241201152819.png" alt="" /></p>
 <h2 id="휴먼편지체"><a class="header" href="#휴먼편지체">휴먼편지체</a></h2>
 <p><img src="dev/rust/img/20241201152827.png" alt="" /></p>
-<pre><pre class="playground"><code class="language-rust">#main.rs 전문
-
+<pre><pre class="playground"><code class="language-rust"><span class="boring">main.rs 전문
+</span>
 use iced::{Element, Sandbox, Settings};
 use iced::{Font};
 use iced::widget::text;
@@ -5342,6 +5328,25 @@ caption=파이썬 샘플 2 인데 이게 caption파이썬= 샘플2가 된다.</p
 <p>책에 적혀 있는 방법은 1번 방법이다.<br />
 최대한 간단하게 써야 한다 함.<br />
 정신건강, 삶의 방향을 관리할 수 있다고.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pdf"><a class="header" href="#pdf">pdf</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pdf-내용-수정하기"><a class="header" href="#pdf-내용-수정하기">pdf 내용 수정하기</a></h1>
+<h2 id="pdf-읽어들여-수정---inkscape"><a class="header" href="#pdf-읽어들여-수정---inkscape">pdf 읽어들여 수정 - inkscape</a></h2>
+<p>pdf 파일을 inkscape에서 읽어들인다. inkscape 1.4.2 사용</p>
+<p><img src="pdf/img/20250719203803.png" alt="" /></p>
+<p><img src="pdf/img/20250719230124.png" alt="" /></p>
+<p>첫 페이지는 빈 페이지고 그 다음 페이지부터 pdf 파일의 내용이 보여진다.</p>
+<p>inkscape를 이용해 내용을 마음껏 수정한다.</p>
+<p><img src="pdf/img/20250719230650.png" alt="" /></p>
+<p>그리고 내보내기를 하면서 ‘페이지’ 탭을 선택한 후</p>
+<ol>
+<li>single file 선택</li>
+<li>페이지 선택</li>
+<li>확장자를 ’pdf’로 변경하면 여러 페이지를 선택할 수 있다.</li>
+<li>저장될 파일명을 선택하고</li>
+<li>저장할 페이지들을 선택한다.</li>
+</ol>
+<p>여기서 page1은 선택을 풀어준다. 이 페이지는 맨 처음 앱을 실행할 때 만들어져 있던 페이지로 내용이 비어있다.</p>
+<p>이제 ‘내보내기’ 버튼을 누르면 하나의 완성된 파일이 만들어진다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="마케팅"><a class="header" href="#마케팅">마케팅</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="팔지마라-해결해줘라"><a class="header" href="#팔지마라-해결해줘라">팔지마라. 해결해줘라</a></h1>
 <p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7264963259730976768" title="" target="_blank">https://www.linkedin.com/feed/update/urn:li:activity:7264963259730976768</a></p>
