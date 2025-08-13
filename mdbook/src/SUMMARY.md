@@ -40,7 +40,8 @@
       - [auto 를 반환하는 함수를 정의하기 전에 사용할 수 없다는 에러메시지가 나올 때](./dev/winui3/00001.md)
       - [winui 3 패키징하지 않고 탐색기에서 exe 파일 실행하기](./dev/winui3/00002.md)
 
-    - [python](./dev/python/python.md)      
+    - [python](./dev/python/python.md)    
+      - [pip install하면 TLS CA 인증서 에러가 난다](./dev/python/00001.md)
 
   - [게임](./dev/game/game.md)
     - [O3DE](./dev/game/O3DE/O3DE.md)
@@ -88,6 +89,8 @@
       - [정적호스팅](./next.js/hosting.md)
       - [github.io에서 호스팅](./next.js/to_github.io.md)
       - [build 버전에서는 console.log 안 보이게](./next.js/nolog.md)
+      - [오라클 연결할 때 azure 관련 에러](./next.js/azureerror.md)
+      - [오라클 연결할 때 thick, thin 연결](./next.js/thin_thick.md)
       
 
     - [nextauth](./nextauth/nextauth.md)

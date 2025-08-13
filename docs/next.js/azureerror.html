@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>build 버전에서는 console.log 안 보이게 - TIL</title>
+        <title>오라클 연결할 때 azure 관련 에러 - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -167,26 +167,44 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="build-버전에서는-consolelog-안-보이게"><a class="header" href="#build-버전에서는-consolelog-안-보이게">build 버전에서는 console.log 안 보이게</a></h1>
-<p>next.config.ts 파일을 다음과 같이 수정한다.</p>
-<pre><code class="language-ts">const nextConfig: NextConfig = {
+                        <h1 id="오라클-연결할-때-azure-관련-에러"><a class="header" href="#오라클-연결할-때-azure-관련-에러">오라클 연결할 때 azure 관련 에러</a></h1>
+<p>오라클 연결해 사용하려 하면 webpack에서</p>
+<p><code>Module not found: Can't resolve '@azure/app-configuration'</code></p>
+<p>에러가 발생할 경우 처리 방법.</p>
+<p>next.js 14 이상인 경우, next.config.ts에서</p>
+<blockquote>
+<p>serverExternalPackages: [“oracledb”]</p>
+</blockquote>
+<p>를 추가하면 된다.</p>
+<p><strong>next.config.ts</strong></p>
+<pre><code>import type { NextConfig } from "next";
+import type { Configuration } from 'webpack';
+
+const nextConfig: NextConfig = {
   /* config options here */
+  eslint: {
+    ignoreDuringBuilds: false,
+  }, 
+
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
-  }
+  },
+
+  serverExternalPackages: ["oracledb"],
 };
+
+export default nextConfig;
 </code></pre>
-<p>이렇게 하면 <code>npm run dev</code> 할 때는 브라우저에서 console.log 의 내용이 보이고, <code>npm run start</code> 하면 보이지 않게 된다.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../next.js/to_github.io.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../next.js/nolog.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../next.js/azureerror.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../next.js/thin_thick.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -196,11 +214,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../next.js/to_github.io.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../next.js/nolog.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../next.js/azureerror.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../next.js/thin_thick.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

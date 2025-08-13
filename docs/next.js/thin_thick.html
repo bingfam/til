@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>build 버전에서는 console.log 안 보이게 - TIL</title>
+        <title>오라클 연결할 때 thick, thin 연결 - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -167,26 +167,25 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="build-버전에서는-consolelog-안-보이게"><a class="header" href="#build-버전에서는-consolelog-안-보이게">build 버전에서는 console.log 안 보이게</a></h1>
-<p>next.config.ts 파일을 다음과 같이 수정한다.</p>
-<pre><code class="language-ts">const nextConfig: NextConfig = {
-  /* config options here */
-  compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
-  }
-};
+                        <h1 id="오라클-연결할-때-thick-thin-연결"><a class="header" href="#오라클-연결할-때-thick-thin-연결">오라클 연결할 때 thick, thin 연결</a></h1>
+<ul>
+<li>thin 연결:</li>
+<li>thick 연결: 오라클 클라이언트를 이용한 연결.</li>
+</ul>
+<p>11g 같은 구형 버전은 thin 연결은 지원하지 않아 thick 연결로만 연결해야 함.</p>
+<pre><code>oracledb.initOracleClient({ libDir: 'D:\\app\\userid\\product\\12.2.0\\client_1' });
 </code></pre>
-<p>이렇게 하면 <code>npm run dev</code> 할 때는 브라우저에서 console.log 의 내용이 보이고, <code>npm run start</code> 하면 보이지 않게 된다.</p>
+<p>이렇게 local의 오라클 클라이언트의 위치를 설정해 줘야 함.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../next.js/to_github.io.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../next.js/azureerror.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../next.js/azureerror.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../nextauth/nextauth.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -196,11 +195,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../next.js/to_github.io.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../next.js/azureerror.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../next.js/azureerror.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../nextauth/nextauth.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
