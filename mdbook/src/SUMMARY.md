@@ -159,6 +159,9 @@
     - [tkiz](./tkiz/tkiz.md)
       - [각 표시 삼각형](./tkiz/tkiz001.md)
   - [3줄일기](./note/threelines.md)
+
+  - [pdf](./pdf/pdf.md)
+      - [pdf 내용 수정](./pdf/editpdf.md)
   
 
 - [마케팅](./marketing/marketing.md)
