@@ -14,3 +14,6 @@ additional-css = ["custom.css"]
 
 [preprocessor.external-links]   # 링크를 새탭으로. https://crates.io/crates/mdbook-external-links
 [preprocessor.backlinks]    # 이거 동작 안됨. 하나 만들던가 해야지.
+[preprocessor.tag]
+command = "mdbook-tag"
+filename = "tags.md"  # 생성될 태그 페이지 파일 이름 (기본값)

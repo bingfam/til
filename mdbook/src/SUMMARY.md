@@ -109,6 +109,10 @@
 
   - [mac](./dev/mac/mac.md)
 
+  - [데이터분석](./data_analysis/da.md)
+    - [[pandas] 특정 행, 열의 위치 값 변경](./data_analysis/da_00001.md)
+    - [[pandas] 특정 행, 혹은 열 삭제](./data_analysis/da_00002.md)
+
   - [기타](./dev/etc.md)
     - [miniconda](./dev/miniconda/miniconda.md)
       - [miniconda 사용법](./dev/miniconda/00001.md)

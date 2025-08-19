@@ -867,7 +867,7 @@ export default function SignInButton_C() {
 </code></pre>
 <p>여기까지 수정하고 <code>/</code> 페이지로 가면(http://localhost:3000)</p>
 <p><img src="img/20250509144332.png" alt="" /></p>
-<p>useSession 쓸 꺼면 &lt;SessionProvider&gt; 로 감싸야 한단다.</p>
+<p>useSession 쓸 꺼면 <SessionProvider> 로 감싸야 한단다.</p>
 <p>그럼 Provider를 만들어 보자.</p>
 <p>app/login/providers.tsx 파일을 생성하자.</p>
 <pre><code class="language-ts">// app/login/providers.tsx
@@ -889,7 +889,7 @@ export default function Providers({ children }: Props)
   );
 }
 </code></pre>
-<p>그냥 {children}을 &lt;SessionProvider&gt;로 감싸기만 한다.</p>
+<p>그냥 {children}을 <SessionProvider>로 감싸기만 한다.</p>
 <p>이제 우리의 SingInButton_C 컴퍼넌트를 감싸기 위해 app/page.tsx 파일을 수정하자.</p>
 <pre><code class="language-ts">// app/page.tsx
 
@@ -907,7 +907,7 @@ export default function Home() {
   );
 }
 </code></pre>
-<p>세션을 사용하는 모든 곳이 감싸지도록 해야 한다. 그래서 대부분 &lt;Providers&gt; 컴퍼넌트를 return 문의 맨 위와 아래에서 사용한다.</p>
+<p>세션을 사용하는 모든 곳이 감싸지도록 해야 한다. 그래서 대부분 <Providers> 컴퍼넌트를 return 문의 맨 위와 아래에서 사용한다.</p>
 <p>만약 providers를 server component로 만들면(맨 위에 “use client”; 하지 않으면) 아래와 같은 에러를 보게 된다.</p>
 <p><img src="img/20250509145043.png" alt="" /></p>
 <p>여기까지 진행하면,</p>
@@ -1048,7 +1048,7 @@ https://next-auth.js.org/errors#jwt_session_error decryption operation failed {
 
 [data/route.ts] session =  null
 </code></pre>
-<p>우선 제일 처음 드는 생각은 아.. &lt;Proders&gt; 를 page.tsx가 아니라 layout.tsx에서 사용해야 겠구나. 였지만 일단 그 문제는 아닌거 같다.</p>
+<p>우선 제일 처음 드는 생각은 아.. <Proders> 를 page.tsx가 아니라 layout.tsx에서 사용해야 겠구나. 였지만 일단 그 문제는 아닌거 같다.</p>
 <p>getServerSession() 함수는 중요한 인자를 하나 받는다. 여태 클라이언트 컴퍼넌트에서 useSession 훅을 사용할 때는 큰 문제없이 쓸 수 있을 줄 알았는데 서버 컴퍼넌트에서 사용하기 위해서는 nextauth를 좀 더 제대로 설정해야 한다. getServerSession() 함수에 authOptions 인자를 추가하면서 nextauth를 좀 더 제대로, 보안을 강화해 가며 사용해 보자.</p>
 <p>여태 우리는 app/api/auth/[…nextauth]/route.ts 파일에서 NextAuth() 함수에 복잡한 값을 파라미터로 던져줬다.</p>
 <p>getServerSession() 함수에서 필수인 파라미터인 authOptions: AuthOptions 의 값이 바로 NextAuth() 함수에 넘겨준 값이었다.</p>
@@ -1448,7 +1448,7 @@ declare module "next-auth" {
 </code></pre>
 <p>이렇게 해주면 모든 문제가 해결된다.</p>
 <h2 id="providers-위치-다시-잡기"><a class="header" href="#providers-위치-다시-잡기">Providers 위치 다시 잡기</a></h2>
-<p>현재 &lt;Providers&gt; 는 app/page.tsx 파일 내에 있다. 이게 전역적으로 다 감싸지려면 app/layout.tsx 파일 내에 있어야 한다.</p>
+<p>현재 <Providers> 는 app/page.tsx 파일 내에 있다. 이게 전역적으로 다 감싸지려면 app/layout.tsx 파일 내에 있어야 한다.</p>
 <p>app/page.tsx 파일 내에서 <code>&lt;Providers&gt;</code> 컴퍼넌트를 없앤다.</p>
 <pre><code class="language-ts">// app/page.tsx
 
