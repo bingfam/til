@@ -1171,6 +1171,94 @@ WARNING: There was an error checking the latest version of pip.
 <p>다빈치리졸브가 프로젝트 목록 나오는 창에서 죽으면 파이썬 버전을 낮추자. 현재 3.11에서는 잘 동작하고 있다. 3.13에서는 무조건 죽는다.</p>
 </li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="flutter"><a class="header" href="#flutter">flutter</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="설치-1"><a class="header" href="#설치-1">설치</a></h1>
+<h2 id="환경"><a class="header" href="#환경">환경</a></h2>
+<ul>
+<li>작성: 2025.08.28.</li>
+<li>windows 10</li>
+<li>visual studio code</li>
+</ul>
+<h2 id="visual-studio에서의-작업"><a class="header" href="#visual-studio에서의-작업">visual studio에서의 작업</a></h2>
+<p>flutter 플러그인을 설치한다.</p>
+<p><img src="dev/flutter/img/20250828095531.png" alt="" /></p>
+<p>설치한 다음, plugin 창을 닫고, <code>Ctrl + Shift + P</code>를 눌러 명령 팔레트를 열고,</p>
+<p><img src="dev/flutter/img/20250828100059.png" alt="" /></p>
+<p><code>flutter doctor</code>를 입력, <code>Flutter: Run Flutter Doctor</code> 를 실행한다.</p>
+<p>flutter doctor이 개발환경을 점검하고 해야 할 일들을 알려준다.</p>
+<p><img src="dev/flutter/img/20250828100231.png" alt="" /></p>
+<p>오른쪽 아래에 이렇게 나왔다. flutter sdk를 설치하라고 한다. 만약 이미 flutter sdk를 가지고 있으면 <code>locate SDK</code> 버튼을 눌러주면 된다. 나는 아예 없으니 <code>Download SDK</code>를 눌러 다운로드부터 하겠다.</p>
+<p>어느 폴더에 할 건지 위치를 물어보는데 <code>C:\sdk</code> 라고 하자. 자동으로 <code>flutter</code> 가 붙는다. 그래서 만약 <code>C:\sdk\flutter</code>라고 하면, <code>C:\sdk\flutter\flutter</code>가 된다.</p>
+<p><img src="dev/flutter/img/20250828100451.png" alt="" /></p>
+<p>자동으로 다운로드 받고,</p>
+<p><img src="dev/flutter/img/20250828100610.png" alt="" /></p>
+<p>뭔가 설치도 알아서 한다.</p>
+<p><img src="dev/flutter/img/20250828101732.png" alt="" /></p>
+<p>설치가 끝나면 path에 등록하겠냐고 물어본다. [Add SDK to PATH] 를 눌러준다.</p>
+<p><img src="dev/flutter/img/20250828101852.png" alt="" /></p>
+<p>설치가 끝난 줄 알았는데 이런 메시지가 또 나온다.(맨 위)</p>
+<p>그래서 이번엔 [Locate SDK] 버튼을 눌러주고,</p>
+<p><img src="dev/flutter/img/20250828102016.png" alt="" /></p>
+<p><code>C:\sdk\flutter</code>를 선택해 줬다.</p>
+<p><img src="dev/flutter/img/20250828102115.png" alt="" /></p>
+<p>그럼 또 flutter doctor가 뭔가 일을 하고, 끝난 거 같다.</p>
+<h2 id="flutter-프로젝트-생성"><a class="header" href="#flutter-프로젝트-생성">flutter 프로젝트 생성</a></h2>
+<p><img src="dev/flutter/img/20250828102301.png" alt="" /></p>
+<p><code>Ctrl + Shift + P</code>를 눌러준다. 그리고 <code>flutter new project</code>를 입력하고 선택하면,</p>
+<p><img src="dev/flutter/img/20250828102348.png" alt="" /></p>
+<p>뭘 만들건지 물어본다. 여기서 <code>Application</code>을 선택했다.</p>
+<p><img src="dev/flutter/img/20250828102512.png" alt="" /></p>
+<p>그럼 프로젝트 폴더를 물어본다.</p>
+<p><img src="dev/flutter/img/20250828102544.png" alt="" /></p>
+<p>프로젝트 이름을 물어본다. (일단 기본값 그대로 줬다)</p>
+<p><img src="dev/flutter/img/20250828102700.png" alt="" /></p>
+<p>그럼 이렇게 프로젝트가 생성된다.</p>
+<h2 id="flutter-프로젝트-실행"><a class="header" href="#flutter-프로젝트-실행">flutter 프로젝트 실행</a></h2>
+<p>vscode의 오른쪽 아래를 보면 <code>No Device</code>라는 버튼이 있다. target이 정해져 있지 않다는 뜻이다.</p>
+<p><img src="dev/flutter/img/20250828102950.png" alt="" /></p>
+<p>이 버튼을 눌러서</p>
+<p><img src="dev/flutter/img/20250828103028.png" alt="" /></p>
+<p>타겟을 Windows로 정해보자.</p>
+<p><img src="dev/flutter/img/20250828103219.png" alt="" /></p>
+<p>다행히도 이렇게 잘 바뀌었다.</p>
+<p><img src="dev/flutter/img/20250828103321.png" alt="" /></p>
+<p>프로그램을 실행하려면 <code>Run &gt; Start Debugging</code>을 하거나 <code>F5</code>키를 누른다.</p>
+<p><img src="dev/flutter/img/20250828103501.png" alt="" /></p>
+<p>잠시 후 디버거를 선택하라는데 CodeLLDB 옆에 <code>suggested</code>가 붙어 있으니 이걸로 하자.</p>
+<p><img src="dev/flutter/img/20250828103556.png" alt="" /></p>
+<p>suggested의 배신으로 이런 메시지를 받게 되었다. [OK] 버튼을 누르면</p>
+<p><img src="dev/flutter/img/20250828103644.png" alt="" /></p>
+<p>이런 환경설정으로 이동한다.</p>
+<p>[Add Configuration] 버튼을 누르면,</p>
+<p><img src="dev/flutter/img/20250828103928.png" alt="" /></p>
+<p>이런 화면이 나오는데, 여기서 밑으로 스크롤을 내려준다.</p>
+<p><img src="dev/flutter/img/20250828104023.png" alt="" /></p>
+<p>우리는 새로 프로젝트를 실행하니 <code>Dart: Launch</code>를 해준다. 만약 기존에 돌고 있던 프로세스에 디버거를 붙이는 거면 attach를 선택해 준다.</p>
+<p><code>launch.json</code>파일을 저장하고 다시 <code>F5</code>키를 누르면 실행된다.</p>
+<p><img src="dev/flutter/img/20250828111824.png" alt="" /></p>
+<pre><code>Error when reading 'D:\test\flutter\test001\flutter_application_1\bin\main.dart': No such file or directory.
+Connecting to VM Service at ws://127.0.0.1:13918/eUbi-8rBx98=/ws
+
+Exited (254).
+</code></pre>
+<p>그런데 이렇게 에러가 난다.</p>
+<p>가만 보면 프로젝트명\bin\main.dart가 없다는데 여기 가봐도 저런 파일 없다. 이 문제는 flutter의 entry를 잘못 설정해 줘서 생긴 문제다.</p>
+<p><code>.vscode/launch.json</code> 파일을 열어서 수정해야 한다. 기본 entry는 <code>lib/main.dart</code>이다.</p>
+<p><img src="dev/flutter/img/20250828112001.png" alt="" /></p>
+<pre><code class="language-json">      "program": "bin/main.dart"
+</code></pre>
+<p>이 부분을</p>
+<pre><code class="language-json">      "program": "lib/main.dart"
+</code></pre>
+<p>이렇게 고쳐주고 다시 F5 키를 누르면,</p>
+<p><img src="dev/flutter/img/20250828112138.png" alt="" /></p>
+<p>아래쪽 노란색으로 보이는 것처럼 윈도우 실행용 tool 들을 다운로드 받고 실행한다.</p>
+<p>building에도 한참 걸린다.</p>
+<p>다 끝난 거 같은데 아마 아무 것도 안 나타난다. 오른쪽 아래에 뭔가 또 선택하는 게 나왔었는데 금방 사라져서 못 봤다.</p>
+<p>암튼 다시 <code>F5</code>키를 눌러보면,</p>
+<p><img src="dev/flutter/img/20250828112517.png" alt="" /></p>
+<p>이런 프로그램이 나타난다.</p>
+<p><code>D:\test\flutter\test001\flutter_application_1\build\windows\x64\runner\Debug\</code> 에 실행파일 <code>flutter_application_1.exe</code>이 있고, 따로 실행해보면 실행 잘 된다.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="게임"><a class="header" href="#게임">게임</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="o3de"><a class="header" href="#o3de">O3DE</a></h1>
 <p>Open 3D Engine</p>
@@ -2090,7 +2178,7 @@ function LongTask_async()
 <p>await는 비동기화 함수 앞에서만 쓸 수 있는데 그걸 동기화되도록 쓰는 거. 죄다 쓰면 도대체 왜 비동기화 하는 거냐.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="웹"><a class="header" href="#웹">웹</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="nextjs"><a class="header" href="#nextjs">next.js</a></h1>
-<h2 id="설치-1"><a class="header" href="#설치-1">설치</a></h2>
+<h2 id="설치-2"><a class="header" href="#설치-2">설치</a></h2>
 <ul>
 <li>node.js를 설치한다.</li>
 <li>next.js는 따로 설치하지 않고 그냥 프로젝트를 설치하면 된다.````
@@ -4041,7 +4129,7 @@ export default nextConfig;
 <li>작성일: 2025. 5. 11.</li>
 <li>최종수정일: 2025. 5. 11.</li>
 </ul>
-<h2 id="설치-2"><a class="header" href="#설치-2">설치</a></h2>
+<h2 id="설치-3"><a class="header" href="#설치-3">설치</a></h2>
 <p>editor.js는 다양한 플러그인을 제공한다. 우선 본체만 설치.</p>
 <pre><code class="language-ps">npm install @editorjs/editorjs
 </code></pre>
@@ -4921,7 +5009,7 @@ where
 즉, salt를 별도의 컬럼에 저장하지 않고, 해시 문자열 자체에 포함시키는 방식이 표준입니다.
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="sqlite3"><a class="header" href="#sqlite3">sqlite3</a></h1>
-<h2 id="설치-3"><a class="header" href="#설치-3">설치</a></h2>
+<h2 id="설치-4"><a class="header" href="#설치-4">설치</a></h2>
 <h3 id="윈도우즈"><a class="header" href="#윈도우즈">윈도우즈</a></h3>
 <p>sqlite3 홈페이지(<a href="https://www.sqlite.org/download.html" title="" target="_blank">https://www.sqlite.org/download.html</a>)에 들어가서 툴을 다운로드 받는다.</p>
 <p><img src="db/sqlite3/img/20250426193620.png" alt="" /></p>
