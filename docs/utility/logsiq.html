@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>libre office - TIL</title>
+        <title>logseq - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -167,18 +167,30 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="libre-office"><a class="header" href="#libre-office">libre office</a></h1>
-<p>libre office에서 만든 문서를 inDesign에서 가져오기 하면 가져오기 에러가 나는 이유: libre office에서 이미지에 투명도를 설정해 줬기 때문.</p>
+                        <h1 id="logseq"><a class="header" href="#logseq">logseq</a></h1>
+<h2 id="audio-파일-추가법"><a class="header" href="#audio-파일-추가법">audio 파일 추가법</a></h2>
+<p>그냥 mp3 파일을 끌어다 놓으면 <code>![]()</code>의 형태가 되는데 logseq에서는 재생안된다. 길이가 00:00:00 로 계산된다.</p>
+<p>방법 1</p>
+<pre><code class="language-md">[:audio {:controls true :src "https://www.xxx.xxx/xxx.mp3"}]
+</code></pre>
+<p>오디오 파일을 웹에 올려놓고 위와 같이 입력한다.</p>
+<p>방법 2</p>
+<p>로컬에 있는 파일은 상대경로로 참조가 안된다. 절대경로로 잡아줘야 한다.</p>
+<pre><code class="language-md">[:audio {:controls true :src "d:\\test\\xxx.mp3"}]
+</code></pre>
+<pre><code class="language-md">[:audio {:controls true :src "d:/test/xxx.mp3"}]
+</code></pre>
+<p>그리고 m4a 파일은 지원하지 않는다.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../utility/powershell/powershell.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../libreoffice/libreoffice.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../utility/logsiq.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../note/note.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -188,11 +200,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../utility/powershell/powershell.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../libreoffice/libreoffice.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../utility/logsiq.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../note/note.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

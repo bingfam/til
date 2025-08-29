@@ -149,6 +149,7 @@
   - [powertoys](./utility/powertoys/powertoys.md)
   - [powerShell](./utility/powershell/powershell.md)
   - [libre office](./libreoffice/libreoffice.md)
+  - [logseq](./utility/logsiq.md)
 
 - [노트](./note/note.md)
   - [mdbook](./note/mdbook/mdbook.md)  
