@@ -150,6 +150,7 @@
   - [powerShell](./utility/powershell/powershell.md)
   - [libre office](./libreoffice/libreoffice.md)
   - [logseq](./utility/logsiq.md)
+  - [pdf](./utility/pdf.md)
 
 - [노트](./note/note.md)
   - [mdbook](./note/mdbook/mdbook.md)  

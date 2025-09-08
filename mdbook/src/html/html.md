@@ -30,4 +30,10 @@
 - &block; : `&block;`
 - &marker;: `&marker;`
 - &FilledSmallSquare; : `&FilledSmallSquare;`
-- &FilledVerySmallSquare;: `&FilledVerySmallSquare;`
+- &FilledVerySmallSquare; : `&FilledVerySmallSquare;`
+- &blacksquare;	: `&blacksquare;`
+- &RightTriangle; : `&RightTriangle;`
+- &blacktriangleright; : `&blacktriangleright;`
+- &bigtriangleup; : `&bigtriangleup;`
+- &divonx; : `&divonx;`
+- &EmptySmallSquare; : `&EmptySmallSquare;`
