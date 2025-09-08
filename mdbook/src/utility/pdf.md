@@ -71,14 +71,18 @@ if __name__ == "__main__": # 이 부분을 "__main__"으로 변경하여 실행�
 
 ```ps
 pip install pymupdf
+pip install pypdf
 ```
 
 ```python
 import fitz  # PyMuPDF
 
-input_pdf = "input.pdf"  # 기존 PDF 파일 경로
-output_pdf = "output.pdf"  # 이미지가 추가된 새 PDF 저장 경로
 image_file = "cover.jpg"  # 삽입할 이미지 파일 경로
+input_pdf = "input.pdf"  # 기존 PDF 파일 경로
+output_pdf = input_pdf.replace(".pdf", "-2.pdf")  # 이미지가 추가된 새 PDF 저장 경로
+
+# print ("input_pdf=", input_pdf, ", output_pdf=", output_pdf)
+
 
 # 기존 PDF 열기
 pdf_document = fitz.open(input_pdf)
@@ -99,4 +103,22 @@ new_page.insert_image(rect, filename=image_file)
 
 # 수정된 PDF 저장
 pdf_document.save(output_pdf)
+
+
+
+## 이렇게 하면 페이지가 밀리지 않고 기존 페이지 번호를 계속 가지고 있다. 그래서 페이지 미는 걸 만듦
+from pypdf import PdfReader, PdfWriter
+
+input_pdf = output_pdf # PyMuPDF로 처리한 PDF
+output_pdf = input_pdf.replace("-2.pdf", "-3.pdf")
+
+reader = PdfReader(input_pdf)
+writer = PdfWriter()
+
+# 기존 모든 페이지 추가
+for page in reader.pages:
+    writer.add_page(page)
+
+with open(output_pdf, "wb") as f_out:
+    writer.write(f_out)
 ```
