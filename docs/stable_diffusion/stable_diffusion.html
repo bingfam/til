@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>MCP - TIL</title>
+        <title>Stable Diffusion - TIL</title>
 
 
         <!-- Custom HTML head -->
@@ -167,66 +167,79 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="mcp"><a class="header" href="#mcp">MCP</a></h1>
-<h2 id="가장-간단한-형태의-mcp"><a class="header" href="#가장-간단한-형태의-mcp">가장 간단한 형태의 mcp</a></h2>
-<p><a href="https://github.com/modelcontextprotocol/python-sdk/blob/main/examples/fastmcp/echo.py" title="" target="_blank">https://github.com/modelcontextprotocol/python-sdk/blob/main/examples/fastmcp/echo.py</a></p>
-<pre><code class="language-python">"""
-FastMCP Echo Server
-"""
+                        <h1 id="stable-diffusion"><a class="header" href="#stable-diffusion">Stable Diffusion</a></h1>
+<h2 id="설치"><a class="header" href="#설치">설치</a></h2>
+<pre><code class="language-ps">PowerShell 7.5.3
 
-from mcp.server.fastmcp import FastMCP
+PS E:\stable_diffusion&gt; python --version
+Python 3.10.11
 
-# Create server
-mcp = FastMCP("Echo Server")
+PS E:\stable_diffusion&gt; python -m pip install --upgrade pip
+Requirement already satisfied: pip in c:\users\OOO\appdata\local\programs\python\python310\lib\site-packages (25.2)
 
+PS E:\stable_diffusion&gt; python -m venv venv
 
-@mcp.tool()
-def echo_tool(text: str) -&gt; str:
-    """Echo the input text"""
-    return text
+PS E:\stable_diffusion&gt; .\venv\Scripts\activate
 
+(venv) PS E:\stable_diffusion&gt; git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui
 
-@mcp.resource("echo://static")
-def echo_resource() -&gt; str:
-    return "Echo!"
+(venv) PS E:\stable_diffusion&gt; cd .\stable-diffusion-webui\
 
-
-@mcp.resource("echo://{text}")
-def echo_template(text: str) -&gt; str:
-    """Echo the input text"""
-    return f"Echo: {text}"
-
-
-@mcp.prompt("echo")
-def echo_prompt(text: str) -&gt; str:
-    return text
+(venv) PS E:\stable_diffusion\stable-diffusion-webui&gt; .\webui-user.bat
 </code></pre>
-<p>그런데 이거 막상 chainlit 에서 MCP 서버로 등록하려하면 에러는 나지 않는데 등록은 안된다. 맨 밑에</p>
-<pre><code class="language-python"># 서버 실행
-if __name__ == "__main__":
-    print("Starting server...")
-    mcp.run()
+<p>여기까지 하면 한참 설치한다. 설치가 끝나면 stable diffusion 창이 나온다.</p>
+<h2 id="내가-원하는-캐릭터-학습"><a class="header" href="#내가-원하는-캐릭터-학습">내가 원하는 캐릭터 학습</a></h2>
+<p>https://hotorch.tistory.com/427 보고 진행함.</p>
+<p>학습도구 설치</p>
+<pre><code class="language-ps">python -m pip install --upgrade pip
+
+(venv) PS E:\stable_diffusion&gt; git clone https://github.com/bmaltais/kohya_ss.git
+
+(venv) PS E:\stable_diffusion&gt; cd .\kohya_ss\
+
+(venv) PS E:\stable_diffusion\kohya_ss&gt; .\setup.bat
 </code></pre>
-<p>이 들어가야 mcp 서버로 추가된다.</p>
-<br />
-<h2 id="mcp의-구조"><a class="header" href="#mcp의-구조">MCP의 구조</a></h2>
-<p><a href="https://modelcontextprotocol.io/introduction#explore-mcp" title="" target="_blank">https://modelcontextprotocol.io/introduction#explore-mcp</a></p>
-<h3 id="mcp-primitive-3개"><a class="header" href="#mcp-primitive-3개">MCP primitive 3개</a></h3>
-<h4 id="resources"><a class="header" href="#resources">resources</a></h4>
-<h4 id="prompts"><a class="header" href="#prompts">prompts</a></h4>
-<h4 id="tools"><a class="header" href="#tools">tools</a></h4>
-<h2 id="mcp-상세-소개"><a class="header" href="#mcp-상세-소개">MCP 상세 소개</a></h2>
-<p><a href="https://modelcontextprotocol.io/introduction" title="" target="_blank">https://modelcontextprotocol.io/introduction</a></p>
+<pre><code class="language-ps">
+Kohya_ss setup menu:
+
+1. Install kohya_ss GUI
+2. (Optional) Install CuDNN files (to use the latest supported CuDNN version)
+3. (DANGER) Install Triton 2.1.0 for Windows... only do it if you know you need it... might break training...
+4. (Optional) Install specific version of bitsandbytes
+5. (Optional) Manually configure Accelerate
+6. (Optional) Launch Kohya_ss GUI in browser
+7. Exit Setup
+
+Select an option:
+</code></pre>
+<p>이렇게 나오면 1 번을 선택한다.</p>
+<p>또 한참 설치한다.</p>
+<pre><code class="language-ps">Kohya_ss setup menu:
+
+1. Install kohya_ss GUI
+2. (Optional) Install CuDNN files (to use the latest supported CuDNN version)
+3. (DANGER) Install Triton 2.1.0 for Windows... only do it if you know you need it... might break training...
+4. (Optional) Install specific version of bitsandbytes
+5. (Optional) Manually configure Accelerate
+6. (Optional) Launch Kohya_ss GUI in browser
+7. Exit Setup
+
+Select an option:
+</code></pre>
+<p>2번을 선택해서 최신 CuDNN 파일을 설치한다.</p>
+<p>다시 위와 같은 메뉴가 나오면 <code>6. (Optional) Launch Kohya_ss GUI in browser</code> 선택한다.</p>
+<p>v25로 설명한 자료:
+<a href="https://www.youtube.com/watch?v=wTVI0SONkpc" title="" target="_blank">https://www.youtube.com/watch?v=wTVI0SONkpc</a></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../ai/lm_chatnlit.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../ai/mcp.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../stable_diffusion/stable_diffusion.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../gis/gis.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -236,11 +249,11 @@ if __name__ == "__main__":
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../ai/lm_chatnlit.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../ai/mcp.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../stable_diffusion/stable_diffusion.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../gis/gis.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

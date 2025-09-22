@@ -176,13 +176,13 @@
 <div style="break-before: page; page-break-before: always;"></div><h1 id="backlink02"><a class="header" href="#backlink02">backlink02</a></h1>
 <p>ㅋㅋㅋ <a href="it/./backlink01.html">백링크</a> 걸기</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="infra"><a class="header" href="#infra">infra</a></h1>
-<h2 id="특정-포트를-윈도우가-점유해서-쓸-수-없는-경우-해결법"><a class="header" href="#특정-포트를-윈도우가-점유해서-쓸-수-없는-경우-해결법">특정 포트를 윈도우가 점유해서 쓸 수 없는 경우 해결법</a></h2>
+<h2 id="특정-port를-윈도우가-점유해서-쓸-수-없는-경우-해결법"><a class="header" href="#특정-port를-윈도우가-점유해서-쓸-수-없는-경우-해결법">특정 port를 윈도우가 점유해서 쓸 수 없는 경우 해결법</a></h2>
 <p>윈도우가 일정 영역을 자기가 쓰기 위해 미리 예약해 두는데 가끔 8080이나 3000번을 예약해서 못 쓰게 되기도 한다.</p>
-<h3 id="윈도우가-미리-예약해-놓은-포트들-확인"><a class="header" href="#윈도우가-미리-예약해-놓은-포트들-확인">윈도우가 미리 예약해 놓은 포트들 확인</a></h3>
+<h3 id="윈도우가-미리-예약해-놓은-port들-확인"><a class="header" href="#윈도우가-미리-예약해-놓은-port들-확인">윈도우가 미리 예약해 놓은 port들 확인</a></h3>
 <pre><code>netsh interface ipv4 show excludedportrange protocol=tcp
 </code></pre>
 <br/>
-<h3 id="내가-쓸-포트는-목록에서-빼기"><a class="header" href="#내가-쓸-포트는-목록에서-빼기">내가 쓸 포트는 목록에서 빼기</a></h3>
+<h3 id="내가-쓸-port는-목록에서-빼기"><a class="header" href="#내가-쓸-port는-목록에서-빼기">내가 쓸 port는 목록에서 빼기</a></h3>
 <pre><code>netsh int ipv4 delete excludedportrange protocol=tcp startport=54022 numberofports=100
 </code></pre>
 <br/>
@@ -4808,6 +4808,69 @@ if __name__ == "__main__":
 <h4 id="tools"><a class="header" href="#tools">tools</a></h4>
 <h2 id="mcp-상세-소개"><a class="header" href="#mcp-상세-소개">MCP 상세 소개</a></h2>
 <p><a href="https://modelcontextprotocol.io/introduction" title="" target="_blank">https://modelcontextprotocol.io/introduction</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="stable-diffusion"><a class="header" href="#stable-diffusion">Stable Diffusion</a></h1>
+<h2 id="설치-4"><a class="header" href="#설치-4">설치</a></h2>
+<pre><code class="language-ps">PowerShell 7.5.3
+
+PS E:\stable_diffusion&gt; python --version
+Python 3.10.11
+
+PS E:\stable_diffusion&gt; python -m pip install --upgrade pip
+Requirement already satisfied: pip in c:\users\OOO\appdata\local\programs\python\python310\lib\site-packages (25.2)
+
+PS E:\stable_diffusion&gt; python -m venv venv
+
+PS E:\stable_diffusion&gt; .\venv\Scripts\activate
+
+(venv) PS E:\stable_diffusion&gt; git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui
+
+(venv) PS E:\stable_diffusion&gt; cd .\stable-diffusion-webui\
+
+(venv) PS E:\stable_diffusion\stable-diffusion-webui&gt; .\webui-user.bat
+</code></pre>
+<p>여기까지 하면 한참 설치한다. 설치가 끝나면 stable diffusion 창이 나온다.</p>
+<h2 id="내가-원하는-캐릭터-학습"><a class="header" href="#내가-원하는-캐릭터-학습">내가 원하는 캐릭터 학습</a></h2>
+<p>https://hotorch.tistory.com/427 보고 진행함.</p>
+<p>학습도구 설치</p>
+<pre><code class="language-ps">python -m pip install --upgrade pip
+
+(venv) PS E:\stable_diffusion&gt; git clone https://github.com/bmaltais/kohya_ss.git
+
+(venv) PS E:\stable_diffusion&gt; cd .\kohya_ss\
+
+(venv) PS E:\stable_diffusion\kohya_ss&gt; .\setup.bat
+</code></pre>
+<pre><code class="language-ps">
+Kohya_ss setup menu:
+
+1. Install kohya_ss GUI
+2. (Optional) Install CuDNN files (to use the latest supported CuDNN version)
+3. (DANGER) Install Triton 2.1.0 for Windows... only do it if you know you need it... might break training...
+4. (Optional) Install specific version of bitsandbytes
+5. (Optional) Manually configure Accelerate
+6. (Optional) Launch Kohya_ss GUI in browser
+7. Exit Setup
+
+Select an option:
+</code></pre>
+<p>이렇게 나오면 1 번을 선택한다.</p>
+<p>또 한참 설치한다.</p>
+<pre><code class="language-ps">Kohya_ss setup menu:
+
+1. Install kohya_ss GUI
+2. (Optional) Install CuDNN files (to use the latest supported CuDNN version)
+3. (DANGER) Install Triton 2.1.0 for Windows... only do it if you know you need it... might break training...
+4. (Optional) Install specific version of bitsandbytes
+5. (Optional) Manually configure Accelerate
+6. (Optional) Launch Kohya_ss GUI in browser
+7. Exit Setup
+
+Select an option:
+</code></pre>
+<p>2번을 선택해서 최신 CuDNN 파일을 설치한다.</p>
+<p>다시 위와 같은 메뉴가 나오면 <code>6. (Optional) Launch Kohya_ss GUI in browser</code> 선택한다.</p>
+<p>v25로 설명한 자료:
+<a href="https://www.youtube.com/watch?v=wTVI0SONkpc" title="" target="_blank">https://www.youtube.com/watch?v=wTVI0SONkpc</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="공간정보"><a class="header" href="#공간정보">공간정보</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="qgis"><a class="header" href="#qgis">QGIS</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="qgis-plugin-개발"><a class="header" href="#qgis-plugin-개발">QGIS plugin 개발</a></h1>
@@ -5014,7 +5077,7 @@ where
 즉, salt를 별도의 컬럼에 저장하지 않고, 해시 문자열 자체에 포함시키는 방식이 표준입니다.
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="sqlite3"><a class="header" href="#sqlite3">sqlite3</a></h1>
-<h2 id="설치-4"><a class="header" href="#설치-4">설치</a></h2>
+<h2 id="설치-5"><a class="header" href="#설치-5">설치</a></h2>
 <h3 id="윈도우즈"><a class="header" href="#윈도우즈">윈도우즈</a></h3>
 <p>sqlite3 홈페이지(<a href="https://www.sqlite.org/download.html" title="" target="_blank">https://www.sqlite.org/download.html</a>)에 들어가서 툴을 다운로드 받는다.</p>
 <p><img src="db/sqlite3/img/20250426193620.png" alt="" /></p>

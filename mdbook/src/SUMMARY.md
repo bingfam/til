@@ -126,6 +126,7 @@
   - [Chainlit](./ai/chainlit.md)
   - [LM Studio & chainlit](./ai/lm_chatnlit.md)
   - [MCP](./ai/mcp.md)
+  - [Stable Diffusion](./stable_diffusion/stable_diffusion.md)
 
 - [공간정보](./gis/gis.md)
   - [QGIS](./gis/qgis/qgis.md)
