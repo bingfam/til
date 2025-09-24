@@ -66,6 +66,7 @@
     - [linux에서 접속(token)](./dev/git/00009.md)
     - [local에 git 서버 운영](./dev/git/00010.md)
     - [바뀐 점만 다른 곳에 적용](./dev/git/00011.md)
+    - [macos에서 https로 로그인](./dev/git/00012.md)
 
   - [visual studio](./dev/visualstudio/visualstudo.md)
     - [컴파일 오류 목록 중 하나를 더블클릭하면 문제 세부 정보 창이 나올 때 없애는 방법](./dev/visualstudio/00001.md)
