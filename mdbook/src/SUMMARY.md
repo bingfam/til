@@ -153,6 +153,7 @@
   - [libre office](./libreoffice/libreoffice.md)
   - [logseq](./utility/logsiq.md)
   - [pdf](./utility/pdf.md)
+  - [zettlr](./utility/zettlr.md)
 
 - [노트](./note/note.md)
   - [mdbook](./note/mdbook/mdbook.md)  
