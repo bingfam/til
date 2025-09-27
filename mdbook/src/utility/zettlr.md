@@ -29,7 +29,7 @@ variables:
   mainfont: "NanumGothic"
 ```
 
-variables 부분에 NanumGothic을 사용하겠다고설정한다.
+variables 부분에 NanumGothic을 사용하겠다고 설정한다.
 
 
 ### pdf 파일 여백 주기
@@ -80,3 +80,13 @@ geometry: a4paper,margin=2cm
 그리고 - 뒤에 꼭 스페이스가 하나 있어야 한다. 
 
 여러 단계 리스트를 만들려면 두 번쨰 depth는 스페이스 2칸 쓰고 - 를 넣어야 한다.
+
+
+### contents 페이지
+
+```yaml
+toc: true # Include a table of contents?
+toc-depth: 2 # 2 means to only include headings level 1 and 2 in the ToC
+```
+
+`xelatex.pdf.yaml` 파일에서 `toc` 항목을 true로 바꿔준다.
