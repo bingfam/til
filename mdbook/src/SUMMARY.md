@@ -45,6 +45,7 @@
 
     - [flutter](./dev/flutter/flutter.md)    
       - [설치](./dev/flutter/00001.md)
+
     
 
   - [게임](./dev/game/game.md)
@@ -117,6 +118,8 @@
   - [데이터분석](./data_analysis/da.md)
     - [[pandas] 특정 행, 열의 위치 값 변경](./data_analysis/da_00001.md)
     - [[pandas] 특정 행, 혹은 열 삭제](./data_analysis/da_00002.md)
+
+  - [MSYS2](./msys/msys.md)
 
   - [기타](./dev/etc.md)
     - [miniconda](./dev/miniconda/miniconda.md)
