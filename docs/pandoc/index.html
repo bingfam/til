@@ -168,6 +168,16 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="pandoc"><a class="header" href="#pandoc">pandoc</a></h1>
+<h2 id="한글-문제-없이-pdf로-만들기"><a class="header" href="#한글-문제-없이-pdf로-만들기">한글 문제 없이 pdf로 만들기</a></h2>
+<p><strong>맑은 고딕</strong> 사용</p>
+<pre><code class="language-ps">pandoc cogo.md -o .\output.pdf --pdf-engine=xelatex -V mainfont='맑은 고딕'
+</code></pre>
+<p><strong>나눔고딕</strong> 사용</p>
+<pre><code>pandoc -s -f markdown cogo.md -o output.pdf --pdf-engine=xelatex -V mainfont='나눔고딕' -V papersize=a4 -V fontsize=12pt -V geometry:margin=1.5cm
+</code></pre>
+<h2 id="docx로-만들기"><a class="header" href="#docx로-만들기">docx로 만들기</a></h2>
+<pre><code>pandoc -s -f markdown cogo.md -o output.docx --shift-heading-level-by=-1
+</code></pre>
 
                     </main>
 
