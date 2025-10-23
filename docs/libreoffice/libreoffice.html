@@ -24,29 +24,41 @@
         <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="../highlight.css">
-        <link rel="stylesheet" href="../tomorrow-night.css">
-        <link rel="stylesheet" href="../ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="../custom.css">
 
 
-        <!-- Provide site root to javascript -->
+        <!-- Provide site root and default themes to javascript -->
         <script>
-            var path_to_root = "../";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc.js"></script>
     </head>
     <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
     <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -60,7 +72,8 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -73,8 +86,8 @@
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var sidebar = null;
-            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -110,13 +123,14 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -154,7 +168,45 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="libre-office"><a class="header" href="#libre-office">libre office</a></h1>
+<h2 id="libre-office에서-export한-pdf-파일을-indesign에서-읽지-못하는-문제"><a class="header" href="#libre-office에서-export한-pdf-파일을-indesign에서-읽지-못하는-문제">libre office에서 export한 pdf 파일을 inDesign에서 읽지 못하는 문제</a></h2>
 <p>libre office에서 만든 문서를 inDesign에서 가져오기 하면 가져오기 에러가 나는 이유: libre office에서 이미지에 투명도를 설정해 줬기 때문.</p>
+<h2 id="윈도우에서-만든-자료를-macos에서-읽을-때-폰트가-바뀌는-이유"><a class="header" href="#윈도우에서-만든-자료를-macos에서-읽을-때-폰트가-바뀌는-이유">윈도우에서 만든 자료를 macos에서 읽을 때 폰트가 바뀌는 이유</a></h2>
+<h3 id="os마다-설치된-폰트-이름이-다르다"><a class="header" href="#os마다-설치된-폰트-이름이-다르다">os마다 설치된 폰트 이름이 다르다</a></h3>
+<p>cookie run 글꼴은 모양은 이쁘지만,</p>
+<p>같은 폰트를(지금 생각해 보니 정말 같은 파일인지는 정확치 않다) 윈도우와 macos에 설치하고 보면,</p>
+<p>윈도우에서는 cookie run bold 라는 글꼴이 따로 생성된다.
+cookie run 이라는 글꼴은 없다.</p>
+<ul>
+<li>cookie run regular</li>
+<li>cookie run bold</li>
+<li>cookie run black</li>
+</ul>
+<p>그런데 macos에서는 <code>cookie run</code> 이라는 글꼴만 설치된다.<br />
+그리고 서체관리자에 가보면 글꼴 하나에 3개의 <code>스타일</code>(regular, bold, black)가 있다고 나온다.</p>
+<p>libre office에 가보면 이 3개의 스타일을 따로 사용할 수가 없다. 그냥 옵션에서 bold, regular 를 선택하도록 되어 있다. 제일 굵은 black.. 은 없다.</p>
+<p>pages 같은 macos 전용 프로그램은 스타일을 선택할 수 있는데, libre office mac 은 그런 선택이 없다.</p>
+<p>여튼 중요한 건 macos에는 cookie run이라는 글꼴만 있다는 거다.</p>
+<h3 id="폰트-이름이-다른데서-오는-문제"><a class="header" href="#폰트-이름이-다른데서-오는-문제">폰트 이름이 다른데서 오는 문제</a></h3>
+<p>윈도우에서 만든 파일에는 <code>cookie run bold</code> 라고 되어 있는데, 이걸 macos에서 읽으면 <code>cookie run bold</code>라는 글꼴은 없다는 문제가 발생한다. <code>cookie run</code>이라는 글꼴만 있으니까.</p>
+<p>libre office는 mac과 win 모두 western, asian 글꼴을 나눠서 관리하는데, 이상하게도 western은 이런 경우에도 제대로 표시해 주는데(win, mac 모두) asian 부분은 다른 글꼴로 대체해서 표시된다.</p>
+<p>이 문제는 win에서 만든 문서를 mac에서 읽을 때도 발생하지만 그 반대의 경우에도 마찬가지로 발생한다.</p>
+<h3 id="해결-방법"><a class="header" href="#해결-방법">해결 방법</a></h3>
+<h4 id="1안-master-slide-사용"><a class="header" href="#1안-master-slide-사용">1안. Master Slide 사용</a></h4>
+<p>master slide는 그 페이지의 모양을 관할한다. 그리고 전체 페이지에 적용할 수도 있다.</p>
+<p>모든 페이지애 master slide를 적용해 놓고, 다른 OS에서 읽게 되면 전술한 글꼴 문제가 발생한다.그러니 master slide를 잘 적용해 놓았으면 master slide 에서 western, asian 폰트를 바꿔놓는 것으로 해결된다.</p>
+<p>내 경우, 모든 cookie run 글꼴을 사용한 부분에서 <code>ctrl + shift + M</code>을 눌러서 <code>직접 설정한 서식 지우기</code> 를 하고 master slide 중 하나의 슬라이드를 클릭해서 해당 페이지에 그 master 서식을 적용해 줬다.</p>
+<p>OS를 바꿔 읽어야 할 때마다 이 작업을 해 주면 된다.</p>
+<h4 id="2안-글꼴-대체표-사용"><a class="header" href="#2안-글꼴-대체표-사용">2안. 글꼴 대체표 사용</a></h4>
+<p>위 1안의 master slide 적극 활용은 매우 중요하다. libre office에 글꼴 대체표가 있으니 이걸 사용해도 되더라.</p>
+<p>그런데 이 경우에도 cookie run bold 를 cookie run 이라고만 바꿀 수 있지, 이 대체에 bold 옵션을 따로 줄 수가 없다.</p>
+<p>2안은 완벽한 해결책은 되지 않는다.</p>
+<h4 id="3안-cookie-run-사용하지-않기"><a class="header" href="#3안-cookie-run-사용하지-않기">3안. cookie run 사용하지 않기</a></h4>
+<p>모든 글꼴이 다 그런지 확인은 안해봤는데(나눔고딕은 문제 없는 듯) cookie run은 가급적 쓰지 말자. 두 곳을 왔다갔다 하는 경우도 많으니.</p>
+<h3 id="앞으로-할-일"><a class="header" href="#앞으로-할-일">앞으로 할 일</a></h3>
+<ul>
+<li>master slide의 적극적인 활용</li>
+<li>글꼴 사용 전에 각 OS마다 글꼴 이름이 다른 글꼴은 아닌지 확인해서 안전 글꼴 list 만들고 그 글꼴만 사용하기</li>
+</ul>
 
                     </main>
 
